@@ -350,6 +350,9 @@ O desenvolvimento do SplitAgent está organizado em etapas que podem ser atualiz
         <sub>Líder da equipe</sub>
         <br/>
         <sub>Back-End</sub>
+         <br/>
+        <sub>Engenheiro de IA</sub>
+        <br/>
         <br/><br/>
         <a href="https://github.com/Tiasgod">
           <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub de Tiago"/>
