@@ -1,30 +1,69 @@
 # SplitAgent — Inteligência Financeira Agêntica
 
-
-
-
-\
-
+![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-orange)
+![PWA](https://img.shields.io/badge/Plataforma-PWA-blue)
+![Python](https://img.shields.io/badge/Linguagem-Python-yellow)
+![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
+![IA](https://img.shields.io/badge/Arquitetura-Multi--Agentes-purple)
 
 ## Quem somos
 
-Somos a **ThreeValley**, uma equipe que desenvolve soluções tecnológicas com foco em inteligência artificial, automação e inovação financeira, em parceria com a **IBM e o Banco do Brasil**.
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="25%">
+        <a href="https://github.com/Tiasgod">
+          <img src="https://avatars.githubusercontent.com/Tiasgod" width="100px" alt="Tiago Pereira Dias"/>
+          <br/>
+          <strong>Tiago Pereira Dias</strong>
+        </a>
+        <br/>
+        <sub>Líder da equipe</sub>
+        <br/>
+        <sub>Engenheiro de IA</sub>
+        <br/>
+        <sub>Back-End</sub>
+        <br/><br/>
+        <a href="https://github.com/Tiasgod">
+          <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+        </a>
+        <a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/">
+          <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+        </a>
+      </td>
+      <td align="center" width="25%">
+        <strong>Juliana Alves</strong>
+        <br/>
+        <sub>Designer da Solução</sub>
+        <br/>
+        <sub>UI/UX</sub>
+      </td>
+      <td align="center" width="25%">
+        <strong>Vitória Amélia</strong>
+        <br/>
+        <sub>Líder de Pesquisa</sub>
+        <br/>
+        <sub>Front-End</sub>
+      </td>
+      <td align="center" width="25%">
+        <strong>Rafaela Marques</strong>
+        <br/>
+        <sub>Líder Técnica</sub>
+        <br/>
+        <sub>Comunicação</sub>
+      </td>
+    </tr>
+  </table>
+</p>
 
-Nosso projeto, SplitAgent, busca utilizar agentes de inteligência artificial para auxiliar na gestão financeira, na divisão de pagamentos e na previsão do fluxo de caixa.
+A **ThreeValley** é a equipe responsável pelo desenvolvimento do SplitAgent, reunindo diferentes competências em desenvolvimento de software, inteligência artificial, design e pesquisa.
 
-### Equipe — ThreeValley
-
-| Integrante             | Responsabilidades                            |
-| ---------------------- | -------------------------------------------- |
-| **Tiago Pereira Dias** | Líder da equipe, Engenheiro de IA e Back-End |
-| **Juliana Alves**      | Designer da Solução e UI/UX                  |
-| **Vitória Amélia**     | Líder de Pesquisa e Front-End                |
-| **Rafaela Marques**    | Líder Técnica e de Comunicação               |
+Nosso objetivo é desenvolver uma solução tecnológica que utilize agentes de inteligência artificial para apoiar empreendedores na análise financeira e na tomada de decisões, explorando novas possibilidades de aplicação da IA em problemas reais.
 
 ### Mentoria
 
-- Silas Fernandes
-- João Carlos Manozzo Junior
+- Silas Fernandes;
+- João Carlos Manozzo Junior.
 
 ## Sumário
 
@@ -86,8 +125,7 @@ Desenvolver uma solução baseada em inteligência artificial agêntica para aux
 - Gerar previsões para apoiar o planejamento do fluxo de caixa.
 - Apoiar análises relacionadas a crédito e aspectos fiscais.
 - Integrar agentes especializados por meio de um agente orquestrador.
-- Considerar segurança, governança e inclusão
-- &#x20;financeira durante o desenvolvimento.
+- Considerar segurança, governança e inclusão financeira durante o desenvolvimento.
 - Disponibilizar uma interface acessível pela web e por dispositivos móveis.
 
 ## Agentes de IA
@@ -192,8 +230,6 @@ O fluxo apresentado representa a arquitetura conceitual da solução. A comunica
 - **IBM Bob:** ferramenta utilizada como apoio durante o desenvolvimento.
 
 ## IBM Bob
-
-
 
 O **IBM Bob** foi utilizado como ferramenta de apoio durante o desenvolvimento do projeto SplitAgent.
 
