@@ -19,14 +19,21 @@
 <a href="https://github.com/Tiasgod"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
 <a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
 </td>
-<td align="center" width="25%">
-<a href="https://github.com/juliana15paak"><img src="https://github.com/juliana15paak.png" width="100" height="100" alt="Juliana Alves"/></a><br/>
-<strong>Juliana Alves</strong><br/>
-<sub>Designer da Solução</sub><br/>
-<sub>UI/UX</sub><br/><br/>
-<a href="https://github.com/juliana15paak"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
-<a href="https://www.linkedin.com/in/juliana-alves976/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-</td>
+    <td align="center" width="25%">
+      <p align="center">
+        <a href="https://github.com/Tiasgod"><img src="https://github.com/Tiasgod.png" width="100" height="100" alt="Tiago Pereira Dias"/></a>
+        <br/>
+        <strong>Tiago Pereira Dias</strong>
+        <br/>
+        <sub>Líder da equipe</sub>
+        <br/>
+        <sub>Engenheiro de IA</sub>
+        <br/>
+        <sub>Back-End</sub>
+      </p>
+      <a href="https://github.com/Tiasgod"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
+      <a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
 <td align="center" width="25%">
 <a href="https://github.com/VitoriaAmelia"><img src="https://github.com/VitoriaAmelia.png" width="100" height="100" alt="Vitória Amélia"/></a><br/>
 <strong>Vitória Amélia</strong><br/>
