@@ -88,17 +88,17 @@ O SplitAgent propõe utilizar inteligência artificial agêntica para simplifica
 
 A solução utiliza agentes de inteligência artificial especializados em diferentes atividades, coordenados por um agente orquestrador responsável por direcionar as demandas e integrar as informações.
 
-Com foco no Split Payment, o sistema busca auxiliar na organização e na divisão dos valores de cada transação, considerando os participantes envolvidos e as regras definidas para a operação. Além disso, integra recursos de análise financeira, previsão de caixa, avaliação de crédito, aspectos fiscais, segurança e inclusão financeira em um único ambiente.
+Com foco no Split Payment, o sistema busca auxiliar na organização, considerando os participantes envolvidos e as regras definidas para a operação. Além disso, integra recursos de análise financeira, previsão de caixa, avaliação de crédito, aspectos fiscais, segurança e inclusão financeira em um único ambiente.
 
 Dessa forma, o SplitAgent busca tornar o gerenciamento das transações mais organizado, transparente e eficiente, apoiando a tomada de decisões e reduzindo a necessidade de atividades manuais.
 
 ## O problema
 
-A gestão de pagamentos pode ser complexa para empresas que precisam dividir os valores de uma mesma transação entre diferentes destinatários, controlar os repasses e acompanhar as informações financeiras e fiscais relacionadas a cada operação.
+A gestão financeira pode ser desafiadora para empresas que precisam controlar entradas e saídas, organizar pagamentos, acompanhar obrigações fiscais e prever necessidades futuras de caixa.
 
-Quando esse processo é realizado manualmente ou por meio de sistemas pouco integrados, podem ocorrer dificuldades na conferência dos valores, atrasos nos repasses, erros na distribuição dos recursos e problemas no acompanhamento das transações.
+A falta de integração entre essas atividades pode dificultar a análise das informações e tornar a tomada de decisões mais lenta.
 
-Além disso, a falta de integração entre pagamentos, controle financeiro e obrigações fiscais pode dificultar a identificação de inconsistências e tornar a tomada de decisões mais lenta.
+Além disso, processos financeiros realizados manualmente podem aumentar a possibilidade de erros e dificultar a identificação antecipada de riscos.
 
 O SplitAgent busca enfrentar esses desafios por meio da inteligência artificial agêntica, utilizando agentes especializados para apoiar o processo de Split Payment, organizar as informações das transações, auxiliar na conferência dos valores e identificar possíveis inconsistências. A proposta é oferecer uma solução integrada que contribua para tornar a divisão dos pagamentos mais segura, organizada e eficiente.
 
