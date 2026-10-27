@@ -6,7 +6,7 @@
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
 ![IA](https://img.shields.io/badge/Arquitetura-Multi--Agentes-purple)
 
-Quem somos
+## Quem somos
 
 <p align="center">
 <table>
