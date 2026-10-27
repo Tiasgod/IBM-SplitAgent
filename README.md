@@ -11,7 +11,7 @@
 <table>
 <tr>
 <td align="center" width="25%">
-<a href="https://github.com/Tiasgod"><img src="https://avatars.githubusercontent.com/Tiasgod" width="100" height="100" alt="Tiago Pereira Dias"/></a><br/>
+<a href="https://github.com/Tiasgod"><img src="https://github.com/Tiasgod.png" width="100" height="100" alt="Tiago Pereira Dias"/></a>
 <strong>Tiago Pereira Dias</strong><br/>
 <sub>Líder da equipe</sub><br/>
 <sub>Engenheiro de IA</sub><br/>
