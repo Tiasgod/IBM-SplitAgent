@@ -31,8 +31,11 @@
           <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
         </a>
       </td>
+
       <td align="center" width="25%">
         <a href="https://github.com/juliana15paak">
+          <img src="https://avatars.githubusercontent.com/juliana15paak" width="100px" alt="Juliana Alves"/>
+          <br/>
           <strong>Juliana Alves</strong>
         </a>
         <br/>
@@ -47,8 +50,11 @@
           <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
         </a>
       </td>
+
       <td align="center" width="25%">
         <a href="https://github.com/VitoriaAmelia">
+          <img src="https://avatars.githubusercontent.com/VitoriaAmelia" width="100px" alt="Vitória Amélia"/>
+          <br/>
           <strong>Vitória Amélia</strong>
         </a>
         <br/>
@@ -63,8 +69,11 @@
           <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
         </a>
       </td>
+
       <td align="center" width="25%">
         <a href="https://github.com/Rafa15MQS">
+          <img src="https://avatars.githubusercontent.com/Rafa15MQS" width="100px" alt="Rafaela Marques"/>
+          <br/>
           <strong>Rafaela Marques</strong>
         </a>
         <br/>
