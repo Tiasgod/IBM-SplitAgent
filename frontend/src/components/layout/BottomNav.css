@@ -1,0 +1,59 @@
+/* ============================================================
+   BottomNav — mobile bottom navigation bar
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  height: 64px;
+  padding: 0 var(--space-2);
+  padding-bottom: env(safe-area-inset-bottom); /* iPhone home bar */
+
+  background-color: rgba(242, 245, 249, 0.80);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Each destination */
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-gray);
+  transition: color 0.15s ease;
+}
+
+.bottom-nav__item:hover {
+  color: var(--color-primary);
+}
+
+.bottom-nav__item--active {
+  color: var(--color-primary);
+}
+
+/* Label text */
+.bottom-nav__label {
+  font-family: var(--font-family);
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bottom-nav__item--active .bottom-nav__label {
+  font-weight: 700;
+}

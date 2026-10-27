@@ -8,7 +8,7 @@ export default function AppShell() {
 
   return (
     <div className="app-shell">
-      {isDesktop ? <Sidebar /> : null}
+      {isDesktop ? <Sidebar variant="expanded" /> : null}
       <main className="main-content">
         <Outlet />
       </main>

@@ -1,0 +1,27 @@
+/* 1. Import da fonte */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+/* 2. Reset mínimo */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* 3. Base do body */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Layout do AppShell */
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  padding-bottom: calc(64px + var(--space-4)); /* espaço pro BottomNav no mobile */
+}

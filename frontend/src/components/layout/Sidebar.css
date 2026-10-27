@@ -1,0 +1,180 @@
+/* ============================================================
+   Sidebar — base (compartilhado entre todas as variantes)
+   ============================================================ */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  flex-shrink: 0;
+}
+
+.sidebar__logo {
+  padding: var(--space-2) var(--space-2) var(--space-6);
+}
+
+.sidebar__nav {
+  flex: 1;
+}
+
+.sidebar__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Item base — NavLink e botão de logout */
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 10px var(--space-3);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sidebar__footer {
+  padding-top: var(--space-4);
+}
+
+
+/* ============================================================
+   Variante: mobile — fundo claro, ícones + texto
+   ============================================================ */
+.sidebar--mobile {
+  width: 216px;
+  background-color: var(--color-bg);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.sidebar--mobile .sidebar__item {
+  color: var(--color-primary);
+}
+
+.sidebar--mobile .sidebar__item:hover {
+  background-color: rgba(15, 38, 59, 0.07);
+}
+
+.sidebar--mobile .sidebar__item--active {
+  background-color: rgba(15, 38, 59, 0.10);
+  font-weight: 700;
+}
+
+.sidebar--mobile .sidebar__footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sidebar--mobile .sidebar__item--logout {
+  color: var(--color-alert);
+}
+
+.sidebar--mobile .sidebar__item--logout:hover {
+  background-color: rgba(216, 103, 43, 0.08);
+}
+
+
+/* ============================================================
+   Variante: collapsed — fundo escuro, só ícones
+   ============================================================ */
+.sidebar--collapsed {
+  width: 68px;
+  background-color: var(--color-primary);
+  align-items: center;
+}
+
+.sidebar--collapsed .sidebar__logo {
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar--collapsed .sidebar__list {
+  align-items: center;
+}
+
+.sidebar--collapsed .sidebar__item {
+  justify-content: center;
+  gap: 0;
+  width: 44px;
+  padding: 11px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.sidebar--collapsed .sidebar__item:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+}
+
+.sidebar--collapsed .sidebar__item--active {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.sidebar--collapsed .sidebar__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar--collapsed .sidebar__item--logout {
+  color: var(--color-alert);
+  opacity: 0.9;
+}
+
+.sidebar--collapsed .sidebar__item--logout:hover {
+  background-color: rgba(216, 103, 43, 0.15);
+  opacity: 1;
+}
+
+
+/* ============================================================
+   Variante: expanded — fundo escuro, ícones + texto
+   ============================================================ */
+.sidebar--expanded {
+  width: 216px;
+  background-color: var(--color-primary);
+}
+
+.sidebar--expanded .sidebar__item {
+  color: rgba(255, 255, 255, 0.70);
+}
+
+.sidebar--expanded .sidebar__item:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+}
+
+.sidebar--expanded .sidebar__item--active {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.sidebar--expanded .sidebar__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.sidebar--expanded .sidebar__item--logout {
+  color: var(--color-alert);
+  opacity: 0.9;
+}
+
+.sidebar--expanded .sidebar__item--logout:hover {
+  background-color: rgba(216, 103, 43, 0.15);
+  opacity: 1;
+}
