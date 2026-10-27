@@ -12,7 +12,7 @@ Quem somos
 <table>
 <tr>
 <td align="center" valign="top" width="25%">
-<a href="https://github.com/Tiasgod"><img src="https://avatars.githubusercontent.com/Tiasgod" width="100" height="100" alt="Tiago Pereira Dias"/><br/><strong>Tiago Pereira Dias</strong></a><br/>
+<a href="https://github.com/Tiasgod"><img src="https://avatars.githubusercontent.com/Tiasgod" width="100" height="100" alt="Tiago Dias"/><br/><strong>Tiago Dias</strong></a><br/>
 <sub>Líder da equipe</sub><br/>
 <sub>Back-End</sub><br/><br/>
 <a href="https://github.com/Tiasgod"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
