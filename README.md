@@ -9,85 +9,41 @@
 ## Quem somos
 
 <table>
-  <tr>
-    <td align="center" width="25%">
-      <a href="https://github.com/Tiasgod">
-        <img src="https://avatars.githubusercontent.com/Tiasgod" width="100" height="100" alt="Tiago Pereira Dias"/>
-      </a>
-      <br/>
-      <strong>Tiago Pereira Dias</strong>
-      <br/>
-      <sub>Líder da equipe</sub>
-      <br/>
-      <sub>Engenheiro de IA</sub>
-      <br/>
-      <sub>Back-End</sub>
-      <br/><br/>
-      <a href="https://github.com/Tiasgod">
-        <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
-      </a>
-      <a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/">
-        <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-      </a>
-    </td>
-
-    <td align="center" width="25%">
-      <a href="https://github.com/juliana15paak">
-        <img src="https://github.com/juliana15paak.png" width="100" height="100" alt="Juliana Alves"/>
-      </a>
-      <br/>
-      <strong>Juliana Alves</strong>
-      <br/>
-      <sub>Designer da Solução</sub>
-      <br/>
-      <sub>UI/UX</sub>
-      <br/><br/>
-      <a href="https://github.com/juliana15paak">
-        <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
-      </a>
-      <a href="https://www.linkedin.com/in/juliana-alves976/">
-        <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-      </a>
-    </td>
-
-    <td align="center" width="25%">
-      <a href="https://github.com/VitoriaAmelia">
-        <img src="https://github.com/VitoriaAmelia.png" width="100" height="100" alt="Vitória Amélia"/>
-      </a>
-      <br/>
-      <strong>Vitória Amélia</strong>
-      <br/>
-      <sub>Líder de Pesquisa</sub>
-      <br/>
-      <sub>Front-End</sub>
-      <br/><br/>
-      <a href="https://github.com/VitoriaAmelia">
-        <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
-      </a>
-      <a href="https://www.linkedin.com/in/vitoria-amelia-silva-258083357/">
-        <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-      </a>
-    </td>
-
-    <td align="center" width="25%">
-      <a href="https://github.com/Rafa15MQS">
-        <img src="https://github.com/Rafa15MQS.png" width="100" height="100" alt="Rafaela Marques"/>
-      </a>
-      <br/>
-      <strong>Rafaela Marques</strong>
-      <br/>
-      <sub>Líder Técnica</sub>
-      <br/>
-      <sub>Comunicação</sub>
-      <br/><br/>
-      <a href="https://github.com/Rafa15MQS">
-        <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
-      </a>
-      <a href="https://www.linkedin.com/in/rafaela-marques-547485351/">
-        <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-      </a>
-    </td>
-  </tr>
+<tr>
+<td align="center" width="25%">
+<a href="https://github.com/Tiasgod"><img src="https://avatars.githubusercontent.com/Tiasgod" width="100" height="100" alt="Tiago Pereira Dias"/></a><br/>
+<strong>Tiago Pereira Dias</strong><br/>
+<sub>Líder da equipe</sub><br/>
+<sub>Engenheiro de IA</sub><br/>
+<sub>Back-End</sub><br/><br/>
+<a href="https://github.com/Tiasgod"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
+<a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/juliana15paak"><img src="https://github.com/juliana15paak.png" width="100" height="100" alt="Juliana Alves"/></a><br/>
+<strong>Juliana Alves</strong><br/>
+<sub>Designer da Solução</sub><br/>
+<sub>UI/UX</sub><br/><br/>
+<a href="https://github.com/juliana15paak"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
+<a href="https://www.linkedin.com/in/juliana-alves976/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/VitoriaAmelia"><img src="https://github.com/VitoriaAmelia.png" width="100" height="100" alt="Vitória Amélia"/></a><br/>
+<strong>Vitória Amélia</strong><br/>
+<sub>Líder de Pesquisa</sub><br/>
+<sub>Front-End</sub><br/><br/>
+<a href="https://github.com/VitoriaAmelia"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
+<a href="https://www.linkedin.com/in/vitoria-amelia-silva-258083357/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/Rafa15MQS"><img src="https://github.com/Rafa15MQS.png" width="100" height="100" alt="Rafaela Marques"/></a><br/>
+<strong>Rafaela Marques</strong><br/>
+<sub>Líder Técnica</sub><br/>
+<sub>Comunicação</sub><br/><br/>
+<a href="https://github.com/Rafa15MQS"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
+<a href="https://www.linkedin.com/in/rafaela-marques-547485351/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+</td>
+</tr>
 </table>
 
 A ThreeValley é a equipe responsável pelo desenvolvimento do SplitAgent, reunindo diferentes competências em desenvolvimento de software, inteligência artificial, design e pesquisa.
