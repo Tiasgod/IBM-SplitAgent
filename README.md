@@ -14,7 +14,6 @@
 <td align="center" width="25%">
 <a href="https://github.com/Tiasgod"><img src="https://avatars.githubusercontent.com/Tiasgod" width="100px" alt="Tiago Pereira Dias"/><br/><strong>Tiago Pereira Dias</strong></a><br/>
 <sub>Líder da equipe</sub><br/>
-<sub>Engenheiro de IA</sub><br/>
 <sub>Back-End</sub><br/><br/>
 <a href="https://github.com/Tiasgod"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
 <a href="https://www.linkedin.com/in/tiagopdias-02-2004-ti/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
