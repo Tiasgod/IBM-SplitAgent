@@ -166,6 +166,10 @@ Entre as funcionalidades previstas para o SplitAgent estão:
 
 As funcionalidades representam o escopo planejado para a solução e poderão ser implementadas e refinadas ao longo do desenvolvimento.
 
+## API
+
+https://ibm-splitagent-back-end-production.up.railway.app/docs#/
+
 ## Arquitetura da solução
 
 A arquitetura do SplitAgent foi pensada para separar a interface do usuário, a camada de serviços e a lógica de inteligência artificial.
