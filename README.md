@@ -38,7 +38,7 @@
 <td align="center" valign="top" width="25%">
 <a href="https://github.com/Rafa15MQS"><img src="https://github.com/Rafa15MQS.png" width="100" height="100" alt="Rafaela Marques"/><br/><strong>Rafaela Marques</strong></a><br/>
 <sub>Líder Técnica</sub><br/>
-<sub>Comunicação</sub><br/><br/>
+<sub>Líder de Comunicação</sub><br/><br/>
 <a href="https://github.com/Rafa15MQS"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
 <a href="https://www.linkedin.com/in/rafaela-marques-547485351/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
 </td>
