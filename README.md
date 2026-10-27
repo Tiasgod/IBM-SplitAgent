@@ -6,8 +6,7 @@
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
 ![IA](https://img.shields.io/badge/Arquitetura-Multi--Agentes-purple)
 
-## Quem somos
-
+## Nosso Time
 <p align="center">
 <table>
 <tr>
@@ -28,7 +27,7 @@
 </td>
 
 <td align="center" valign="top" width="25%">
-<a href="https://github.com/VitoriaAmelia"><img src="https://github.com/VitoriaAmelia.png" width="100" height="100" alt="Vitória Amélia"/><br/><strong>Vitória Amélia</strong></a><br/>
+<a href="https://github.com/VitoriaAmelia"><img src="https://github.com/VitoriaAmelia.png" width="100" height="100" alt="Vitoria Amelia"/><br/><strong>Vitoria Amelia</strong></a><br/>
 <sub>Líder de Pesquisa</sub><br/>
 <sub>Front-End</sub><br/><br/>
 <a href="https://github.com/VitoriaAmelia"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a>
