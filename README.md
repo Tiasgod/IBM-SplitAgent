@@ -32,25 +32,52 @@
         </a>
       </td>
       <td align="center" width="25%">
-        <strong>Juliana Alves</strong>
+        <a href="https://github.com/juliana15paak">
+          <strong>Juliana Alves</strong>
+        </a>
         <br/>
         <sub>Designer da Solução</sub>
         <br/>
         <sub>UI/UX</sub>
+        <br/><br/>
+        <a href="https://github.com/juliana15paak">
+          <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+        </a>
+        <a href="https://linkedin.com/in/juliana-alves976">
+          <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+        </a>
       </td>
       <td align="center" width="25%">
-        <strong>Vitória Amélia</strong>
+        <a href="https://github.com/VitoriaAmelia">
+          <strong>Vitória Amélia</strong>
+        </a>
         <br/>
         <sub>Líder de Pesquisa</sub>
         <br/>
         <sub>Front-End</sub>
+        <br/><br/>
+        <a href="https://github.com/VitoriaAmelia">
+          <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+        </a>
+        <a href="https://www.linkedin.com/in/vitoria-amelia-silva-258083357">
+          <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+        </a>
       </td>
       <td align="center" width="25%">
-        <strong>Rafaela Marques</strong>
+        <a href="https://github.com/Rafa15MQS">
+          <strong>Rafaela Marques</strong>
+        </a>
         <br/>
         <sub>Líder Técnica</sub>
         <br/>
         <sub>Comunicação</sub>
+        <br/><br/>
+        <a href="https://github.com/Rafa15MQS">
+          <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+        </a>
+        <a href="https://www.linkedin.com/in/rafaela-marques-547485351">
+          <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+        </a>
       </td>
     </tr>
   </table>
