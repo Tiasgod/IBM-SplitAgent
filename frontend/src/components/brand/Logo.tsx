@@ -24,18 +24,19 @@ export function Logo({ variant = "full", size = "md", color, className }: LogoPr
     return <LogoText height={textHeights[size]} color={color} className={className} />;
   }
 
-  // variant === "full": render the complete logo (icon + text) as a single SVG
+  // variant === "full": viewBox 446×106 — margem extra à direita para o 't' de Agent não ser cortado
   const height = iconHeights[size];
-  const width = Math.round((height * 432) / 106);
+  const width = Math.round((height * 446) / 106);
 
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 432 106"
+      viewBox="0 0 446 106"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="SplitAgent"
+      display="block"
       className={className}
     >
       {/* Icon paths */}
@@ -72,7 +73,7 @@ export function Logo({ variant = "full", size = "md", color, className }: LogoPr
         fontWeight="bold"
         letterSpacing="0em"
       >
-        <tspan x="249" y="79.556">Agent</tspan>
+        <tspan x="257" y="79.556">Agent</tspan>
       </text>
 
       <defs>

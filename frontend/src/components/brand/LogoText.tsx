@@ -5,13 +5,17 @@ interface LogoTextProps {
 }
 
 export function LogoText({ height = 32, color = "#022139", className }: LogoTextProps) {
+  // viewBox 346×87: margem extra à direita para o 't' de Agent não ser cortado
+  const width = Math.round((height * 346) / 87);
   return (
     <svg
+      width={width}
       height={height}
-      viewBox="0 0 325 87"
+      viewBox="0 0 346 87"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="SplitAgent"
+      display="block"
       className={className}
     >
       <text
@@ -34,7 +38,7 @@ export function LogoText({ height = 32, color = "#022139", className }: LogoText
         fontWeight="bold"
         letterSpacing="0em"
       >
-        <tspan x="148" y="64.556">Agent</tspan>
+        <tspan x="156" y="64.556">Agent</tspan>
       </text>
     </svg>
   );

@@ -15,6 +15,7 @@ export function LogoIcon({ height = 32, className }: LogoIconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
+      display="block"
       className={className}
     >
       <path

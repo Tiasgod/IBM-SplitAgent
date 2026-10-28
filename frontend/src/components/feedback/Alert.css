@@ -1,0 +1,108 @@
+/* ============================================================
+   Alert — base
+   ============================================================ */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border-left: 4px solid transparent;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.alert__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.alert__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.alert__title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.alert__message {
+  font-weight: 400;
+}
+
+.alert__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  margin-top: 1px;
+}
+
+.alert__close:hover {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   info
+   ============================================================ */
+.alert--info {
+  background-color: #e8f4fd;
+  border-left-color: #3b82d4;
+  color: #1e3a5f;
+}
+
+.alert--info .alert__icon { color: #3b82d4; }
+.alert--info .alert__close { color: #1e3a5f; }
+
+
+/* ============================================================
+   success
+   ============================================================ */
+.alert--success {
+  background-color: #e6f6ec;
+  border-left-color: var(--color-success);
+  color: #145228;
+}
+
+.alert--success .alert__icon { color: var(--color-success); }
+.alert--success .alert__close { color: #145228; }
+
+
+/* ============================================================
+   warning
+   ============================================================ */
+.alert--warning {
+  background-color: var(--color-bg-alert);
+  border-left-color: var(--color-alert);
+  color: #7a3610;
+}
+
+.alert--warning .alert__icon { color: var(--color-alert); }
+.alert--warning .alert__close { color: #7a3610; }
+
+
+/* ============================================================
+   error
+   ============================================================ */
+.alert--error {
+  background-color: #fde8ea;
+  border-left-color: var(--color-danger);
+  color: #7a1018;
+}
+
+.alert--error .alert__icon { color: var(--color-danger); }
+.alert--error .alert__close { color: #7a1018; }

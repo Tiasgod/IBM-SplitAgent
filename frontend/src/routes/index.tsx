@@ -1,11 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AppShell from "../components/layout/AppShell";
+import Assistente from "../pages/Assistente";
+import Simulador from "../pages/Simulador";
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppShell />}>
+          <Route index element={<Navigate to="/simulador" replace />} />
+          <Route path="/assistente" element={<Assistente />} />
+          <Route path="/simulador" element={<Simulador />} />
         </Route>
       </Routes>
     </BrowserRouter>

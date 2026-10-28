@@ -15,6 +15,8 @@ interface HeaderProps {
   onMenuClick?: () => void;
   onBack?: () => void;
   onForward?: () => void;
+  /** Oculta a seta na variante agent-forward (ex: tela do assistente) */
+  hideForwardArrow?: boolean;
   /** Src da imagem do avatar (agent-* | avatar-back) */
   avatarSrc?: string;
   /** Subtítulo exibido abaixo da logo nas variantes agent-* */
@@ -27,6 +29,7 @@ export function Header({
   onMenuClick,
   onBack,
   onForward,
+  hideForwardArrow = false,
   avatarSrc,
   subtitle = "Seu assistente financeiro",
   className,
@@ -94,13 +97,15 @@ export function Header({
   if (variant === "agent-forward") {
     return (
       <header className={`header header--agent ${className ?? ""}`}>
-        <button
-          className="header__icon-btn"
-          onClick={onForward}
-          aria-label="Expandir"
-        >
-          <ChevronRight size={22} strokeWidth={2} />
-        </button>
+        {!hideForwardArrow && (
+          <button
+            className="header__icon-btn"
+            onClick={onForward}
+            aria-label="Expandir"
+          >
+            <ChevronRight size={22} strokeWidth={2} />
+          </button>
+        )}
         <div className="header__agent-info">
           {avatarEl}
           <div className="header__agent-text">

@@ -1,0 +1,436 @@
+/* ============================================================
+   Simulador — página (formulário + resultado)
+   ============================================================ */
+.simulador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+/* Page header — eyebrow + título */
+.simulador__page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.simulador__eyebrow {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.simulador__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.15;
+}
+
+/* ============================================================
+   Card container
+   ============================================================ */
+.simulador__card {
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.simulador__card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Fields stack */
+.simulador__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Payment toggle group */
+.simulador__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.simulador__legend {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.simulador__toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.simulador__toggle {
+  padding: 6px var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.simulador__toggle:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.simulador__toggle--active {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+/* Submit button — full width */
+.simulador__submit {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============================================================
+   Result — impact card
+   Mobile: empilhado (impacto-main + meta em coluna, valores abaixo)
+   ============================================================ */
+.simulador__card--impact {
+  gap: var(--space-4);
+  position: relative;
+}
+
+/* Cabeçalho do card: título + link "Como calculamos?" no topo direito */
+.simulador__impact-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.simulador__impact-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+  flex: 1;
+}
+
+.simulador__how-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.simulador__how-link:hover {
+  text-decoration: underline;
+}
+
+/* Linha: imposto + alíquota/link (mobile: coluna, desktop-chat: linha) */
+.simulador__impact-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.simulador__impact-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.simulador__impact-tax {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.simulador__impact-aliquota {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* Value boxes — empilhados por padrão (mobile + desktop com chat aberto) */
+.simulador__impact-values {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.simulador__value-box {
+  background-color: var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.simulador__value-label {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
+}
+
+.simulador__value-amount {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.simulador__value-amount--highlight {
+  color: var(--color-tertiary); /* #FFC801 */
+}
+
+/* ============================================================
+   Precision upsell section
+   ============================================================ */
+.simulador__precision {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__precision-title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__precision-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  line-height: 1.6;
+}
+
+.simulador__features {
+  list-style: none;
+  padding: var(--space-4) var(--space-6);
+  margin: 0;
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.simulador__feature-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: #ffffff;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Connect options
+   ============================================================ */
+.simulador__connect {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-4); /* separa da seção anterior no mobile */
+}
+
+.simulador__connect-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  font-weight: 500;
+}
+
+.simulador__connect-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__connect-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  width: 100%;
+}
+
+.simulador__connect-card:hover {
+  border-color: var(--color-secondary);
+  background-color: var(--color-bg-secondary);
+}
+
+.simulador__connect-icon {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.simulador__connect-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__connect-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Desktop — sem painel de chat (tela cheia)
+   Valores ficam lado a lado no card de impacto
+   ============================================================ */
+@media (min-width: 768px) {
+  /* Card de impacto: main à esquerda, values à direita */
+  .simulador__card--impact {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .simulador__impact-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  /* No desktop sem chat, os values ficam ao lado */
+  .simulador__impact-values {
+    flex-direction: column;
+    flex: 0 0 auto;
+    min-width: 12rem;
+  }
+
+  /* Precision + connect em grid 2 colunas */
+  .simulador__precision-connect {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .simulador__connect {
+    padding-top: 0; /* no desktop dentro do grid não precisa de padding-top */
+  }
+}
+
+/* ============================================================
+   SimuladorResult shell — layout com/sem painel de chat
+   ============================================================ */
+
+/* Mobile: apenas o conteúdo principal, chat não aparece */
+.simulador-result-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  position: relative;
+}
+
+/* O PageLayout ocupa o espaço disponível */
+.simulador-result-shell > .page-layout {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Painel lateral do chat — oculto no mobile */
+.simulador-result-shell__chat {
+  display: none;
+}
+
+/* Botão flutuante para abrir o chat */
+.simulador-result-shell__chat-trigger {
+  display: none;
+}
+
+/* ── Desktop ─────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  /* Botão flutuante: avatar no canto superior direito */
+  .simulador-result-shell__chat-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: var(--space-4);
+    right: var(--space-4);
+    z-index: 50;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .simulador-result-shell__chat-trigger-avatar {
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: #d1d9e0;
+  }
+
+  /* Com chat aberto: divide em dois painéis */
+  .simulador-result-shell--chat-open {
+    gap: 0;
+  }
+
+  .simulador-result-shell--chat-open > .page-layout {
+    /* Conteúdo principal encolhe para dar espaço ao chat */
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* Painel do chat aparece */
+  .simulador-result-shell--chat-open .simulador-result-shell__chat {
+    display: flex;
+    flex: 0 0 clamp(18rem, 30vw, 26rem);
+    border-left: 1px solid var(--color-border);
+    background-color: #ffffff;
+    min-height: 0;
+    height: 100%;
+  }
+
+  /* Quando chat está aberto, values do card ficam empilhados */
+  .simulador-result-shell--chat-open .simulador__card--impact {
+    flex-direction: column;
+  }
+
+  .simulador-result-shell--chat-open .simulador__impact-values {
+    flex-direction: column;
+    flex: unset;
+  }
+
+  /* precision+connect voltam para coluna única */
+  .simulador-result-shell--chat-open .simulador__precision-connect {
+    display: flex;
+    flex-direction: column;
+  }
+}

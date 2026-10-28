@@ -30,11 +30,13 @@ export default function Sidebar({ variant = "expanded" }: SidebarProps) {
   const navigate = useNavigate();
   const showLabels = variant !== "collapsed";
   const logoVariant = variant === "collapsed" ? "icon" : "full";
+  // Fundo escuro nas variantes expanded/collapsed → texto da logo branco
+  const logoColor = variant === "mobile" ? undefined : "#ffffff";
 
   return (
     <aside className={`sidebar sidebar--${variant}`} aria-label="Menu lateral">
       <div className="sidebar__logo">
-        <Logo variant={logoVariant} size="sm" />
+        <Logo variant={logoVariant} size="md" color={logoColor} />
       </div>
 
       <nav className="sidebar__nav" aria-label="Navegação principal">

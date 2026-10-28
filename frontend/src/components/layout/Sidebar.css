@@ -7,10 +7,13 @@
   min-height: 100dvh;
   padding: var(--space-6) var(--space-4);
   flex-shrink: 0;
+  overflow: hidden; /* impede logo de vazar para fora */
 }
 
 .sidebar__logo {
   padding: var(--space-2) var(--space-2) var(--space-6);
+  overflow: hidden;
+  /* Logo SVG tem display:block, então envolve o conteúdo corretamente */
 }
 
 .sidebar__nav {

@@ -1,0 +1,41 @@
+/* ============================================================
+   Spinner
+   ============================================================ */
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spinner__ring {
+  display: block;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(14, 117, 115, 0.2);
+  border-top-color: var(--color-secondary);
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+/* Sizes */
+.spinner--sm .spinner__ring {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.spinner--md .spinner__ring {
+  width: 28px;
+  height: 28px;
+  border-width: 3px;
+}
+
+.spinner--lg .spinner__ring {
+  width: 44px;
+  height: 44px;
+  border-width: 4px;
+}
+
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}

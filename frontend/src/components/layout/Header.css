@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 56px;
+  min-height: 3.5rem; /* ~56px, cresce se necessário */
   padding: 0 var(--space-4);
   background-color: var(--color-bg);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -17,8 +17,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border: none;
   background: transparent;
   border-radius: var(--radius-md);
@@ -34,8 +34,8 @@
 
 /* Avatar */
 .header__avatar {
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -86,6 +86,7 @@
 .header--agent {
   gap: var(--space-3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  justify-content: flex-start;
 }
 
 .header__agent-info {
@@ -93,13 +94,13 @@
   align-items: center;
   gap: var(--space-3);
   min-width: 0;
+  flex: 1;
 }
 
 .header__agent-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  min-width: 0;
+  gap: 2px;
 }
 
 .header__agent-subtitle {
@@ -120,5 +121,5 @@
   gap: var(--space-2);
   background-color: transparent;
   border-bottom: none;
-  height: 48px;
+  min-height: 3rem;
 }
