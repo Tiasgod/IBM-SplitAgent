@@ -77,3 +77,46 @@
   font-size: var(--font-size-xs);
   color: var(--color-danger);
 }
+
+
+/* ============================================================
+   Variant: filter — fundo escuro, ícone calendário esquerda
+   ============================================================ */
+.select-wrapper--filter {
+  width: auto;
+}
+
+/* Ícone à esquerda */
+.select-field__icon-left {
+  position: absolute;
+  left: var(--space-3);
+  color: #ffffff;
+  pointer-events: none;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.select-field__control--filter {
+  height: 40px;
+  background-color: var(--color-gray);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: #ffffff;
+  font-weight: 500;
+  padding-left: calc(var(--space-3) + 18px + var(--space-2));
+}
+
+.select-field__control--filter option {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.select-field__control--filter:focus {
+  box-shadow: 0 0 0 3px rgba(91, 107, 124, 0.35);
+  border-color: transparent;
+}
+
+/* Chevron branco no filter */
+.select-wrapper--filter .select-field__icon {
+  color: #ffffff;
+}

@@ -1,6 +1,8 @@
 import { type SelectHTMLAttributes, useId } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Calendar } from "lucide-react";
 import "./Select.css";
+
+export type SelectVariant = "default" | "filter";
 
 interface SelectOption {
   value: string;
@@ -8,6 +10,7 @@ interface SelectOption {
 }
 
 interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "children"> {
+  variant?: SelectVariant;
   options: SelectOption[];
   placeholder?: string;
   label?: string;
@@ -15,6 +18,7 @@ interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "chi
 }
 
 export function Select({
+  variant = "default",
   options,
   placeholder = "Selecione",
   label,
@@ -27,16 +31,24 @@ export function Select({
   const id = externalId ?? generatedId;
 
   return (
-    <div className={`select-wrapper${error ? " select-wrapper--error" : ""} ${className ?? ""}`}>
+    <div className={`select-wrapper select-wrapper--${variant}${error ? " select-wrapper--error" : ""} ${className ?? ""}`}>
       {label && (
         <label htmlFor={id} className="select-label">
           {label}
         </label>
       )}
       <div className="select-field">
+        {variant === "filter" && (
+          <Calendar
+            size={18}
+            strokeWidth={1.75}
+            className="select-field__icon-left"
+            aria-hidden="true"
+          />
+        )}
         <select
           id={id}
-          className="select-field__control"
+          className={`select-field__control${variant === "filter" ? " select-field__control--filter" : ""}`}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
           defaultValue=""
