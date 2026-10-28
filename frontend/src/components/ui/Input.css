@@ -1,0 +1,89 @@
+/* ============================================================
+   Input
+   ============================================================ */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.input-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Field container — wraps icon + control */
+.input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-field__icon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--color-gray);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* Native input */
+.input-field__control {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-4);
+  background-color: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input-field__control::placeholder {
+  color: var(--color-gray);
+}
+
+.input-field__control:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(14, 117, 115, 0.15);
+}
+
+/* Date variant — indent para o ícone */
+.input-field__control--date {
+  padding-left: calc(var(--space-3) + 18px + var(--space-2));
+  cursor: pointer;
+}
+
+/* Remove o seletor nativo de data no Chrome/Safari */
+.input-field__control--date::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: var(--space-3);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Error state */
+.input-wrapper--error .input-field__control {
+  border-color: var(--color-danger);
+}
+
+.input-wrapper--error .input-field__control:focus {
+  box-shadow: 0 0 0 3px rgba(218, 30, 40, 0.15);
+}
+
+.input-error {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+}

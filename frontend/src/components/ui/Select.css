@@ -1,0 +1,79 @@
+/* ============================================================
+   Select
+   ============================================================ */
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.select-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Field container */
+.select-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Chevron icon — posicionado à direita */
+.select-field__icon {
+  position: absolute;
+  right: var(--space-3);
+  color: var(--color-gray);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* Native select */
+.select-field__control {
+  width: 100%;
+  height: 44px;
+  padding: 0 calc(var(--space-3) + 18px + var(--space-2)) 0 var(--space-4);
+  background-color: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  /* Remove seta nativa */
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Placeholder (option vazia/disabled) */
+.select-field__control:invalid,
+.select-field__control option[value=""] {
+  color: var(--color-gray);
+}
+
+.select-field__control:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(14, 117, 115, 0.15);
+}
+
+/* Error state */
+.select-wrapper--error .select-field__control {
+  border-color: var(--color-danger);
+}
+
+.select-wrapper--error .select-field__control:focus {
+  box-shadow: 0 0 0 3px rgba(218, 30, 40, 0.15);
+}
+
+.select-error {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+}
