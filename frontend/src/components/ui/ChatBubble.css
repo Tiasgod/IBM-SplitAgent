@@ -28,7 +28,7 @@
    agent — fundo branco, borda, texto escuro, alinhado à esquerda
    ============================================================ */
 .chat-bubble--agent {
-  background-color: #ffffff;
+  background-color: var(--color-bg);
   color: var(--color-text);
   border: 1.5px solid var(--color-border);
   align-self: flex-start;

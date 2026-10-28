@@ -189,40 +189,43 @@ function SimuladorResult({
       <PageLayout headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
-          <p className="simulador__eyebrow">Simulador de compra</p>
+          <p className="simulador__eyebrow">Simulador de venda</p>
           <h1 className="simulador__title">Resultado</h1>
         </div>
 
         {/* Impact card */}
         <div className="simulador__card simulador__card--impact">
-          {/* Lado esquerdo: título + dados + link */}
-          <div className="simulador__impact-left">
-            <div className="simulador__impact-header">
-              <h2 className="simulador__impact-title">
-                Impacto estimado do Split Payment
-              </h2>
-              <a href="#como-calculamos" className="simulador__how-link">
-                Como calculamos?
-              </a>
-            </div>
-            <div className="simulador__impact-body">
+          {/* Linha 1: título (esquerda) + "Como calculamos?" (direita) */}
+          <div className="simulador__impact-header">
+            <h2 className="simulador__impact-title">
+              Impacto estimado do Split Payment
+            </h2>
+            <a href="#como-calculamos" className="simulador__how-link">
+              Como calculamos?
+            </a>
+          </div>
+
+          {/* Linha 2: dados à esquerda + value boxes à direita */}
+          <div className="simulador__impact-body">
+            {/* Esquerda: label + valor + alíquota */}
+            <div className="simulador__impact-left">
               <p className="simulador__impact-label">Valor estimado dos impostos</p>
               <p className="simulador__impact-tax">{fmt(result.estimatedTax)}</p>
               <p className="simulador__impact-aliquota">Alíquota: {result.aliquota}%</p>
             </div>
-          </div>
 
-          {/* Lado direito: value boxes */}
-          <div className="simulador__impact-values">
-            <div className="simulador__value-box">
-              <span className="simulador__value-label">Valor total vendido</span>
-              <span className="simulador__value-amount">{fmt(result.totalSaleValue)}</span>
-            </div>
-            <div className="simulador__value-box">
-              <span className="simulador__value-label">Valor recebido líquido</span>
-              <span className="simulador__value-amount simulador__value-amount--highlight">
-                {fmt(result.netReceivedValue)}
-              </span>
+            {/* Direita: dois value boxes empilhados */}
+            <div className="simulador__impact-values">
+              <div className="simulador__value-box">
+                <span className="simulador__value-label">Valor total vendido</span>
+                <span className="simulador__value-amount">{fmt(result.totalSaleValue)}</span>
+              </div>
+              <div className="simulador__value-box">
+                <span className="simulador__value-label">Valor recebido líquido</span>
+                <span className="simulador__value-amount simulador__value-amount--highlight">
+                  {fmt(result.netReceivedValue)}
+                </span>
+              </div>
             </div>
           </div>
         </div>

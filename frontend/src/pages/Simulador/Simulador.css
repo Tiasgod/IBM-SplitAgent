@@ -111,14 +111,17 @@
 
 /* ============================================================
    Result — impact card
-   Mobile: empilhado (impacto-main + meta em coluna, valores abaixo)
+   Mobile / chat-open: empilhado em coluna
+   Desktop sem chat: header (título + link) full-width,
+                     body = 2 colunas (left | values)
    ============================================================ */
+
+/* Card base */
 .simulador__card--impact {
   gap: var(--space-4);
-  position: relative;
 }
 
-/* Cabeçalho do card: título + link "Como calculamos?" no topo direito */
+/* Linha 1: título + link "Como calculamos?" */
 .simulador__impact-header {
   display: flex;
   align-items: flex-start;
@@ -140,14 +143,23 @@
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
+  padding-top: 2px; /* alinha com a primeira linha do título */
 }
 
 .simulador__how-link:hover {
   text-decoration: underline;
 }
 
-/* Linha: imposto + alíquota/link (mobile: coluna, desktop-chat: linha) */
+/* Linha 2: conteúdo numérico
+   Mobile: coluna (left acima, values abaixo) */
 .simulador__impact-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Esquerda: label + valor + alíquota */
+.simulador__impact-left {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -168,9 +180,10 @@
 .simulador__impact-aliquota {
   font-size: var(--font-size-sm);
   color: var(--color-gray);
+  margin-top: var(--space-1);
 }
 
-/* Value boxes — empilhados por padrão (mobile + desktop com chat aberto) */
+/* Value boxes — empilhados em coluna sempre */
 .simulador__impact-values {
   display: flex;
   flex-direction: column;
@@ -250,7 +263,7 @@
 .simulador__connect {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
   padding-top: var(--space-4); /* separa da seção anterior no mobile */
 }
 
@@ -307,28 +320,24 @@
 
 /* ============================================================
    Desktop — sem painel de chat (tela cheia)
-   Valores ficam lado a lado no card de impacto
    ============================================================ */
 @media (min-width: 768px) {
-  /* Card de impacto: main à esquerda, values à direita */
-  .simulador__card--impact {
+  /* Impact body: 2 colunas — dados à esq, boxes à dir */
+  .simulador__impact-body {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    gap: var(--space-6);
   }
 
   .simulador__impact-left {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
     min-width: 0;
   }
 
-  /* No desktop sem chat, os values ficam ao lado */
+  /* Value boxes ocupam largura fixa à direita */
   .simulador__impact-values {
-    flex-direction: column;
-    flex: 0 0 auto;
-    min-width: 12rem;
+    flex: 0 0 clamp(11rem, 20%, 13rem);
+    min-width: 11rem;
   }
 
   /* Precision + connect em grid 2 colunas */
@@ -340,7 +349,7 @@
   }
 
   .simulador__connect {
-    padding-top: 0; /* no desktop dentro do grid não precisa de padding-top */
+    padding-top: 0;
   }
 }
 
@@ -403,7 +412,6 @@
   }
 
   .simulador-result-shell--chat-open > .page-layout {
-    /* Conteúdo principal encolhe para dar espaço ao chat */
     flex: 1 1 0;
     min-width: 0;
   }
@@ -418,17 +426,20 @@
     height: 100%;
   }
 
-  /* Quando chat está aberto, values do card ficam empilhados */
-  .simulador-result-shell--chat-open .simulador__card--impact {
+  /* Chat aberto: body volta para coluna empilhada */
+  .simulador-result-shell--chat-open .simulador__impact-body {
     flex-direction: column;
+    align-items: stretch;
   }
 
+  /* Chat aberto: value boxes esticam full-width */
   .simulador-result-shell--chat-open .simulador__impact-values {
-    flex-direction: column;
     flex: unset;
+    min-width: unset;
+    width: 100%;
   }
 
-  /* precision+connect voltam para coluna única */
+  /* Chat aberto: precision+connect em coluna única */
   .simulador-result-shell--chat-open .simulador__precision-connect {
     display: flex;
     flex-direction: column;

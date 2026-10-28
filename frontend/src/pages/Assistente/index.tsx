@@ -10,6 +10,8 @@ export default function Assistente() {
       <ChatPanel
         onClose={isDesktop ? () => window.history.back() : undefined}
         onBack={!isDesktop ? () => window.history.back() : undefined}
+        hideForwardArrow={isDesktop}
+        className="chat-panel--wide"
       />
     </div>
   );

@@ -39,10 +39,12 @@ interface ChatPanelProps {
   onBack?: () => void;
   /** Oculta o header (ex: quando usado dentro de tela cheia que já tem header) */
   hideHeader?: boolean;
+  /** Oculta a seta de avançar no header agent-forward (ex: página Assistente) */
+  hideForwardArrow?: boolean;
   className?: string;
 }
 
-export function ChatPanel({ onClose, onBack, hideHeader = false, className }: ChatPanelProps) {
+export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArrow = false, className }: ChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -91,6 +93,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, className }: Ch
           variant={onClose ? "agent-forward" : "agent-back"}
           onForward={onClose}
           onBack={onBack}
+          hideForwardArrow={hideForwardArrow}
           className="chat-panel__header"
         />
       )}

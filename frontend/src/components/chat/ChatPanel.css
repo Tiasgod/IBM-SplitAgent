@@ -6,7 +6,7 @@
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  background-color: var(--color-bg);
+  background-color: #ffffff;
 }
 
 .chat-panel__header {
@@ -26,6 +26,21 @@
   flex-direction: column;
   gap: var(--space-3);
   scroll-behavior: smooth;
+}
+
+/* Modifier: padding lateral no desktop (página Assistente) */
+@media (min-width: 768px) {
+  .chat-panel--wide .chat-panel__messages {
+    padding: var(--space-8) clamp(var(--space-6), 12vw, 120px);
+  }
+
+  .chat-panel--wide .chat-panel__bottom {
+    padding: var(--space-4) clamp(var(--space-6), 12vw, 120px);
+  }
+
+  .chat-panel--wide .chat-panel__suggestions {
+    justify-content: center;
+  }
 }
 
 /* Date separator */
