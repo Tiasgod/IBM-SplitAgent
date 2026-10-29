@@ -583,3 +583,374 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* ============================================================
+   RESULTADO COM DADOS FINANCEIROS
+   ============================================================ */
+
+/* ─── Layout 2-colunas ───────────────────────────────────── */
+
+.simulador__with-data-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  min-width: 0;
+}
+
+/* ─── Coluna esquerda: Previsão do caixa ─────────────────── */
+
+.simulador__forecast-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  min-width: 0;
+}
+
+.simulador__forecast-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: center;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.simulador__forecast-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__forecast-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* Saldo disponível */
+
+.simulador__forecast-balance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) 0;
+}
+
+.simulador__forecast-balance-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.simulador__forecast-balance-value {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.1;
+}
+
+/* Métricas: menor saldo / despesas previstas */
+
+.simulador__forecast-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-4);
+}
+
+.simulador__forecast-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.simulador__forecast-metric-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.simulador__forecast-metric-value {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.simulador__forecast-metric-value--alert {
+  color: var(--color-alert);
+}
+
+.simulador__forecast-metric-note {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray);
+}
+
+/* Alert banner */
+
+.simulador__forecast-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-bg-alert);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.simulador__forecast-alert-icon {
+  color: var(--color-alert);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.simulador__forecast-alert-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.simulador__forecast-alert-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-alert);
+}
+
+.simulador__forecast-alert-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Agent analysis card */
+
+.simulador__agent-card {
+  background: var(--color-bg-secondary);
+  border: 1.5px solid rgba(14, 117, 115, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__agent-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-secondary);
+}
+
+.simulador__agent-card-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.simulador__agent-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__agent-card-para {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── Coluna direita: chart + alternativas ───────────────── */
+
+.simulador__evolution-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.simulador__evolution-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.simulador__evolution-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__evolution-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* Chart box */
+
+.simulador__chart-box {
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.simulador__chart-inner-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.simulador__chart-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__chart-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.simulador__evolution-detail-link {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: none;
+  text-align: right;
+  align-self: flex-end;
+  transition: opacity 0.15s ease;
+}
+
+.simulador__evolution-detail-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Alternatives */
+
+.simulador__alternatives {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__alternatives-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__alternatives-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__alt-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-family);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.simulador__alt-card:hover {
+  border-color: var(--color-secondary);
+  background-color: var(--color-bg-secondary);
+}
+
+.simulador__alt-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.simulador__alt-card-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__alt-card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  line-height: 1.5;
+}
+
+.simulador__alt-card-chevron {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+/* ─── Desktop: 2 colunas ─────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .simulador__with-data-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .simulador__forecast-header {
+    text-align: left;
+  }
+
+  .simulador__forecast-balance {
+    align-items: flex-start;
+  }
+
+  /* Chat aberto: colapsa para coluna única */
+  .chat-shell--open .simulador__with-data-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ─── Mobile ─────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .simulador__forecast-card {
+    padding: var(--space-4);
+  }
+
+  .simulador__forecast-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .simulador__chart-box {
+    padding: var(--space-3);
+  }
+
+  .simulador__alt-card {
+    padding: var(--space-3) var(--space-4);
+  }
+}
