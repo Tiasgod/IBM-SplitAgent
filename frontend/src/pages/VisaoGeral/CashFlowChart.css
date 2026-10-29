@@ -1,0 +1,63 @@
+/* ============================================================
+   CashFlowChart — white card wrapping an SVG line chart
+   ============================================================ */
+.cashflow-chart {
+  background-color: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Header row: title + subtitle + info icon */
+.cashflow-chart__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.cashflow-chart__header-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.cashflow-chart__header-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.cashflow-chart__info-icon {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+/* SVG stretches full width, aspect-ratio preserved by padding-bottom trick */
+.cashflow-chart__svg-wrapper {
+  width: 100%;
+  position: relative;
+  /* 200/600 = 33.33% — matches the SVG viewBox ratio */
+  padding-bottom: 33.33%;
+  min-height: 140px;
+}
+
+.cashflow-chart__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .cashflow-chart {
+    padding: var(--space-6);
+  }
+}
