@@ -4,6 +4,7 @@ import Assistente from "../pages/Assistente";
 import Simulador from "../pages/Simulador";
 import VisaoGeral from "../pages/VisaoGeral";
 import Login from "../pages/Login";
+import Cadastro from "../pages/Cadastro";
 import FluxoDeCaixa from "../pages/FluxoDeCaixa";
 import Configuracoes from "../pages/Configuracoes";
 
@@ -12,6 +13,7 @@ export function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
         <Route element={<AppShell />}>
           <Route index element={<VisaoGeral />} />
           <Route path="/assistente" element={<Assistente />} />
