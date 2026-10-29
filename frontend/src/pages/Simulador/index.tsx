@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { TrendingUp, Calendar, Shield, Building2, Upload } from "lucide-react";
 import { PageLayout } from "../../components/layout/PageLayout";
+import { ChatShell } from "../../components/layout/ChatShell";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Select } from "../../components/ui/Select";
-import { ChatPanel } from "../../components/chat/ChatPanel";
 import "./Simulador.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -181,12 +181,9 @@ function SimuladorResult({
 }) {
   const fmt = (n: number) =>
     n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-  const [chatOpen, setChatOpen] = useState(false);
 
   return (
-    <div className={`simulador-result-shell${chatOpen ? " simulador-result-shell--chat-open" : ""}`}>
-      {/* Painel principal */}
-      <PageLayout headerVariant="nav" onBack={onBack}>
+    <ChatShell headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
           <p className="simulador__eyebrow">Simulador de venda</p>
@@ -195,33 +192,55 @@ function SimuladorResult({
 
         {/* Impact card */}
         <div className="simulador__card simulador__card--impact">
-          {/* Linha 1: título (esquerda) + "Como calculamos?" (direita) */}
           <div className="simulador__impact-header">
             <h2 className="simulador__impact-title">
               Impacto estimado do Split Payment
             </h2>
-            <a href="#como-calculamos" className="simulador__how-link">
-              Como calculamos?
-            </a>
+
+            {!chatOpen && (
+              <a href="#como-calculamos" className="simulador__how-link">
+                Como calculamos?
+              </a>
+            )}
           </div>
 
-          {/* Linha 2: dados à esquerda + value boxes à direita */}
           <div className="simulador__impact-body">
-            {/* Esquerda: label + valor + alíquota */}
             <div className="simulador__impact-left">
-              <p className="simulador__impact-label">Valor estimado dos impostos</p>
-              <p className="simulador__impact-tax">{fmt(result.estimatedTax)}</p>
-              <p className="simulador__impact-aliquota">Alíquota: {result.aliquota}%</p>
+              <p className="simulador__impact-label">
+                Valor estimado dos impostos
+              </p>
+
+              <p className="simulador__impact-tax">
+                {fmt(result.estimatedTax)}
+              </p>
+
+              <div className="simulador__impact-meta">
+                <p className="simulador__impact-aliquota">
+                  Alíquota: {result.aliquota}%
+                </p>
+
+                {chatOpen && (
+                  <a href="#como-calculamos" className="simulador__how-link">
+                    Como calculamos?
+                  </a>
+                )}
+              </div>
             </div>
 
-            {/* Direita: dois value boxes empilhados */}
             <div className="simulador__impact-values">
               <div className="simulador__value-box">
-                <span className="simulador__value-label">Valor total vendido</span>
-                <span className="simulador__value-amount">{fmt(result.totalSaleValue)}</span>
+                <span className="simulador__value-label">
+                  Valor total vendido
+                </span>
+                <span className="simulador__value-amount">
+                  {fmt(result.totalSaleValue)}
+                </span>
               </div>
+
               <div className="simulador__value-box">
-                <span className="simulador__value-label">Valor recebido líquido</span>
+                <span className="simulador__value-label">
+                  Valor recebido líquido
+                </span>
                 <span className="simulador__value-amount simulador__value-amount--highlight">
                   {fmt(result.netReceivedValue)}
                 </span>
@@ -273,25 +292,6 @@ function SimuladorResult({
           </div>
         </div>
       </div>
-      </PageLayout>
-
-      {/* Painel lateral do assistente — desktop only */}
-      {chatOpen && (
-        <div className="simulador-result-shell__chat">
-          <ChatPanel onClose={() => setChatOpen(false)} />
-        </div>
-      )}
-
-      {/* Botão flutuante para abrir o chat — desktop, quando fechado */}
-      {!chatOpen && (
-        <button
-          className="simulador-result-shell__chat-trigger"
-          onClick={() => setChatOpen(true)}
-          aria-label="Abrir assistente"
-        >
-          <span className="simulador-result-shell__chat-trigger-avatar" aria-hidden="true" />
-        </button>
-      )}
-    </div>
+    </ChatShell>
   );
 }

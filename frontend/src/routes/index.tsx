@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AppShell from "../components/layout/AppShell";
 import Assistente from "../pages/Assistente";
 import Simulador from "../pages/Simulador";
+import FluxoDeCaixa from "../pages/FluxoDeCaixa";
 
 export function AppRoutes() {
   return (
@@ -11,6 +12,7 @@ export function AppRoutes() {
           <Route index element={<Navigate to="/simulador" replace />} />
           <Route path="/assistente" element={<Assistente />} />
           <Route path="/simulador" element={<Simulador />} />
+          <Route path="/fluxo" element={<FluxoDeCaixa />} />
         </Route>
       </Routes>
     </BrowserRouter>

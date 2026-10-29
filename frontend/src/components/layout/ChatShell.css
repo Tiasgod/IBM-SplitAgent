@@ -1,0 +1,113 @@
+/* ============================================================
+   ChatShell — wrapper compartilhado com painel lateral do
+   assistente. Mobile: chat oculto. Desktop: trigger flutuante
+   + painel lateral.
+   ============================================================ */
+
+.chat-shell {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.chat-shell > .page-layout {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.chat-shell .page-layout__content {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Painel e trigger: ocultos no mobile */
+
+.chat-shell__panel {
+  display: none;
+}
+
+.chat-shell__trigger {
+  display: none;
+}
+
+/* ============================================================
+   Desktop (≥ 768px)
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  /* Botão flutuante para abrir o chat */
+
+  .chat-shell__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: var(--space-4);
+    right: var(--space-4);
+    z-index: 50;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .chat-shell__trigger-avatar {
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: #d1d9e0;
+  }
+
+  /* ── Chat aberto ── */
+
+  .chat-shell--open {
+    gap: 0;
+  }
+
+  .chat-shell--open > .page-layout {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0;
+  }
+
+  .chat-shell--open > .page-layout .page-layout__content {
+    padding: var(--space-8);
+    min-width: 0;
+  }
+
+  /* Painel lateral */
+
+  .chat-shell--open .chat-shell__panel {
+    display: flex;
+    flex: 0 0 clamp(18rem, 28vw, 25rem);
+    width: clamp(18rem, 28vw, 25rem);
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    border-left: 1px solid var(--color-border);
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+}
+
+/* ============================================================
+   Mobile: sem altura fixa para evitar corte
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .chat-shell {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .chat-shell > .page-layout {
+    width: 100%;
+    min-width: 0;
+  }
+}
