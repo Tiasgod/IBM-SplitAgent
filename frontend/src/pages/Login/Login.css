@@ -1,0 +1,186 @@
+/* ============================================================
+   Login page
+   ============================================================ */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+}
+
+/* ── Main area ── */
+.login-page__main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.login-page__wrapper {
+  width: 100%;
+  max-width: 37.5rem; /* 600px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ── Hero row ── */
+.login-page__hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.login-page__hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.login-page__title {
+  font-family: var(--font-family);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.15;
+}
+
+.login-page__subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-gray);
+  line-height: 1.5;
+  max-width: 22ch;
+}
+
+/* ── Illustration ── */
+.login-page__illustration {
+  flex-shrink: 0;
+}
+
+.login-page__svg-illustration {
+  width: clamp(72px, 14vw, 100px);
+  height: auto;
+}
+
+/* ── Form card ── */
+.login-page__card {
+  background-color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.login-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Forgot password link ── */
+.login-page__forgot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.login-page__forgot-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-page__forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Submit button — full width ── */
+.login-page__submit-btn {
+  width: 100%;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  padding: 0.875rem var(--space-4);
+}
+
+/* ── Divider ── */
+.login-page__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.login-page__divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.login-page__divider-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+
+/* ── Google button ── */
+.login-page__google-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: auto;
+  align-self: center;
+  padding: 0.5rem 1.25rem;
+  background-color: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-page__google-btn:hover {
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Register link ── */
+.login-page__register {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.login-page__register-link {
+  color: var(--color-secondary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-page__register-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   Desktop — centres card horizontally, adds more breathing room
+   ============================================================ */
+@media (min-width: 768px) {
+  .login-page__main {
+    padding: var(--space-8) var(--space-8);
+    align-items: center;
+    min-height: calc(100dvh - 3.5rem); /* 100vh minus header */
+  }
+
+  .login-page__wrapper {
+    max-width: 37.5rem;
+  }
+
+  .login-page__card {
+    padding: var(--space-8);
+  }
+}
