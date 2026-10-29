@@ -20,7 +20,7 @@ export default function Login() {
     setError(null);
     try {
       await authService.login({ identificador: email, senha });
-      navigate("/");
+      navigate("/visao-geral");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao fazer login. Tente novamente.");
     } finally {

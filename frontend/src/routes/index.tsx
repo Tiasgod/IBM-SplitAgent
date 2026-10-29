@@ -5,6 +5,7 @@ import Simulador from "../pages/Simulador";
 import VisaoGeral from "../pages/VisaoGeral";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
+import Inicio from "../pages/Inicio";
 import FluxoDeCaixa from "../pages/FluxoDeCaixa";
 import Configuracoes from "../pages/Configuracoes";
 import Historico from "../pages/Historico";
@@ -13,10 +14,11 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route element={<AppShell />}>
-          <Route index element={<VisaoGeral />} />
+          <Route path="/visao-geral" element={<VisaoGeral />} />
           <Route path="/assistente" element={<Assistente />} />
           <Route path="/simulador" element={<Simulador />} />
           <Route path="/fluxo" element={<FluxoDeCaixa />} />

@@ -25,7 +25,7 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: "/",              icon: House,    label: "Início" },
+  { to: "/visao-geral",   icon: House,    label: "Início" },
   { to: "/simulador",     icon: Wand2,    label: "Simulador" },
   { to: "/fluxo",         icon: Landmark, label: "Fluxo de caixa" },
   { to: "/assistente",    icon: Bot,      label: "Assistente" },
@@ -79,7 +79,6 @@ export default function Sidebar({
             <li key={to}>
               <NavLink
                 to={to}
-                end={to === "/"}
                 title={!showLabels ? label : undefined}
                 className={({ isActive }) =>
                   `sidebar__item${isActive ? " sidebar__item--active" : ""}`
