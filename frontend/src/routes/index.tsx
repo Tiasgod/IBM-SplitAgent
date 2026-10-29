@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import FluxoDeCaixa from "../pages/FluxoDeCaixa";
 import Configuracoes from "../pages/Configuracoes";
+import Historico from "../pages/Historico";
 
 export function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ export function AppRoutes() {
           <Route path="/assistente" element={<Assistente />} />
           <Route path="/simulador" element={<Simulador />} />
           <Route path="/fluxo" element={<FluxoDeCaixa />} />
+          <Route path="/historico" element={<Historico />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
         </Route>
       </Routes>
