@@ -6,6 +6,7 @@ import VisaoGeral from "../pages/VisaoGeral";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import Inicio from "../pages/Inicio";
+import LandingPage from "../pages/LandingPage";
 import FluxoDeCaixa from "../pages/FluxoDeCaixa";
 import Configuracoes from "../pages/Configuracoes";
 import Historico from "../pages/Historico";
@@ -14,6 +15,7 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/landing" element={<LandingPage />} />
         <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
