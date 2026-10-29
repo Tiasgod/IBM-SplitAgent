@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/layout/Header";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import "./Login.css";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -103,7 +105,13 @@ export default function Login() {
           {/* Register link */}
           <p className="login-page__register">
             Não tem conta?{" "}
-            <a href="#" className="login-page__register-link">Cadastre-se</a>
+            <button
+              type="button"
+              className="login-page__register-link"
+              onClick={() => navigate("/cadastro")}
+            >
+              Cadastre-se
+            </button>
           </p>
         </div>
       </main>

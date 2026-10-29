@@ -157,6 +157,12 @@
 }
 
 .login-page__register-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
   color: var(--color-secondary);
   font-weight: 600;
   text-decoration: none;
