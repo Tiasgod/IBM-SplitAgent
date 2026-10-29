@@ -1,0 +1,26 @@
+/* ── Fallback button (no VITE_GOOGLE_CLIENT_ID configured) ── */
+.google-signin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background-color: #ffffff;
+  border: 1.5px solid #dadce0;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #3c4043;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ── GSI-rendered button container ── */
+/* GSI injects an inline-block iframe; we center it inside a full-width flex row */
+.google-signin-btn--gsi {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

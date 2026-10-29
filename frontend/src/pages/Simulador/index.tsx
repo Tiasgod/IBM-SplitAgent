@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { simuladorService } from "../../services/simulador.service";
 import {
   TrendingUp,
   Calendar,
@@ -68,15 +69,14 @@ export interface SimuladorResultData {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PRODUCT_OPTIONS = [
-  { value: "produto", label: "Produto" },
-  { value: "servico", label: "Serviço" },
-  { value: "misto",   label: "Misto (produto + serviço)" },
+  { value: "venda", label: "Venda" },
+  { value: "despesa", label: "Despesa" },
 ];
 
 const TAX_REGIME_OPTIONS = [
-  { value: "simples",   label: "Simples Nacional" },
-  { value: "presumido", label: "Lucro Presumido" },
-  { value: "real",      label: "Lucro Real" },
+  { value: "6",     label: "Simples Nacional (~6%)" },
+  { value: "13.33", label: "Lucro Presumido (~13,33%)" },
+  { value: "15",    label: "Lucro Real (~15%)" },
 ];
 
 const PAYMENT_METHODS: { value: PaymentMethod; label: string }[] = [
@@ -104,19 +104,6 @@ const CONNECTION_OPTIONS = [
   },
 ];
 
-// ─── Mock data for with-data result ──────────────────────────────────────────
-
-const MOCK_CHART_DATA: ChartPoint[] = [
-  { label: "Hoje",   balance: 48000 },
-  { label: "Dia 5",  balance: 42000 },
-  { label: "Dia 10", balance: 35000, isRisk: true },
-  { label: "Dia 15", balance: 28000, isRisk: true },
-  { label: "Dia 20", balance: 22000, isRisk: true },
-  { label: "Dia 22", balance: 18500 },
-  { label: "Dia 25", balance: 30000 },
-  { label: "Dia 30", balance: 35000 },
-];
-
 const MIN_BALANCE = 20000;
 
 // ─── Shared formatters ────────────────────────────────────────────────────────
@@ -137,6 +124,8 @@ export default function Simulador() {
   const [step, setStep] = useState<"form" | "result-with-data" | "result">("form");
   const [resultData, setResultData] = useState<SimuladorResultData | null>(null);
   const [result, setResult] = useState<SimuladorResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<SimuladorForm>({
     productType:   "",
     saleValue:     "",
@@ -145,36 +134,92 @@ export default function Simulador() {
     taxRegime:     "",
   });
 
-  function handleSimulate() {
-    const numericValue = parseFloat(form.saleValue.replace(/\D/g, "")) || 0;
-    const aliquota = 0.1;
-    const baseResult: SimuladorResult = {
-      estimatedTax:     numericValue * aliquota,
-      aliquota:         aliquota * 100,
-      totalSaleValue:   numericValue,
-      netReceivedValue: numericValue * (1 - aliquota),
-    };
+  async function handleSimulate() {
+    setLoading(true);
+    setError(null);
+    try {
+      const numericValue = parseFloat(form.saleValue.replace(/[^\d,]/g, "").replace(",", ".")) || 0;
+      const descricao = [
+        PRODUCT_OPTIONS.find(o => o.value === form.productType)?.label ?? form.productType,
+        PAYMENT_METHODS.find(o => o.value === form.paymentMethod)?.label,
+      ].filter(Boolean).join(" — ");
 
-    // Simulate "has financial data" — flip to false to test the no-data result
-    const hasFinancialData = true;
-
-    if (hasFinancialData) {
-      const tax = fmtBRL(baseResult.estimatedTax);
-      const total = fmtBRL(baseResult.totalSaleValue);
-      setResultData({
-        result: baseResult,
-        forecast: {
-          availableBalance:  18500,
-          lowestForecast:     6200,
-          projectedExpenses: 12000,
-        },
-        chartData: MOCK_CHART_DATA,
-        agentAnalysis: `A venda de ${total} tem ${tax} em impostos estimados.\n\nMesmo com a venda, seu caixa pode cair para R$ 6.200,00 nos próximos 30 dias por causa das despesas previstas.\n\n**Recomendação**: confira os pagamentos previstos e avalie parcelar compromissos para preservar seu capital de giro.`,
+      const res = await simuladorService.simular({
+        tipo:                          form.productType, // "venda" | "despesa"
+        descricao,
+        data:                          form.expectedDate,
+        valor:                         numericValue,
+        aliquota_tributaria_percentual: form.productType === "despesa" ? 0 : parseFloat(form.taxRegime),
       });
-      setStep("result-with-data");
-    } else {
-      setResult(baseResult);
-      setStep("result");
+
+      // Parse currency strings like "R$ 1.234,56" → number
+      const parseBRL = (s: string | null | undefined): number => {
+        if (!s) return 0;
+        return parseFloat(s.replace(/[^\d,]/g, "").replace(",", ".")) || 0;
+      };
+
+      const valorSimulado  = parseBRL(res.valor_simulado);
+      const tributos       = parseBRL(res.tributos_estimados_simulacao);
+      const liquido        = parseBRL(res.valor_liquido_simulacao);
+      const aliquotaNum    = valorSimulado > 0 ? (tributos / valorSimulado) * 100 : parseFloat(form.taxRegime);
+
+      const baseResult: SimuladorResult = {
+        estimatedTax:     tributos,
+        aliquota:         parseFloat(aliquotaNum.toFixed(2)),
+        totalSaleValue:   valorSimulado,
+        netReceivedValue: liquido,
+      };
+
+      // Check if the API has cash-flow projection data
+      const projecao = res.projecao_simulada as Record<string, { saldo_previsto: string }> | undefined;
+      const projecaoEntries = projecao ? Object.entries(projecao) : [];
+      const hasFinancialData = projecaoEntries.length > 0;
+
+      if (hasFinancialData) {
+        const saldoAtual     = parseBRL(res.saldo_atual_simulado);
+        const menorSaldo     = parseBRL(res.menor_saldo_simulado);
+        const saldoOriginal  = parseBRL(res.saldo_atual_original);
+
+        const chartData: ChartPoint[] = projecaoEntries.map(([data, val]) => ({
+          label:   data,
+          balance: parseBRL(val.saldo_previsto),
+          isRisk:  res.periodos_abaixo_minimo_simulados?.some(p => p.data === data),
+        }));
+
+        const agentLines: string[] = [
+          `A venda de ${res.valor_simulado} gera ${res.tributos_estimados_simulacao} em tributos estimados.`,
+        ];
+        if (res.valor_liquido_simulacao) {
+          agentLines.push(`Você receberá líquido ${res.valor_liquido_simulacao}.`);
+        }
+        if (res.gera_saldo_negativo) {
+          agentLines.push("⚠ Esta operação pode gerar saldo negativo no caixa.");
+        } else if (res.fica_abaixo_minimo) {
+          agentLines.push("⚠ O saldo pode ficar abaixo do mínimo em alguns períodos.");
+        }
+        if (res.observacao_tributaria) {
+          agentLines.push(`**Observação tributária**: ${res.observacao_tributaria}`);
+        }
+
+        setResultData({
+          result: baseResult,
+          forecast: {
+            availableBalance:  saldoAtual,
+            lowestForecast:    menorSaldo,
+            projectedExpenses: saldoOriginal - saldoAtual,
+          },
+          chartData,
+          agentAnalysis: agentLines.join("\n\n"),
+        });
+        setStep("result-with-data");
+      } else {
+        setResult(baseResult);
+        setStep("result");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao simular. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -200,11 +245,11 @@ export default function Simulador() {
         </div>
 
         <div className="simulador__card">
-          <h2 className="simulador__card-title">Dados da venda</h2>
+          <h2 className="simulador__card-title">Dados da transação</h2>
 
           <div className="simulador__fields">
             <Select
-              label="O que você vai vender?"
+              label="Tipo de transação"
               options={PRODUCT_OPTIONS}
               placeholder="Selecione"
               value={form.productType}
@@ -212,7 +257,7 @@ export default function Simulador() {
             />
 
             <Input
-              label="Valor da venda"
+              label="Valor"
               placeholder="R$"
               value={form.saleValue}
               onChange={e => setForm(f => ({ ...f, saleValue: e.target.value }))}
@@ -225,40 +270,54 @@ export default function Simulador() {
               onChange={e => setForm(f => ({ ...f, expectedDate: e.target.value }))}
             />
 
-            <fieldset className="simulador__fieldset">
-              <legend className="simulador__legend">Como será o pagamento?</legend>
-              <div className="simulador__toggle-group">
-                {PAYMENT_METHODS.map(({ value, label }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className={`simulador__toggle${form.paymentMethod === value ? " simulador__toggle--active" : ""}`}
-                    onClick={() => setForm(f => ({ ...f, paymentMethod: value }))}
-                    aria-pressed={form.paymentMethod === value}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
+            {form.productType !== "despesa" && (
+              <fieldset className="simulador__fieldset">
+                <legend className="simulador__legend">Como será o pagamento?</legend>
+                <div className="simulador__toggle-group">
+                  {PAYMENT_METHODS.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={`simulador__toggle${form.paymentMethod === value ? " simulador__toggle--active" : ""}`}
+                      onClick={() => setForm(f => ({ ...f, paymentMethod: value }))}
+                      aria-pressed={form.paymentMethod === value}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+            )}
 
-            <Select
-              label="Regime tributário da empresa"
-              options={TAX_REGIME_OPTIONS}
-              placeholder="Selecione"
-              value={form.taxRegime}
-              onChange={e => setForm(f => ({ ...f, taxRegime: e.target.value }))}
-            />
+            {form.productType !== "despesa" && (
+              <Select
+                label="Regime tributário da empresa"
+                options={TAX_REGIME_OPTIONS}
+                placeholder="Selecione"
+                value={form.taxRegime}
+                onChange={e => setForm(f => ({ ...f, taxRegime: e.target.value }))}
+              />
+            )}
           </div>
+
+          {error && (
+            <p className="simulador__error" role="alert">{error}</p>
+          )}
 
           <Button
             variant="primary"
             size="lg"
             className="simulador__submit"
             onClick={handleSimulate}
-            disabled={!form.productType || !form.saleValue || !form.taxRegime}
+            disabled={
+              loading ||
+              !form.productType ||
+              !form.saleValue ||
+              !form.expectedDate ||
+              (form.productType !== "despesa" && !form.taxRegime)
+            }
           >
-            Simular Impacto
+            {loading ? "Simulando…" : "Simular Impacto"}
           </Button>
         </div>
       </div>
@@ -510,7 +569,7 @@ function SimuladorResultWithData({
     <ChatShell headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
-          <p className="simulador__eyebrow">Simulador de venda</p>
+          <p className="simulador__eyebrow">Simulador de transação</p>
           <h1 className="simulador__title">Resultado</h1>
         </div>
 
@@ -538,7 +597,7 @@ function SimuladorResultNoData({
     <ChatShell headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
-          <p className="simulador__eyebrow">Simulador de venda</p>
+          <p className="simulador__eyebrow">Simulador de transação</p>
           <h1 className="simulador__title">Resultado</h1>
         </div>
 

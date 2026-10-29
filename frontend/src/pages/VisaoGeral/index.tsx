@@ -1,9 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Bot } from "lucide-react";
 import { PageLayout } from "../../components/layout/PageLayout";
 import { Button } from "../../components/ui/Button";
 import { FinancialSummaryCard } from "./FinancialSummaryCard";
 import { CashFlowChart } from "./CashFlowChart";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import "./VisaoGeral.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -122,15 +123,16 @@ function CashAlertCard({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function VisaoGeral() {
-  const { userName, summary, projectionPoints, minimumBalance, riskPeriods, situation } =
-    VISAO_GERAL_DATA;
+  const { user } = useAuth();
+  const primeiroNome = user?.nome?.split(" ")[0] ?? "você";
+  const { summary, projectionPoints, minimumBalance, riskPeriods, situation } = VISAO_GERAL_DATA;
 
   return (
     <PageLayout headerVariant="nav">
       <div className="visao-geral">
         {/* Page header */}
         <div className="visao-geral__page-header">
-          <p className="visao-geral__eyebrow">Olá, {userName}</p>
+          <p className="visao-geral__eyebrow">Olá, {primeiroNome}</p>
           <h1 className="visao-geral__title">Visão geral</h1>
         </div>
 
