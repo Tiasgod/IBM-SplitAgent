@@ -197,11 +197,9 @@ function SimuladorResult({
               Impacto estimado do Split Payment
             </h2>
 
-            {!chatOpen && (
-              <a href="#como-calculamos" className="simulador__how-link">
-                Como calculamos?
-              </a>
-            )}
+            <a href="#como-calculamos" className="simulador__how-link">
+              Como calculamos?
+            </a>
           </div>
 
           <div className="simulador__impact-body">
@@ -218,12 +216,6 @@ function SimuladorResult({
                 <p className="simulador__impact-aliquota">
                   Alíquota: {result.aliquota}%
                 </p>
-
-                {chatOpen && (
-                  <a href="#como-calculamos" className="simulador__how-link">
-                    Como calculamos?
-                  </a>
-                )}
               </div>
             </div>
 

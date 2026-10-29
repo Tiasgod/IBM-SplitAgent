@@ -6,3 +6,4 @@ export type { HeaderVariant } from "./Header";
 export { PageLayout } from "./PageLayout";
 export { default as AppShell } from "./AppShell";
 export { ChatShell } from "./ChatShell";
+export { useAppShell } from "./AppShellContext";

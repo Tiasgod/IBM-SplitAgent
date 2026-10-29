@@ -168,7 +168,8 @@
 .simulador__impact-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  padding: 1rem 0;
+  gap: var(--space-4);
   min-width: 0;
 }
 
@@ -467,17 +468,17 @@
 
   .chat-shell--open
     .simulador__impact-values {
-    flex: 0 0 clamp(11rem, 28%, 13rem);
-    width: auto;
+    flex: 0 1 auto;
     min-width: 0;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: stretch;
     gap: var(--space-2);
   }
 
   .chat-shell--open
     .simulador__value-box {
-    flex: initial;
-    width: 100%;
+    flex: 1 1 0;
+    min-width: 0;
     box-sizing: border-box;
   }
 
@@ -568,11 +569,6 @@
   .chat-shell--open
     .simulador__impact-body {
     gap: var(--space-3);
-  }
-
-  .chat-shell--open
-    .simulador__impact-values {
-    flex-basis: 11rem;
   }
 
   .chat-shell--open

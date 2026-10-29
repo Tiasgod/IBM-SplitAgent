@@ -280,6 +280,20 @@
   .fluxo__movement-list {
     flex: 1;
   }
+
+  /* Chat aberto: colapsa para coluna única */
+
+  .chat-shell--open .fluxo__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chat-shell--open .fluxo__movements-card {
+    align-self: auto;
+  }
+
+  .chat-shell--open .fluxo__movement-list {
+    flex: none;
+  }
 }
 
 /* ============================================================

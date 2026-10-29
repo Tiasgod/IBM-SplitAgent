@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { Header, type HeaderVariant } from "../layout/Header";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useAppShell } from "./AppShellContext";
 import "./PageLayout.css";
 
 interface PageLayoutProps {
@@ -27,6 +28,7 @@ export function PageLayout({
   className,
 }: PageLayoutProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const { openDrawer } = useAppShell();
 
   return (
     <div className={`page-layout ${className ?? ""}`}>
@@ -34,7 +36,7 @@ export function PageLayout({
       {!isDesktop && headerVariant && (
         <Header
           variant={headerVariant}
-          onMenuClick={onMenuClick}
+          onMenuClick={onMenuClick ?? openDrawer}
           onBack={onBack}
         />
       )}
