@@ -83,6 +83,27 @@
   line-height: 1.5;
 }
 
+/* Situation modifier — atenção (warning) */
+.visao-geral__alert-card--atencao {
+  border-color: var(--color-alert);
+}
+
+.visao-geral__alert-card--atencao .visao-geral__alert-icon {
+  background-color: var(--color-tertiary);
+  color: var(--color-primary);
+}
+
+/* Situation modifier — crítica (danger) */
+.visao-geral__alert-card--critica {
+  border-color: var(--color-danger);
+  background-color: #fff5f5;
+}
+
+.visao-geral__alert-card--critica .visao-geral__alert-icon {
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
 /* CTA button — override width from btn--cta */
 .visao-geral__cta-btn {
   width: 100%;
