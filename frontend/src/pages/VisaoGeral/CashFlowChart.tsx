@@ -1,26 +1,8 @@
+import type { CashFlowPoint, RiskPeriod } from "./index";
 import "./CashFlowChart.css";
 
-// Chart data points — value in thousands (mil)
-const DATA_POINTS = [
-  { day: "Hoje", value: 55 },
-  { day: "Dia 5",  value: 50 },
-  { day: "Dia 10", value: 38 },
-  { day: "Dia 15", value: 28 },
-  { day: "Dia 20", value: 24 },
-  { day: "Dia 22", value: 26 },
-  { day: "Dia 25", value: 34 },
-  { day: "Dia 30", value: 42 },
-];
-
-// Risk period — indices 2 to 5 (Dia 10 → Dia 22)
-const RISK_START = 2;
-const RISK_END = 5;
-
-// Y-axis labels
+// Y-axis labels (in thousands)
 const Y_LABELS = [60, 40, 20, 0];
-
-// Minimum balance threshold (in thousands)
-const MIN_VALUE = 25;
 
 const PAD_LEFT = 52;  // space for y-axis labels
 const PAD_RIGHT = 16;
@@ -28,7 +10,7 @@ const PAD_TOP = 16;
 const PAD_BOTTOM = 32; // space for x-axis labels
 
 /**
- * Maps a data value (0–60 thousands) to an SVG y-coordinate.
+ * Maps a data value (in thousands) to an SVG y-coordinate.
  * viewBox height is 200, data range 0–65.
  */
 function yCoord(value: number, height: number, minVal: number, maxVal: number) {
@@ -39,15 +21,21 @@ function xCoord(index: number, total: number, width: number) {
   return PAD_LEFT + (index / (total - 1)) * (width - PAD_LEFT - PAD_RIGHT);
 }
 
-export function CashFlowChart() {
+interface CashFlowChartProps {
+  points: CashFlowPoint[];
+  minimumBalance: number;
+  riskPeriods: RiskPeriod[];
+}
+
+export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods }: CashFlowChartProps) {
   const WIDTH = 600;
   const HEIGHT = 200;
   const MIN_DATA = 0;
   const MAX_DATA = 65;
 
-  const points = DATA_POINTS.map((d, i) => ({
+  const points = dataPoints.map((d, i) => ({
     ...d,
-    x: xCoord(i, DATA_POINTS.length, WIDTH),
+    x: xCoord(i, dataPoints.length, WIDTH),
     y: yCoord(d.value, HEIGHT, MIN_DATA, MAX_DATA),
   }));
 
@@ -61,13 +49,10 @@ export function CashFlowChart() {
     ` L ${points[points.length - 1].x},${yCoord(0, HEIGHT, MIN_DATA, MAX_DATA)}` +
     ` L ${points[0].x},${yCoord(0, HEIGHT, MIN_DATA, MAX_DATA)} Z`;
 
-  // Risk region x boundaries
-  const riskX1 = points[RISK_START].x;
-  const riskX2 = points[RISK_END].x;
   const chartBottom = yCoord(0, HEIGHT, MIN_DATA, MAX_DATA);
 
   // Min value line y
-  const minY = yCoord(MIN_VALUE, HEIGHT, MIN_DATA, MAX_DATA);
+  const minY = yCoord(minimumBalance, HEIGHT, MIN_DATA, MAX_DATA);
 
   return (
     <div className="cashflow-chart">
@@ -119,36 +104,47 @@ export function CashFlowChart() {
             );
           })}
 
-          {/* Risk period background */}
-          <rect
-            x={riskX1}
-            y={PAD_TOP}
-            width={riskX2 - riskX1}
-            height={chartBottom - PAD_TOP}
-            fill="#FFC801"
-            fillOpacity="0.12"
-          />
-
-          {/* Risk period label */}
-          <text
-            x={(riskX1 + riskX2) / 2}
-            y={PAD_TOP + 14}
-            textAnchor="middle"
-            fontSize="9.5"
-            fontWeight="600"
-            fill="#D8672B"
-          >
-            Período de risco
-          </text>
-          <text
-            x={(riskX1 + riskX2) / 2}
-            y={PAD_TOP + 26}
-            textAnchor="middle"
-            fontSize="9"
-            fill="#D8672B"
-          >
-            Dias 10 – 22
-          </text>
+          {/* Risk periods */}
+          {riskPeriods.map((rp) => {
+            const startPoint = points.find(p => p.day === rp.startDay);
+            const endPoint   = points.find(p => p.day === rp.endDay);
+            if (!startPoint || !endPoint) return null;
+            const riskX1 = startPoint.x;
+            const riskX2 = endPoint.x;
+            return (
+              <g key={`${rp.startDay}-${rp.endDay}`}>
+                {/* Risk period background */}
+                <rect
+                  x={riskX1}
+                  y={PAD_TOP}
+                  width={riskX2 - riskX1}
+                  height={chartBottom - PAD_TOP}
+                  fill="#FFC801"
+                  fillOpacity="0.12"
+                />
+                {/* Risk period label */}
+                <text
+                  x={(riskX1 + riskX2) / 2}
+                  y={PAD_TOP + 14}
+                  textAnchor="middle"
+                  fontSize="9.5"
+                  fontWeight="600"
+                  fill="#D8672B"
+                >
+                  Período de risco
+                </text>
+                <text
+                  x={(riskX1 + riskX2) / 2}
+                  y={PAD_TOP + 26}
+                  textAnchor="middle"
+                  fontSize="9"
+                  fill="#D8672B"
+                >
+                  {rp.startDay} – {rp.endDay}
+                </text>
+              </g>
+            );
+          })}
 
           {/* Area fill */}
           <path d={areaPath} fill="url(#areaGradient)" />
@@ -198,7 +194,7 @@ export function CashFlowChart() {
           ))}
 
           {/* X-axis labels — only show first, middle, last */}
-          {[0, Math.floor((DATA_POINTS.length - 1) / 2), DATA_POINTS.length - 1].map((i) => (
+          {[0, Math.floor((dataPoints.length - 1) / 2), dataPoints.length - 1].map((i) => (
             <text
               key={i}
               x={points[i].x}
@@ -207,7 +203,7 @@ export function CashFlowChart() {
               fontSize="10"
               fill="#5B6B7C"
             >
-              {DATA_POINTS[i].day}
+              {dataPoints[i].day}
             </text>
           ))}
         </svg>

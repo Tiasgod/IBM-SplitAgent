@@ -7,11 +7,11 @@ import {
 import "./FinancialSummaryCard.css";
 
 interface FinancialSummaryCardProps {
-  liquidoEstimado: number;
-  bruto: number;
-  tributos: number;
-  liquido: number;
-  saldo: number;
+  estimatedNet: number;
+  totalSold: number;
+  estimatedTaxes: number;
+  netValue: number;
+  currentBalance: number;
 }
 
 function fmt(value: number) {
@@ -19,17 +19,17 @@ function fmt(value: number) {
 }
 
 export function FinancialSummaryCard({
-  liquidoEstimado,
-  bruto,
-  tributos,
-  liquido,
-  saldo,
+  estimatedNet,
+  totalSold,
+  estimatedTaxes,
+  netValue,
+  currentBalance,
 }: FinancialSummaryCardProps) {
   const metrics = [
-    { icon: Search,    label: "Bruto",    value: bruto },
-    { icon: FileText,  label: "Tributos", value: tributos },
-    { icon: RefreshCw, label: "Líquido",  value: liquido },
-    { icon: Banknote,  label: "Saldo",    value: saldo },
+    { icon: Search,    label: "Bruto",    value: totalSold },
+    { icon: FileText,  label: "Tributos", value: estimatedTaxes },
+    { icon: RefreshCw, label: "Líquido",  value: netValue },
+    { icon: Banknote,  label: "Saldo",    value: currentBalance },
   ];
 
   return (
@@ -38,7 +38,7 @@ export function FinancialSummaryCard({
 
       <div className="fin-summary__liquid">
         <span className="fin-summary__liquid-label">Líquido estimado:</span>
-        <span className="fin-summary__liquid-value">{fmt(liquidoEstimado)}</span>
+        <span className="fin-summary__liquid-value">{fmt(estimatedNet)}</span>
       </div>
 
       <div className="fin-summary__grid">
