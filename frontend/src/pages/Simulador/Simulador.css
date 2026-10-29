@@ -1,14 +1,19 @@
 /* ============================================================
-   Simulador — página (formulário + resultado)
+   SIMULADOR — formulário e resultado
    ============================================================ */
+
 .simulador {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
   width: 100%;
+  min-width: 0;
 }
 
-/* Page header — eyebrow + título */
+/* ============================================================
+   Cabeçalho da página
+   ============================================================ */
+
 .simulador__page-header {
   display: flex;
   flex-direction: column;
@@ -29,8 +34,9 @@
 }
 
 /* ============================================================
-   Card container
+   Card base
    ============================================================ */
+
 .simulador__card {
   background: #ffffff;
   border: 1.5px solid var(--color-border);
@@ -39,6 +45,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+  min-width: 0;
 }
 
 .simulador__card-title {
@@ -47,14 +54,16 @@
   color: var(--color-text);
 }
 
-/* Fields stack */
+/* ============================================================
+   Formulário
+   ============================================================ */
+
 .simulador__fields {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
 }
 
-/* Payment toggle group */
 .simulador__fieldset {
   border: none;
   padding: 0;
@@ -88,7 +97,10 @@
   font-weight: 500;
   color: var(--color-text);
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .simulador__toggle:hover {
@@ -103,30 +115,29 @@
   font-weight: 600;
 }
 
-/* Submit button — full width */
 .simulador__submit {
   width: 100%;
   justify-content: center;
 }
 
 /* ============================================================
-   Result — impact card
-   Mobile / chat-open: empilhado em coluna
-   Desktop sem chat: header (título + link) full-width,
-                     body = 2 colunas (left | values)
+   Resultado — card de impacto
    ============================================================ */
 
-/* Card base */
 .simulador__card--impact {
-  gap: var(--space-4);
+  width: 100%;
+  min-width: 0;
+  gap: var(--space-5);
 }
 
-/* Linha 1: título + link "Como calculamos?" */
+/* Título e link no topo */
+
 .simulador__impact-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-4);
+  min-width: 0;
 }
 
 .simulador__impact-title {
@@ -135,34 +146,39 @@
   color: var(--color-text);
   line-height: 1.3;
   flex: 1;
+  min-width: 0;
 }
 
 .simulador__how-link {
+  display: inline-block;
   font-size: var(--font-size-sm);
   color: var(--color-secondary);
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
-  padding-top: 2px; /* alinha com a primeira linha do título */
+  padding-top: 2px;
 }
 
 .simulador__how-link:hover {
   text-decoration: underline;
 }
 
-/* Linha 2: conteúdo numérico
-   Mobile: coluna (left acima, values abaixo) */
+/* Área com imposto e valores */
+
 .simulador__impact-body {
   display: flex;
   flex-direction: column;
+  padding: 1rem 0;
   gap: var(--space-4);
+  min-width: 0;
 }
 
-/* Esquerda: label + valor + alíquota */
 .simulador__impact-left {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-1);
+  min-width: 0;
 }
 
 .simulador__impact-label {
@@ -171,61 +187,90 @@
 }
 
 .simulador__impact-tax {
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.2;
 }
 
-.simulador__impact-aliquota {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray);
+/* Alíquota e link */
+
+.simulador__impact-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
   margin-top: var(--space-1);
 }
 
-/* Value boxes — empilhados em coluna sempre */
+.simulador__impact-aliquota {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  margin: 0;
+}
+
+/* Cards escuros */
+
 .simulador__impact-values {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  min-width: 0;
 }
 
 .simulador__value-box {
   background-color: var(--color-primary);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 4px;
+  min-width: 0;
 }
 
 .simulador__value-label {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 400;
+  line-height: 1.4;
 }
 
 .simulador__value-amount {
   font-size: var(--font-size-lg);
   font-weight: 700;
   color: #ffffff;
+  line-height: 1.3;
 }
 
 .simulador__value-amount--highlight {
-  color: var(--color-tertiary); /* #FFC801 */
+  color: var(--color-tertiary);
 }
 
 /* ============================================================
-   Precision upsell section
+   Previsão mais precisa
    ============================================================ */
+
+.simulador__precision-connect {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+}
+
 .simulador__precision {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  width: 100%;
+  min-width: 0;
 }
 
 .simulador__precision-title {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.3;
@@ -233,19 +278,23 @@
 
 .simulador__precision-desc {
   font-size: var(--font-size-sm);
-  color: var(--color-gray);
-  line-height: 1.6;
+  color: var(--color-text);
+  line-height: 1.4;
 }
+
+/* Lista de benefícios */
 
 .simulador__features {
   list-style: none;
   padding: var(--space-4) var(--space-6);
-  margin: 0;
+  margin: var(--space-3) 0 0;
   background-color: var(--color-secondary);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .simulador__feature-item {
@@ -255,42 +304,59 @@
   color: #ffffff;
   font-size: var(--font-size-md);
   font-weight: 600;
+  line-height: 1.4;
+}
+
+.simulador__feature-item svg {
+  flex-shrink: 0;
 }
 
 /* ============================================================
-   Connect options
+   Opções de conexão bancária
    ============================================================ */
+
 .simulador__connect {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding-top: var(--space-4); /* separa da seção anterior no mobile */
+  padding-top: var(--space-4);
+  width: 100%;
+  min-width: 0;
 }
 
 .simulador__connect-label {
   font-size: var(--font-size-sm);
   color: var(--color-gray);
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .simulador__connect-options {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  width: 100%;
+  min-width: 0;
 }
 
 .simulador__connect-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-4);
   padding: var(--space-4);
   background: #ffffff;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-lg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
 }
 
 .simulador__connect-card:hover {
@@ -301,7 +367,10 @@
 .simulador__connect-icon {
   color: var(--color-secondary);
   flex-shrink: 0;
-  margin-top: 2px;
+}
+
+.simulador__connect-card > div {
+  min-width: 0;
 }
 
 .simulador__connect-title {
@@ -314,134 +383,574 @@
 .simulador__connect-desc {
   font-size: var(--font-size-sm);
   color: var(--color-gray);
-  line-height: 1.5;
+  line-height: 1.4;
   margin-top: 2px;
 }
 
 /* ============================================================
-   Desktop — sem painel de chat (tela cheia)
+   Desktop
    ============================================================ */
+
 @media (min-width: 768px) {
-  /* Impact body: 2 colunas — dados à esq, boxes à dir */
+  /* O card de impacto ocupa toda a largura disponível */
+
+  .simulador__card--impact {
+    padding: var(--space-6);
+  }
+
+  /* Imposto à esquerda e valores à direita */
+
   .simulador__impact-body {
     flex-direction: row;
     align-items: center;
-    gap: var(--space-6);
+    justify-content: space-between;
+    gap: var(--space-2);
   }
 
   .simulador__impact-left {
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
   }
 
-  /* Value boxes ocupam largura fixa à direita */
+  /* Chat fechado: dois cards lado a lado */
+
   .simulador__impact-values {
-    flex: 0 0 clamp(11rem, 20%, 13rem);
-    min-width: 11rem;
+    flex: 0 1 auto;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-3);
   }
 
-  /* Precision + connect em grid 2 colunas */
+  .simulador__value-box {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: var(--space-4);
+  }
+
+  .simulador__value-label {
+    white-space: normal;
+  }
+
+  /* Previsão e conexão em duas colunas */
+
   .simulador__precision-connect {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
-    align-items: start;
   }
 
   .simulador__connect {
     padding-top: 0;
   }
-}
 
-/* ============================================================
-   SimuladorResult shell — layout com/sem painel de chat
-   ============================================================ */
+  /* ==========================================================
+     Chat aberto: ajustes de layout específicos do Simulador
+     ========================================================== */
 
-/* Mobile: apenas o conteúdo principal, chat não aparece */
-.simulador-result-shell {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  height: 100%;
-  position: relative;
-}
+  .chat-shell--open
+    .simulador__page-header {
+    margin-right: 3.5rem;
+  }
 
-/* O PageLayout ocupa o espaço disponível */
-.simulador-result-shell > .page-layout {
-  flex: 1;
-  min-width: 0;
-}
+  /* Card de impacto: imposto à esquerda, cards à direita */
 
-/* Painel lateral do chat — oculto no mobile */
-.simulador-result-shell__chat {
-  display: none;
-}
-
-/* Botão flutuante para abrir o chat */
-.simulador-result-shell__chat-trigger {
-  display: none;
-}
-
-/* ── Desktop ─────────────────────────────────────────────── */
-@media (min-width: 768px) {
-  /* Botão flutuante: avatar no canto superior direito */
-  .simulador-result-shell__chat-trigger {
-    display: flex;
+  .chat-shell--open
+    .simulador__impact-body {
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: var(--space-4);
-    right: var(--space-4);
-    z-index: 50;
-    background: transparent;
-    border: none;
-    cursor: pointer;
+    gap: var(--space-5);
   }
 
-  .simulador-result-shell__chat-trigger-avatar {
-    display: block;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background-color: #d1d9e0;
-  }
-
-  /* Com chat aberto: divide em dois painéis */
-  .simulador-result-shell--chat-open {
-    gap: 0;
-  }
-
-  .simulador-result-shell--chat-open > .page-layout {
+  .chat-shell--open
+    .simulador__impact-left {
     flex: 1 1 0;
     min-width: 0;
   }
 
-  /* Painel do chat aparece */
-  .simulador-result-shell--chat-open .simulador-result-shell__chat {
-    display: flex;
-    flex: 0 0 clamp(18rem, 30vw, 26rem);
-    border-left: 1px solid var(--color-border);
-    background-color: #ffffff;
-    min-height: 0;
-    height: 100%;
-  }
-
-  /* Chat aberto: body volta para coluna empilhada */
-  .simulador-result-shell--chat-open .simulador__impact-body {
-    flex-direction: column;
+  .chat-shell--open
+    .simulador__impact-values {
+    flex: 0 1 auto;
+    min-width: 0;
+    flex-direction: row;
     align-items: stretch;
+    gap: var(--space-2);
   }
 
-  /* Chat aberto: value boxes esticam full-width */
-  .simulador-result-shell--chat-open .simulador__impact-values {
-    flex: unset;
-    min-width: unset;
+  .chat-shell--open
+    .simulador__value-box {
+    flex: 1 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .chat-shell--open
+    .simulador__value-label {
+    white-space: normal;
+  }
+
+  /* Link junto à alíquota */
+
+  .chat-shell--open
+    .simulador__impact-meta {
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .chat-shell--open
+    .simulador__how-link {
+    white-space: normal;
+  }
+
+  /* A seção de previsão aproveita toda a largura do painel */
+
+  .chat-shell--open
+    .simulador__precision-connect {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .chat-shell--open
+    .simulador__precision,
+  .chat-shell--open
+    .simulador__connect {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .chat-shell--open
+    .simulador__connect-options {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   Mobile: evitar cortes e estouro horizontal
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .simulador__card {
+    padding: var(--space-4);
+  }
+
+  .simulador__impact-header {
+    flex-wrap: wrap;
+  }
+
+  .simulador__impact-title {
+    flex-basis: 100%;
+  }
+
+  .simulador__impact-values {
     width: 100%;
   }
 
-  /* Chat aberto: precision+connect em coluna única */
-  .simulador-result-shell--chat-open .simulador__precision-connect {
-    display: flex;
-    flex-direction: column;
+  .simulador__value-box {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .simulador__connect-card {
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   Desktop estreito: adaptar o card quando o chat está aberto
+   ============================================================ */
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  .chat-shell--open
+    .simulador__card--impact {
+    padding: var(--space-4);
+  }
+
+  .chat-shell--open
+    .simulador__impact-body {
+    gap: var(--space-3);
+  }
+
+  .chat-shell--open
+    .simulador__impact-tax {
+    font-size: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .chat-shell--open
+    .simulador__value-amount {
+    font-size: var(--font-size-md);
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ============================================================
+   RESULTADO COM DADOS FINANCEIROS
+   ============================================================ */
+
+/* ─── Layout 2-colunas ───────────────────────────────────── */
+
+.simulador__with-data-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  min-width: 0;
+}
+
+/* ─── Coluna esquerda: Previsão do caixa ─────────────────── */
+
+.simulador__forecast-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  min-width: 0;
+}
+
+.simulador__forecast-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: center;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.simulador__forecast-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__forecast-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* Saldo disponível */
+
+.simulador__forecast-balance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) 0;
+}
+
+.simulador__forecast-balance-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.simulador__forecast-balance-value {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.1;
+}
+
+/* Métricas: menor saldo / despesas previstas */
+
+.simulador__forecast-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-4);
+}
+
+.simulador__forecast-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.simulador__forecast-metric-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.simulador__forecast-metric-value {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.simulador__forecast-metric-value--alert {
+  color: var(--color-alert);
+}
+
+.simulador__forecast-metric-note {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray);
+}
+
+/* Alert banner */
+
+.simulador__forecast-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-bg-alert);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.simulador__forecast-alert-icon {
+  color: var(--color-alert);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.simulador__forecast-alert-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.simulador__forecast-alert-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-alert);
+}
+
+.simulador__forecast-alert-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Agent analysis card */
+
+.simulador__agent-card {
+  background: var(--color-bg-secondary);
+  border: 1.5px solid rgba(14, 117, 115, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__agent-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-secondary);
+}
+
+.simulador__agent-card-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.simulador__agent-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__agent-card-para {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── Coluna direita: chart + alternativas ───────────────── */
+
+.simulador__evolution-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.simulador__evolution-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.simulador__evolution-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__evolution-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* Chart box */
+
+.simulador__chart-box {
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.simulador__chart-inner-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.simulador__chart-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__chart-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.simulador__evolution-detail-link {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: none;
+  text-align: right;
+  align-self: flex-end;
+  transition: opacity 0.15s ease;
+}
+
+.simulador__evolution-detail-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Alternatives */
+
+.simulador__alternatives {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__alternatives-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulador__alternatives-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.simulador__alt-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-family);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.simulador__alt-card:hover {
+  border-color: var(--color-secondary);
+  background-color: var(--color-bg-secondary);
+}
+
+.simulador__alt-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.simulador__alt-card-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.simulador__alt-card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  line-height: 1.5;
+}
+
+.simulador__alt-card-chevron {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+/* ─── Desktop: 2 colunas ─────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .simulador__with-data-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .simulador__forecast-header {
+    text-align: left;
+  }
+
+  .simulador__forecast-balance {
+    align-items: flex-start;
+  }
+
+  /* Chat aberto: colapsa para coluna única */
+  .chat-shell--open .simulador__with-data-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ─── Mobile ─────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .simulador__forecast-card {
+    padding: var(--space-4);
+  }
+
+  .simulador__forecast-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .simulador__chart-box {
+    padding: var(--space-3);
+  }
+
+  .simulador__alt-card {
+    padding: var(--space-3) var(--space-4);
   }
 }

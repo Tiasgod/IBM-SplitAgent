@@ -1,0 +1,311 @@
+/* ============================================================
+   FLUXO DE CAIXA
+   ============================================================ */
+
+.fluxo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  min-width: 0;
+}
+
+/* ─── Cabeçalho ──────────────────────────────────────────── */
+
+.fluxo__page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fluxo__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.15;
+}
+
+.fluxo__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+/* ─── Layout principal: 2 colunas no desktop ─────────────── */
+
+.fluxo__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fluxo__col-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* ─── Card base ──────────────────────────────────────────── */
+
+.fluxo__card {
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  min-width: 0;
+}
+
+.fluxo__card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+/* ─── Saldo disponível ───────────────────────────────────── */
+
+.fluxo__balance-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fluxo__balance-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.fluxo__balance-value {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.1;
+}
+
+.fluxo__balance-forecast {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.fluxo__balance-forecast-value {
+  color: var(--color-alert);
+  font-weight: 600;
+}
+
+.fluxo__balance-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* ─── Projeção do caixa ──────────────────────────────────── */
+
+.fluxo__projection-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: var(--space-1);
+  column-gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  align-items: baseline;
+}
+
+.fluxo__projection-inflows-label,
+.fluxo__projection-outflows-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+
+.fluxo__projection-inflows-value {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.fluxo__projection-outflows-value {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-alert);
+}
+
+.fluxo__chart-wrapper {
+  width: 100%;
+}
+
+/* ─── Alerta do agente ───────────────────────────────────── */
+
+.fluxo__agent-alert {
+  background-color: var(--color-bg-secondary);
+  border-color: rgba(14, 117, 115, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fluxo__agent-alert-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-secondary);
+}
+
+.fluxo__agent-alert-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.fluxo__agent-alert-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.fluxo__agent-alert-link {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.fluxo__agent-alert-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* ─── Próximas movimentações ─────────────────────────────── */
+
+.fluxo__movement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fluxo__movement-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fluxo__movement-item:first-child {
+  padding-top: 0;
+}
+
+.fluxo__movement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fluxo__movement-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.fluxo__movement-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.fluxo__movement-date {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.fluxo__movement-amount {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.fluxo__movement-amount--positive {
+  color: var(--color-secondary);
+}
+
+.fluxo__movement-amount--negative {
+  color: var(--color-alert);
+}
+
+.fluxo__movements-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-4);
+}
+
+.fluxo__movements-see-all {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.fluxo__movements-see-all:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVO — Desktop (≥ 768px): layout 2 colunas
+   ============================================================ */
+
+@media (min-width: 768px) {
+  .fluxo__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .fluxo__movements-card {
+    /* Coluna direita ocupa toda a altura da coluna esquerda */
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fluxo__movement-list {
+    flex: 1;
+  }
+
+  /* Chat aberto: colapsa para coluna única */
+
+  .chat-shell--open .fluxo__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chat-shell--open .fluxo__movements-card {
+    align-self: auto;
+  }
+
+  .chat-shell--open .fluxo__movement-list {
+    flex: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVO — Mobile (< 768px)
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .fluxo__card {
+    padding: var(--space-4);
+  }
+
+  .fluxo__balance-value {
+    font-size: 2rem;
+  }
+}

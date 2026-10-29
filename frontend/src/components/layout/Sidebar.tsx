@@ -7,6 +7,9 @@ import {
   History,
   Settings,
   LogOut,
+  ChevronLeft,
+  ChevronRight,
+  X,
 } from "lucide-react";
 import { Logo } from "../brand";
 import "./Sidebar.css";
@@ -15,6 +18,10 @@ export type SidebarVariant = "mobile" | "collapsed" | "expanded";
 
 interface SidebarProps {
   variant?: SidebarVariant;
+  /** Desktop only: toggle between expanded ↔ collapsed */
+  onCollapse?: () => void;
+  /** Mobile only: close the drawer */
+  onDrawerClose?: () => void;
 }
 
 const navItems = [
@@ -26,17 +33,44 @@ const navItems = [
   { to: "/configuracoes", icon: Settings, label: "Configurações" },
 ] as const;
 
-export default function Sidebar({ variant = "expanded" }: SidebarProps) {
+export default function Sidebar({
+  variant = "expanded",
+  onCollapse,
+  onDrawerClose,
+}: SidebarProps) {
   const navigate = useNavigate();
   const showLabels = variant !== "collapsed";
   const logoVariant = variant === "collapsed" ? "icon" : "full";
-  // Fundo escuro nas variantes expanded/collapsed → texto da logo branco
   const logoColor = variant === "mobile" ? undefined : "#ffffff";
 
   return (
     <aside className={`sidebar sidebar--${variant}`} aria-label="Menu lateral">
       <div className="sidebar__logo">
         <Logo variant={logoVariant} size="md" color={logoColor} />
+
+        {/* Desktop: collapse / expand toggle */}
+        {(variant === "expanded" || variant === "collapsed") && onCollapse && (
+          <button
+            className="sidebar__collapse-btn"
+            onClick={onCollapse}
+            aria-label={variant === "expanded" ? "Recolher menu" : "Expandir menu"}
+          >
+            {variant === "expanded"
+              ? <ChevronLeft size={18} strokeWidth={2} />
+              : <ChevronRight size={18} strokeWidth={2} />}
+          </button>
+        )}
+
+        {/* Mobile drawer: close button */}
+        {variant === "mobile" && onDrawerClose && (
+          <button
+            className="sidebar__close-btn"
+            onClick={onDrawerClose}
+            aria-label="Fechar menu"
+          >
+            <X size={20} strokeWidth={2} />
+          </button>
+        )}
       </div>
 
       <nav className="sidebar__nav" aria-label="Navegação principal">
