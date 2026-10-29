@@ -4,7 +4,7 @@ import "./BottomNav.css";
 
 // Mobile bottom nav shows the 4 primary destinations (no Histórico / Configurações)
 const navItems = [
-  { to: "/",           icon: House,    label: "Início" },
+  { to: "/visao-geral", icon: House,    label: "Início" },
   { to: "/simulador",  icon: Wand2,    label: "Simulador" },
   { to: "/fluxo",      icon: Landmark, label: "Fluxo de caixa" },
   { to: "/assistente", icon: Bot,      label: "Assistente" },
@@ -17,7 +17,6 @@ export default function BottomNav() {
         <NavLink
           key={to}
           to={to}
-          end={to === "/"}
           className={({ isActive }) =>
             `bottom-nav__item${isActive ? " bottom-nav__item--active" : ""}`
           }

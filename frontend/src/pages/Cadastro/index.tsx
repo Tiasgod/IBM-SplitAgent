@@ -22,7 +22,7 @@ export default function Cadastro() {
     setError(null);
     try {
       await authService.cadastro({ nome, documento, email, senha });
-      navigate("/");
+      navigate("/visao-geral");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao criar conta. Tente novamente.");
     } finally {
