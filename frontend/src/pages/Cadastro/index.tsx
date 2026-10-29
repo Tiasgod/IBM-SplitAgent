@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/layout/Header";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import { GoogleSignInButton } from "../../components/ui/GoogleSignInButton";
+import { authService } from "../../services/auth.service";
 import "./Cadastro.css";
 
 export default function Cadastro() {
@@ -11,10 +13,21 @@ export default function Cadastro() {
   const [documento, setDocumento] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: register logic
+    setLoading(true);
+    setError(null);
+    try {
+      await authService.cadastro({ nome, documento, email, senha });
+      navigate("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao criar conta. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -28,7 +41,7 @@ export default function Cadastro() {
           <div className="cadastro-page__hero">
             <h1 className="cadastro-page__title">Cadastre-se</h1>
             <p className="cadastro-page__subtitle">
-              Cadastre-se para começar a usar o SpitAgent.
+              Crie sua conta para começar a usar o SplitAgent.
             </p>
           </div>
 
@@ -61,14 +74,28 @@ export default function Cadastro() {
                 autoComplete="new-password"
               />
 
+              {error && (
+                <p className="cadastro-page__error" role="alert">{error}</p>
+              )}
+
               <Button
                 variant="primary"
                 size="md"
                 type="submit"
                 className="cadastro-page__submit-btn"
+                disabled={loading}
               >
-                Criar Conta
+                {loading ? "Criando conta…" : "Criar Conta"}
               </Button>
+
+              {/* Divider */}
+              <div className="cadastro-page__divider">
+                <span className="cadastro-page__divider-line" />
+                <span className="cadastro-page__divider-text">ou continue com</span>
+                <span className="cadastro-page__divider-line" />
+              </div>
+
+              <GoogleSignInButton onError={setError} />
             </form>
           </div>
 

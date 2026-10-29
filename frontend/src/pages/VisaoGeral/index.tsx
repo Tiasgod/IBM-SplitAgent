@@ -3,15 +3,19 @@ import { PageLayout } from "../../components/layout/PageLayout";
 import { Button } from "../../components/ui/Button";
 import { FinancialSummaryCard } from "./FinancialSummaryCard";
 import { CashFlowChart } from "./CashFlowChart";
+import { useAuth } from "../../hooks/useAuth";
 import "./VisaoGeral.css";
 
 export default function VisaoGeral() {
+  const { user } = useAuth();
+  const primeiroNome = user?.nome?.split(" ")[0] ?? "você";
+
   return (
     <PageLayout headerVariant="nav">
       <div className="visao-geral">
         {/* Page header */}
         <div className="visao-geral__page-header">
-          <p className="visao-geral__eyebrow">Olá, Fulana</p>
+          <p className="visao-geral__eyebrow">Olá, {primeiroNome}</p>
           <h1 className="visao-geral__title">Visão geral</h1>
         </div>
 

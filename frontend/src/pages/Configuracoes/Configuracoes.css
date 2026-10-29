@@ -94,8 +94,51 @@
   transition: opacity 0.15s ease;
 }
 
-.config__user-edit-btn:hover {
+.config__user-edit-btn:hover:not(:disabled) {
   opacity: 0.7;
+}
+
+.config__user-edit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Edit form inside the card ── */
+.config__user-card--editing {
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.config__user-edit-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.config__user-edit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  padding-top: 0.25rem;
+}
+
+.config__user-edit-btn--save {
+  color: var(--color-success, #1a7a4a);
+}
+
+.config__user-edit-btn--cancel {
+  color: var(--color-danger, #c0392b);
+}
+
+.config__edit-error {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger, #c0392b);
+  background: rgba(192, 57, 43, 0.08);
+  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
 }
 
 /* ─── Layout principal ───────────────────────────────────── */
@@ -178,6 +221,22 @@
   text-align: center;
 }
 
+.config__import-error {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger, #c0392b);
+  background: rgba(192, 57, 43, 0.08);
+  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
+}
+
+.config__import-success {
+  font-size: var(--font-size-sm);
+  color: var(--color-success, #1a7a4a);
+  background: rgba(26, 122, 74, 0.08);
+  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
+}
+
 /* ─── LGPD e Privacidade ─────────────────────────────────── */
 
 .config__lgpd-list {
@@ -218,8 +277,13 @@
   transition: background-color 0.15s ease;
 }
 
-.config__account-btn:hover {
+.config__account-btn:hover:not(:disabled) {
   background-color: #ffffff;
+}
+
+.config__account-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .config__account-btn-title {
@@ -231,6 +295,43 @@
 .config__account-btn-subtitle {
   font-size: var(--font-size-sm);
   color: var(--color-gray);
+}
+
+.config__account-btn--cancel {
+  background: var(--color-bg, #f7f8fa);
+  border-color: var(--color-border);
+}
+
+/* ─── Confirmação de exclusão ────────────────────────────── */
+
+.config__delete-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border: 1.5px solid var(--color-alert);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-bg-alert);
+}
+
+.config__delete-confirm-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.config__delete-confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.config__delete-error {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger, #c0392b);
+  background: rgba(192, 57, 43, 0.08);
+  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
 }
 
 /* ============================================================

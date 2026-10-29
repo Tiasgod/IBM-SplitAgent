@@ -70,6 +70,33 @@
   margin-top: var(--space-2);
 }
 
+.cadastro-page__error {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger, #c0392b);
+  background: rgba(192, 57, 43, 0.08);
+  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
+}
+
+/* ── Divider ── */
+.cadastro-page__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cadastro-page__divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.cadastro-page__divider-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+
 /* ── Login link ── */
 .cadastro-page__login {
   text-align: center;
