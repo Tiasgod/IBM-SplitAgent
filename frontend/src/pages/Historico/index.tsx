@@ -4,43 +4,8 @@ import { Link } from "react-router-dom";
 import { ChatShell } from "../../components/layout/ChatShell";
 import { Button } from "../../components/ui/Button";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { historicoService, type Decision } from "../../services/historico.service";
 import "./Historico.css";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-export interface Decision {
-  id: string;
-  date: string;
-  recommendation: string;
-  userChoice: string;
-  projectedResult: string;
-}
-
-// ─── Placeholder data (will come from backend) ────────────────────────────────
-
-const DECISIONS: Decision[] = [
-  {
-    id: "1",
-    date: "12/09/2026",
-    recommendation: "Antecipar recebíveis",
-    userChoice: "Antecipação parcial de R$ 15.000",
-    projectedResult: "Saldo mínimo sobe para R$ 18.000",
-  },
-  {
-    id: "2",
-    date: "03/09/2026",
-    recommendation: "Antecipar recebíveis",
-    userChoice: "Antecipação parcial de R$ 15.000",
-    projectedResult: "Saldo mínimo sobe para R$ 18.000",
-  },
-  {
-    id: "3",
-    date: "20/08/2026",
-    recommendation: "Reduzir despesas variáveis",
-    userChoice: "Corte de R$ 3.000 em fornecedores",
-    projectedResult: "Fluxo positivo por 45 dias",
-  },
-];
 
 const PERIOD_OPTIONS = [
   "Todos os períodos",
@@ -165,6 +130,41 @@ function EmptyState() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Historico() {
+  const [decisions, setDecisions] = useState<Decision[]>([]);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    historicoService
+      .listar()
+      .then(({ decisions, isEmpty }) => {
+        setDecisions(decisions);
+        setIsEmpty(isEmpty);
+      })
+      .catch((e: Error) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  function renderContent() {
+    if (loading) {
+      return <p className="historico__loading">Carregando...</p>;
+    }
+    if (error) {
+      return <p className="historico__error">Erro ao carregar histórico: {error}</p>;
+    }
+    if (isEmpty || decisions.length === 0) {
+      return <EmptyState />;
+    }
+    return (
+      <ul className="historico__list">
+        {decisions.map((d) => (
+          <DecisionCard key={d.id} decision={d} />
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ChatShell headerVariant="nav">
       <div className="historico">
@@ -177,15 +177,7 @@ export default function Historico() {
 
         <PeriodFilter />
 
-        {DECISIONS.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <ul className="historico__list">
-            {DECISIONS.map((d) => (
-              <DecisionCard key={d.id} decision={d} />
-            ))}
-          </ul>
-        )}
+        {renderContent()}
       </div>
     </ChatShell>
   );
