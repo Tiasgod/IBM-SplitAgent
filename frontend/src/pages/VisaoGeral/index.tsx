@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bot } from "lucide-react";
 import { PageLayout } from "../../components/layout/PageLayout";
@@ -5,71 +6,17 @@ import { Button } from "../../components/ui/Button";
 import { FinancialSummaryCard } from "./FinancialSummaryCard";
 import { CashFlowChart } from "./CashFlowChart";
 import { useAuth } from "../../hooks/useAuth";
+import {
+  calculosFinanceirosService,
+  type CashSituation,
+  type RiskPeriod,
+  type VisaoGeralPageData,
+} from "../../services/calculos-financeiros.service";
 import "./VisaoGeral.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Re-exports for CashFlowChart.tsx (imports CashFlowPoint & RiskPeriod from "./index") ──
 
-export type CashSituation = "saudavel" | "atencao" | "critica";
-
-export interface CashFlowPoint {
-  day: string;
-  value: number;
-}
-
-export interface RiskPeriod {
-  startDay: string;
-  endDay: string;
-  totalOutflows: number;
-}
-
-export interface FinancialSummary {
-  estimatedNet: number;
-  totalSold: number;
-  estimatedTaxes: number;
-  netValue: number;
-  currentBalance: number;
-}
-
-export interface VisaoGeralData {
-  userName: string;
-  summary: FinancialSummary;
-  projectionPoints: CashFlowPoint[];
-  minimumBalance: number;
-  lowestBalance: number;
-  lowestBalanceDay: string;
-  riskPeriods: RiskPeriod[];
-  situation: CashSituation;
-}
-
-// ─── Placeholder data (will come from backend) ────────────────────────────────
-
-const VISAO_GERAL_DATA: VisaoGeralData = {
-  userName: "Fulana",
-  summary: {
-    estimatedNet:   14000,
-    totalSold:      84200,
-    estimatedTaxes: 84200,
-    netValue:       84200,
-    currentBalance: 84200,
-  },
-  projectionPoints: [
-    { day: "Hoje",   value: 55 },
-    { day: "Dia 5",  value: 50 },
-    { day: "Dia 10", value: 38 },
-    { day: "Dia 15", value: 28 },
-    { day: "Dia 20", value: 24 },
-    { day: "Dia 22", value: 26 },
-    { day: "Dia 25", value: 34 },
-    { day: "Dia 30", value: 42 },
-  ],
-  minimumBalance: 25,
-  lowestBalance: 24,
-  lowestBalanceDay: "Dia 20",
-  riskPeriods: [
-    { startDay: "Dia 10", endDay: "Dia 22", totalOutflows: 41000 },
-  ],
-  situation: "atencao",
-};
+export type { CashSituation, CashFlowPoint, RiskPeriod } from "../../services/calculos-financeiros.service";
 
 // ─── Alert sub-component ──────────────────────────────────────────────────────
 
@@ -97,7 +44,7 @@ function CashAlertCard({
 
   const desc = isCritica
     ? `Contas a pagar somam R$ ${outflowsFormatted} mil nesse período. Ação imediata recomendada.`
-    : `Contas a pagar somam R$ ${outflowsFormatted} mil nesse período. Quer ver o que fazer?`;
+    : `Contas ar somam R$ ${outflowsFormatted} mil nesse período. Quer ver o que fazer?`;
 
   return (
     <div className={`visao-geral__alert-card ${modifierClass}`}>
@@ -125,7 +72,43 @@ function CashAlertCard({
 export default function VisaoGeral() {
   const { user } = useAuth();
   const primeiroNome = user?.nome?.split(" ")[0] ?? "você";
-  const { summary, projectionPoints, minimumBalance, riskPeriods, situation } = VISAO_GERAL_DATA;
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<VisaoGeralPageData | null>(null);
+
+  function loadData() {
+    setLoading(true);
+    setError(null);
+    calculosFinanceirosService
+      .buscarVisaoGeral()
+      .then(setData)
+      .catch((e: Error) => setError(e.message))
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    loadData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <PageLayout headerVariant="nav">
+        <p style={{ textAlign: "center" }}>Carregando...</p>
+      </PageLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageLayout headerVariant="nav">
+        <p style={{ textAlign: "center" }}>{error}</p>
+      </PageLayout>
+    );
+  }
+
+  const { summary, projectionPoints, minimumBalance, riskPeriods, situation } = data!;
 
   return (
     <PageLayout headerVariant="nav">

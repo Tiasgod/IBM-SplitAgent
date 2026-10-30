@@ -1,11 +1,62 @@
 import { useState, useRef, useEffect } from "react";
-import { Lightbulb, ListChecks, TrendingUp, CalendarDays, ChevronDown, Bot } from "lucide-react";
+import { Lightbulb, TrendingUp, CalendarDays, ChevronDown, Calculator, Tag, DollarSign, Landmark, Banknote } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ChatShell } from "../../components/layout/ChatShell";
 import { Button } from "../../components/ui/Button";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { historicoService, type Decision } from "../../services/historico.service";
 import "./Historico.css";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface Simulation {
+  id: string;
+  date: string;
+  transactionType: string;
+  simulatedValue: number;
+  taxRegime: string;
+  estimatedTax: number;
+  aliquota: number;
+  totalSaleValue: number;
+  netReceivedValue: number;
+}
+
+// ─── Mock data ────────────────────────────────────────────────────────────────
+
+const MOCK_SIMULATIONS: Simulation[] = [
+  {
+    id: "1",
+    date: "28/10/2026",
+    transactionType: "Venda",
+    simulatedValue: 12000,
+    taxRegime: "Simples Nacional (~6%)",
+    estimatedTax: 720,
+    aliquota: 6,
+    totalSaleValue: 12000,
+    netReceivedValue: 11280,
+  },
+  {
+    id: "2",
+    date: "25/10/2026",
+    transactionType: "Venda",
+    simulatedValue: 5000,
+    taxRegime: "Lucro Presumido (~13,33%)",
+    estimatedTax: 666.5,
+    aliquota: 13.33,
+    totalSaleValue: 5000,
+    netReceivedValue: 4333.5,
+  },
+  {
+    id: "3",
+    date: "20/10/2026",
+    transactionType: "Despesa",
+    simulatedValue: 8500,
+    taxRegime: "Lucro Real (~15%)",
+    estimatedTax: 1275,
+    aliquota: 15,
+    totalSaleValue: 8500,
+    netReceivedValue: 7225,
+  },
+];
 
 const PERIOD_OPTIONS = [
   "Todos os períodos",
@@ -16,28 +67,65 @@ const PERIOD_OPTIONS = [
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function DecisionCard({ decision }: { decision: Decision }) {
+function SimulationCard({ simulation }: { simulation: Simulation }) {
+  const fmt = (value: number) =>
+    value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
   return (
     <li className="historico__entry">
-      <span className="historico__date">{decision.date}</span>
+      <span className="historico__date">{simulation.date}</span>
       <div className="historico__card">
+        {/* Grupo 1 — Dados da operação */}
         <div className="historico__row">
           <span className="historico__row-badge historico__row-badge--gold" aria-hidden="true">
-            <Lightbulb size={18} strokeWidth={1.75} />
+            <Tag size={18} strokeWidth={1.75} />
           </span>
           <div className="historico__row-body">
-            <span className="historico__row-label">Recomendação do Split Payment:</span>
-            <span className="historico__row-value">{decision.recommendation}</span>
+            <span className="historico__row-label">Tipo de transação</span>
+            <span className="historico__row-value">{simulation.transactionType}</span>
           </div>
         </div>
 
         <div className="historico__row">
           <span className="historico__row-badge historico__row-badge--dark" aria-hidden="true">
-            <ListChecks size={18} strokeWidth={1.75} />
+            <CalendarDays size={18} strokeWidth={1.75} />
           </span>
           <div className="historico__row-body">
-            <span className="historico__row-label">Sua decisão</span>
-            <span className="historico__row-value">{decision.userChoice}</span>
+            <span className="historico__row-label">Data</span>
+            <span className="historico__row-value">{simulation.date}</span>
+          </div>
+        </div>
+
+        <div className="historico__row">
+          <span className="historico__row-badge historico__row-badge--dark" aria-hidden="true">
+            <DollarSign size={18} strokeWidth={1.75} />
+          </span>
+          <div className="historico__row-body">
+            <span className="historico__row-label">Valor simulado</span>
+            <span className="historico__row-value">{fmt(simulation.simulatedValue)}</span>
+          </div>
+        </div>
+
+        <div className="historico__row">
+          <span className="historico__row-badge historico__row-badge--dark" aria-hidden="true">
+            <Landmark size={18} strokeWidth={1.75} />
+          </span>
+          <div className="historico__row-body">
+            <span className="historico__row-label">Regime tributário</span>
+            <span className="historico__row-value">{simulation.taxRegime}</span>
+          </div>
+        </div>
+
+        {/* Grupo 2 — Resultado da simulação */}
+        <div className="historico__row">
+          <span className="historico__row-badge historico__row-badge--gold" aria-hidden="true">
+            <Lightbulb size={18} strokeWidth={1.75} />
+          </span>
+          <div className="historico__row-body">
+            <span className="historico__row-label">Impostos estimados</span>
+            <span className="historico__row-value">
+              {fmt(simulation.estimatedTax)} · Alíquota: {simulation.aliquota}%
+            </span>
           </div>
         </div>
 
@@ -46,8 +134,18 @@ function DecisionCard({ decision }: { decision: Decision }) {
             <TrendingUp size={18} strokeWidth={1.75} />
           </span>
           <div className="historico__row-body">
-            <span className="historico__row-label">Resultado projeto</span>
-            <span className="historico__row-value">{decision.projectedResult}</span>
+            <span className="historico__row-label">Valor total vendido</span>
+            <span className="historico__row-value">{fmt(simulation.totalSaleValue)}</span>
+          </div>
+        </div>
+
+        <div className="historico__row">
+          <span className="historico__row-badge historico__row-badge--teal" aria-hidden="true">
+            <Banknote size={18} strokeWidth={1.75} />
+          </span>
+          <div className="historico__row-body">
+            <span className="historico__row-label">Valor recebido líquido</span>
+            <span className="historico__row-value">{fmt(simulation.netReceivedValue)}</span>
           </div>
         </div>
       </div>
@@ -115,11 +213,11 @@ function EmptyState() {
 
   return (
     <div className="historico__empty">
-      <p className="historico__empty-text">Ainda não há histórico registrado...</p>
+      <p className="historico__empty-text">Nenhuma simulação realizada ainda...</p>
       {isDesktop && (
-        <Link to="/assistente" className="historico__empty-cta">
-          <Button variant="cta" icon={<Bot size={18} strokeWidth={1.75} />}>
-            Falar com SplitAgent
+        <Link to="/simulador" className="historico__empty-cta">
+          <Button variant="cta" icon={<Calculator size={18} strokeWidth={1.75} />}>
+            Fazer uma simulação
           </Button>
         </Link>
       )}
@@ -130,36 +228,14 @@ function EmptyState() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Historico() {
-  const [decisions, setDecisions] = useState<Decision[]>([]);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    historicoService
-      .listar()
-      .then(({ decisions, isEmpty }) => {
-        setDecisions(decisions);
-        setIsEmpty(isEmpty);
-      })
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
-
   function renderContent() {
-    if (loading) {
-      return <p className="historico__loading">Carregando...</p>;
-    }
-    if (error) {
-      return <p className="historico__error">Erro ao carregar histórico: {error}</p>;
-    }
-    if (isEmpty || decisions.length === 0) {
+    if (MOCK_SIMULATIONS.length === 0) {
       return <EmptyState />;
     }
     return (
       <ul className="historico__list">
-        {decisions.map((d) => (
-          <DecisionCard key={d.id} decision={d} />
+        {MOCK_SIMULATIONS.map((s) => (
+          <SimulationCard key={s.id} simulation={s} />
         ))}
       </ul>
     );
@@ -169,9 +245,9 @@ export default function Historico() {
     <ChatShell headerVariant="nav">
       <div className="historico">
         <div className="historico__page-header">
-          <h1 className="historico__title">Histórico</h1>
+          <h1 className="historico__title">Histórico de Simulações</h1>
           <p className="historico__subtitle">
-            Acompanhe as recomendações que você aceitou e os resultados projetados
+            Veja todas as simulações de transações que você realizou
           </p>
         </div>
 

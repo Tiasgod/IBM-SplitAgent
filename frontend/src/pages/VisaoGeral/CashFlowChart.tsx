@@ -1,20 +1,31 @@
 import type { CashFlowPoint, RiskPeriod } from "./index";
 import "./CashFlowChart.css";
 
-// Y-axis labels (in thousands)
-const Y_LABELS = [60, 40, 20, 0];
-
 const PAD_LEFT = 52;  // space for y-axis labels
 const PAD_RIGHT = 16;
 const PAD_TOP = 16;
 const PAD_BOTTOM = 32; // space for x-axis labels
 
-/**
- * Maps a data value (in thousands) to an SVG y-coordinate.
- * viewBox height is 200, data range 0–65.
- */
+/** Maps a data value (in thousands) to an SVG y-coordinate. */
 function yCoord(value: number, height: number, minVal: number, maxVal: number) {
   return PAD_TOP + ((maxVal - value) / (maxVal - minVal)) * (height - PAD_TOP - PAD_BOTTOM);
+}
+
+/** Returns a "nice" round step for Y-axis labels given a data range. */
+function niceStep(range: number): number {
+  const raw = range / 4;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(raw || 1)));
+  return Math.ceil(raw / magnitude) * magnitude || 1;
+}
+
+/** Builds evenly-spaced Y-axis label values from min to max (top→bottom). */
+function buildYLabels(min: number, max: number): number[] {
+  const step = niceStep(max - min);
+  const labels: number[] = [];
+  for (let v = Math.ceil(min / step) * step; v <= max; v += step) {
+    labels.push(Math.round(v));
+  }
+  return labels.reverse();
 }
 
 function xCoord(index: number, total: number, width: number) {
@@ -30,8 +41,9 @@ interface CashFlowChartProps {
 export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods }: CashFlowChartProps) {
   const WIDTH = 600;
   const HEIGHT = 200;
-  const MIN_DATA = 0;
-  const MAX_DATA = 65;
+  const MIN_DATA = Math.min(0, ...dataPoints.map(p => p.value));
+  const MAX_DATA = Math.max(...dataPoints.map(p => p.value), minimumBalance) * 1.1;
+  const Y_LABELS = buildYLabels(MIN_DATA, MAX_DATA);
 
   const points = dataPoints.map((d, i) => ({
     ...d,
@@ -75,6 +87,14 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
               <stop offset="0%"   stopColor="#0E7573" stopOpacity="0.35" />
               <stop offset="100%" stopColor="#0E7573" stopOpacity="0.04" />
             </linearGradient>
+            <clipPath id="chartClip">
+              <rect
+                x={PAD_LEFT}
+                y={PAD_TOP}
+                width={WIDTH - PAD_LEFT - PAD_RIGHT}
+                height={HEIGHT - PAD_TOP - PAD_BOTTOM}
+              />
+            </clipPath>
           </defs>
 
           {/* Y-axis grid lines + labels */}
@@ -98,7 +118,7 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
                   fontSize="10"
                   fill="#5B6B7C"
                 >
-                  {val > 0 ? `${val} mil` : "0"}
+                  {val !== 0 ? `${val} mil` : "0"}
                 </text>
               </g>
             );
@@ -147,7 +167,7 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
           })}
 
           {/* Area fill */}
-          <path d={areaPath} fill="url(#areaGradient)" />
+          <path d={areaPath} fill="url(#areaGradient)" clipPath="url(#chartClip)" />
 
           {/* Line */}
           <polyline
@@ -157,6 +177,7 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
             strokeWidth="2.5"
             strokeLinejoin="round"
             strokeLinecap="round"
+            clipPath="url(#chartClip)"
           />
 
           {/* Minimum value dashed line */}

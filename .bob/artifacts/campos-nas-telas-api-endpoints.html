@@ -1,0 +1,482 @@
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Campos × API × Endpoints</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    background: #ffffff;
+    color: #1f2328;
+    padding: 32px 24px;
+  }
+  .page { max-width: 820px; margin: 0 auto; }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: #57606a;
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #57606a;
+    margin-bottom: 4px;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: #57606a;
+    margin-bottom: 10px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead tr {
+    background: #f7f8fa;
+  }
+  th {
+    text-align: left;
+    padding: 9px 14px;
+    font-weight: 600;
+    color: #1f2328;
+    border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f7f8fa; }
+  .field-screen {
+    font-weight: 500;
+    color: #1f2328;
+  }
+  .field-api {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    background: #f0f0f5;
+    color: #5a3e9e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .field-api.unused {
+    background: #f5f5f5;
+    color: #999;
+  }
+  .endpoint-pill {
+    display: inline-block;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .ep-get { background: #e6f4ea; color: #1a6632; }
+  .ep-post { background: #e8f0fe; color: #1a56c4; }
+  .ep-put { background: #fff4e5; color: #b35c00; }
+  .ep-delete { background: #fde8e8; color: #b91c1c; }
+  .badge-unused {
+    font-size: 10px;
+    color: #999;
+    font-style: italic;
+    margin-left: 4px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 28px 0;
+  }
+  .page-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .badge-vg { background: #ede9fe; color: #5b21b6; }
+  .badge-fc { background: #e0f2fe; color: #0369a1; }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 12px;
+    color: #57606a;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Campos nas Telas × API × Endpoints</h1>
+  <p class="subtitle">Mapeamento completo — Visão Geral e Fluxo de Caixa</p>
+
+  
+  <div class="section">
+    <span class="page-badge badge-vg">Visão Geral</span>
+    <div class="section-title">GET /api/v1/calculos-financeiros/visao-geral</div>
+    <div class="section-desc">Resumo financeiro + situação do caixa</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Líquido estimado</td>
+          <td><code class="field-api">valor_liquido_vendas</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Total vendido</td>
+          <td><code class="field-api">total_vendido</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Impostos estimados</td>
+          <td><code class="field-api">tributos_estimados</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Saldo atual</td>
+          <td><code class="field-api">saldo_atual</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Linha mínimo (gráfico)</td>
+          <td><code class="field-api">saldo_minimo_configurado</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Alerta (cor + visibilidade)</td>
+          <td><code class="field-api">situacao_caixa</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen"><span style="color:#999">—</span><span class="badge-unused">não exibido</span></td>
+          <td><code class="field-api unused">aliquota_tributaria_percentual</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen"><span style="color:#999">—</span><span class="badge-unused">não exibido</span></td>
+          <td><code class="field-api unused">menor_saldo_previsto</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen"><span style="color:#999">—</span><span class="badge-unused">não exibido</span></td>
+          <td><code class="field-api unused">observacao_tributaria</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/visao-geral</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <span class="page-badge badge-vg">Visão Geral</span>
+    <div class="section-title">GET /api/v1/calculos-financeiros/fluxo-caixa → dias[]</div>
+    <div class="section-desc">Pontos do gráfico de projeção e períodos de risco</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Label do eixo X ("Hoje" / "Dia N")</td>
+          <td><code class="field-api">dias[].data</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Altura da barra (gráfico)</td>
+          <td><code class="field-api">dias[].saldo_previsto</code> ÷1000</td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Barra vermelha / região de risco</td>
+          <td><code class="field-api">dias[].abaixo_minimo</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Alerta — "Contas a pagar somam R$ Xk"</td>
+          <td><code class="field-api">dias[].total_saidas</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <div class="section">
+    <span class="page-badge badge-fc">Fluxo de Caixa</span>
+    <div class="section-title">GET /api/v1/calculos-financeiros/fluxo-caixa</div>
+    <div class="section-desc">BalanceCard + ProjectionCard</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Saldo disponível</td>
+          <td><code class="field-api">saldo_atual</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Menor saldo previsto</td>
+          <td><code class="field-api">menor_saldo_previsto</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Próximos X dias</td>
+          <td><code class="field-api">dias.length</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Entradas previstas</td>
+          <td><code class="field-api">dias[].total_entradas_liquidas</code> (soma)</td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Saídas previstas</td>
+          <td><code class="field-api">dias[].total_saidas</code> (soma)</td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Gráfico de barras — label</td>
+          <td><code class="field-api">dias[].data</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Gráfico de barras — valor</td>
+          <td><code class="field-api">dias[].saldo_previsto</code> ÷1000</td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Gráfico de barras — cor (vermelho/verde)</td>
+          <td><code class="field-api">dias[].abaixo_minimo</code></td>
+          <td><span class="endpoint-pill ep-get">calculos-financeiros/fluxo-caixa</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <span class="page-badge badge-fc">Fluxo de Caixa</span>
+    <div class="section-title">GET /api/v1/movimentacoes</div>
+    <div class="section-desc">MovementsCard — movimentações financeiras previstas</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Título do item</td>
+          <td><code class="field-api">movimentacoes[].descricao</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Subtítulo ("Entrada prevista" / "Despesa prevista")</td>
+          <td><code class="field-api">movimentacoes[].tipo</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Data do item</td>
+          <td><code class="field-api">movimentacoes[].data</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Valor (+ entrada / − saída)</td>
+          <td><code class="field-api">movimentacoes[].valor</code> + <code class="field-api">tipo</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen"><span style="color:#999">—</span><span class="badge-unused">não exibido</span></td>
+          <td><code class="field-api unused">movimentacoes[].origem</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <span class="page-badge badge-fc">Fluxo de Caixa</span>
+    <div class="section-title">GET /api/v1/movimentacoes/manuais</div>
+    <div class="section-desc">MovementsCard — movimentações inseridas manualmente</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Título do item</td>
+          <td><code class="field-api">descricao</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Subtítulo ("Entrada prevista" / "Despesa prevista")</td>
+          <td><code class="field-api">tipo</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Data do item</td>
+          <td><code class="field-api">data</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Valor (+ entrada / − saída)</td>
+          <td><code class="field-api">valor</code> + <code class="field-api">tipo</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen"><span style="color:#999">—</span><span class="badge-unused">não exibido</span></td>
+          <td><code class="field-api unused">categoria</code></td>
+          <td><span class="endpoint-pill ep-get">movimentacoes/manuais</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <div class="section">
+    <span class="page-badge badge-fc">Fluxo de Caixa</span>
+    <div class="section-title">ManualEntryCard — CRUD Saldo Inicial</div>
+    <div class="section-desc">Formulários de inserção, edição e exclusão de saldo</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Data de referência</td>
+          <td><code class="field-api">data_referencia</code></td>
+          <td><span class="endpoint-pill ep-post">POST saldo-inicial</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Saldo</td>
+          <td><code class="field-api">saldo</code></td>
+          <td><span class="endpoint-pill ep-post">POST saldo-inicial</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Lista de saldos (data + valor)</td>
+          <td><code class="field-api">id</code> · <code class="field-api">data_referencia</code> · <code class="field-api">saldo</code></td>
+          <td><span class="endpoint-pill ep-get">GET saldo-inicial</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Editar saldo (data + valor)</td>
+          <td><code class="field-api">data_referencia</code> · <code class="field-api">saldo</code></td>
+          <td><span class="endpoint-pill ep-put">PUT saldo-inicial/{id}</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Excluir saldo</td>
+          <td>— (204 No Content)</td>
+          <td><span class="endpoint-pill ep-delete">DELETE saldo-inicial/{id}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <span class="page-badge badge-fc">Fluxo de Caixa</span>
+    <div class="section-title">ManualEntryCard — CRUD Movimentação Manual</div>
+    <div class="section-desc">Formulários de inserção, edição e exclusão de movimentação</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campo na tela</th>
+          <th>Campo na API</th>
+          <th>Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-screen">Descrição</td>
+          <td><code class="field-api">descricao</code></td>
+          <td><span class="endpoint-pill ep-post">POST movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Valor</td>
+          <td><code class="field-api">valor</code></td>
+          <td><span class="endpoint-pill ep-post">POST movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Data</td>
+          <td><code class="field-api">data</code></td>
+          <td><span class="endpoint-pill ep-post">POST movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Tipo (entrada / saída)</td>
+          <td><code class="field-api">tipo</code></td>
+          <td><span class="endpoint-pill ep-post">POST movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Categoria (opcional)</td>
+          <td><code class="field-api">categoria</code></td>
+          <td><span class="endpoint-pill ep-post">POST movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Lista de movimentações</td>
+          <td><code class="field-api">id</code> · <code class="field-api">data</code> · <code class="field-api">descricao</code> · <code class="field-api">valor</code> · <code class="field-api">tipo</code> · <code class="field-api">categoria</code></td>
+          <td><span class="endpoint-pill ep-get">GET movimentacoes/manuais</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Editar movimentação</td>
+          <td>campos opcionais: <code class="field-api">descricao?</code> · <code class="field-api">valor?</code> · <code class="field-api">data?</code> · <code class="field-api">tipo?</code> · <code class="field-api">categoria?</code></td>
+          <td><span class="endpoint-pill ep-put">PUT movimentacoes/manuais/{id}</span></td>
+        </tr>
+        <tr>
+          <td class="field-screen">Excluir movimentação</td>
+          <td>— (204 No Content)</td>
+          <td><span class="endpoint-pill ep-delete">DELETE movimentacoes/manuais/{id}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

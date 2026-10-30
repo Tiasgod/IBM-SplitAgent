@@ -309,3 +309,316 @@
     font-size: 2rem;
   }
 }
+
+/* ============================================================
+   MANUAL ENTRY CARD
+   ============================================================ */
+
+.manual-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+
+.manual-entry__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.manual-entry__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.manual-entry__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.manual-entry__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  line-height: 1.5;
+}
+
+.manual-entry__toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.manual-entry__toggle:hover {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-secondary);
+}
+
+.manual-entry__toggle--open {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-gray);
+}
+
+/* ─── Body colapsável ───────────────────────────────────────── */
+
+.manual-entry__body {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ─── Tabs ──────────────────────────────────────────────────── */
+
+.manual-entry__tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1.5px solid var(--color-border);
+}
+
+.manual-entry__tab {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.manual-entry__tab:hover {
+  color: var(--color-text);
+}
+
+.manual-entry__tab--active {
+  color: var(--color-secondary);
+  border-bottom-color: var(--color-secondary);
+  font-weight: 700;
+}
+
+/* ─── Form ──────────────────────────────────────────────────── */
+
+.manual-entry__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
+}
+
+.manual-entry__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Row — dois campos lado a lado quando há espaço */
+.manual-entry__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 480px) {
+  .manual-entry__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.manual-entry__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ─── Feedback de sucesso ───────────────────────────────────── */
+
+.manual-entry__success {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-success);
+  text-align: center;
+  padding: var(--space-4) 0;
+}
+
+/* ─── Manual Entry — lista de registros ─────────────────────── */
+
+.manual-entry__records {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.manual-entry__records-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .manual-entry__records-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.manual-entry__records-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.manual-entry__records-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.manual-entry__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.manual-entry__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.manual-entry__list-item:last-child {
+  border-bottom: none;
+}
+
+.manual-entry__list-item--editing {
+  flex-direction: column;
+  align-items: stretch;
+  padding: var(--space-4) 0;
+}
+
+.manual-entry__list-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.manual-entry__list-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.manual-entry__list-category {
+  font-weight: 400;
+  color: var(--color-gray);
+}
+
+.manual-entry__list-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.manual-entry__list-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray);
+}
+
+.manual-entry__list-value {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.manual-entry__list-value--positive {
+  color: var(--color-secondary);
+}
+
+.manual-entry__list-value--negative {
+  color: var(--color-alert);
+}
+
+.manual-entry__list-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* Icon buttons (edit / delete) */
+.manual-entry__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-gray);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.manual-entry__icon-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.manual-entry__icon-btn--danger:hover {
+  background: var(--color-bg-alert);
+  color: var(--color-alert);
+}
+
+/* Confirm delete inline */
+.manual-entry__confirm-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-alert);
+}
+
+/* Error / empty feedback */
+.manual-entry__error {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+}
+
+.manual-entry__empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  padding: var(--space-2) 0;
+}

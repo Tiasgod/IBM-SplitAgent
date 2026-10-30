@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Lightbulb } from "lucide-react";
 import {
   BarChart,
@@ -9,99 +10,23 @@ import {
   Cell,
 } from "recharts";
 import { ChatShell } from "../../components/layout/ChatShell";
+import { ManualEntryCard } from "./ManualEntryCard";
+import {
+  calculosFinanceirosService,
+  type FluxoCaixaPageData,
+  type BalanceSummary,
+  type CashProjection,
+  type Movement,
+} from "../../services/calculos-financeiros.service";
 import "./FluxoDeCaixa.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-
-export interface BalanceSummary {
-  availableBalance: number;
-  lowestForecast: number;
-  forecastDays: number;
-}
-
-export interface CashProjection {
-  totalInflows: number;
-  totalOutflows: number;
-  chartData: CashChartPoint[];
-}
-
-export interface CashChartPoint {
-  label: string;
-  value: number;
-  isNegative?: boolean;
-}
-
-export interface Movement {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  amount: number; // positive = entrada, negative = saída
-}
 
 export interface AgentAlert {
   message: string;
   linkLabel: string;
   linkHref: string;
 }
-
-// ─── Placeholder data (will come from backend) ────────────────────────────────
-
-const BALANCE_SUMMARY: BalanceSummary = {
-  availableBalance: 18500,
-  lowestForecast: 6200,
-  forecastDays: 30,
-};
-
-const CASH_PROJECTION: CashProjection = {
-  totalInflows: 24000,
-  totalOutflows: 36000,
-  chartData: [
-    { label: "Hoje",  value: 18500 },
-    { label: "Dia 7", value: 14800 },
-    { label: "Dia 15", value: 6200, isNegative: true },
-    { label: "Dia 22", value: 9700 },
-    { label: "Dia 30", value: 11500 },
-  ],
-};
-
-const MOVEMENTS: Movement[] = [
-  {
-    id: "1",
-    title: "Aluguel",
-    description: "Despesa prevista",
-    date: "23 out.",
-    amount: -3200,
-  },
-  {
-    id: "2",
-    title: "Recebimento de vendas",
-    description: "Entrada prevista",
-    date: "25 out.",
-    amount: 8500,
-  },
-  {
-    id: "3",
-    title: "Fornecedor",
-    description: "Despesa prevista",
-    date: "28 out.",
-    amount: -6000,
-  },
-  {
-    id: "4",
-    title: "Recebimento de vendas",
-    description: "Entrada prevista",
-    date: "29 out.",
-    amount: 1000,
-  },
-  {
-    id: "5",
-    title: "Compra de máquina",
-    description: "Despesa prevista",
-    date: "30 out.",
-    amount: -2000,
-  },
-];
 
 const AGENT_ALERT: AgentAlert = {
   message:
@@ -266,6 +191,40 @@ function MovementsCard({ movements }: { movements: Movement[] }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FluxoDeCaixa() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<FluxoCaixaPageData | null>(null);
+
+  function loadData() {
+    setLoading(true);
+    calculosFinanceirosService
+      .buscarFluxoCaixa()
+      .then(setData)
+      .catch((e: Error) => setError(e.message))
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    loadData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <ChatShell headerVariant="nav">
+        <p style={{ textAlign: "center" }}>Carregando...</p>
+      </ChatShell>
+    );
+  }
+
+  if (error) {
+    return (
+      <ChatShell headerVariant="nav">
+        <p style={{ textAlign: "center" }}>{error}</p>
+      </ChatShell>
+    );
+  }
+
   return (
     <ChatShell headerVariant="nav">
       <div className="fluxo">
@@ -279,14 +238,17 @@ export default function FluxoDeCaixa() {
         <div className="fluxo__layout">
           {/* Coluna esquerda */}
           <div className="fluxo__col-left">
-            <BalanceCard data={BALANCE_SUMMARY} />
-            <ProjectionCard data={CASH_PROJECTION} />
+            <BalanceCard data={data!.balance} />
+            <ProjectionCard data={data!.projection} />
             <AgentAlertCard alert={AGENT_ALERT} />
           </div>
 
           {/* Coluna direita */}
-          <MovementsCard movements={MOVEMENTS} />
+          <MovementsCard movements={data!.movements} />
         </div>
+
+        {/* Inserção manual de dados */}
+        <ManualEntryCard onSaved={loadData} />
       </div>
     </ChatShell>
   );
