@@ -153,9 +153,41 @@ function SimulationCard({ simulation }: { simulation: Simulation }) {
   );
 }
 
-function PeriodFilter() {
+// ─── Filter helpers ───────────────────────────────────────────────────────────
+
+function parseBRDate(dateStr: string): Date {
+  const [day, month, year] = dateStr.split("/").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function filterByPeriod(simulations: Simulation[], period: string): Simulation[] {
+  if (period === "Todos os períodos") return simulations;
+
+  const now = new Date();
+  const cutoff = new Date(now);
+
+  if (period === "Últimos 30 dias") {
+    cutoff.setDate(now.getDate() - 30);
+  } else if (period === "Últimos 3 meses") {
+    cutoff.setMonth(now.getMonth() - 3);
+  } else if (period === "Últimos 6 meses") {
+    cutoff.setMonth(now.getMonth() - 6);
+  } else {
+    return simulations;
+  }
+
+  return simulations.filter((s) => parseBRDate(s.date) >= cutoff);
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+interface PeriodFilterProps {
+  selected: string;
+  onChange: (value: string) => void;
+}
+
+function PeriodFilter({ selected, onChange }: PeriodFilterProps) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(PERIOD_OPTIONS[0]);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -195,7 +227,7 @@ function PeriodFilter() {
               aria-selected={option === selected}
               className={`historico__filter-option${option === selected ? " historico__filter-option--active" : ""}`}
               onClick={() => {
-                setSelected(option);
+                onChange(option);
                 setOpen(false);
               }}
             >
@@ -204,6 +236,14 @@ function PeriodFilter() {
           ))}
         </ul>
       )}
+    </div>
+  );
+}
+
+function NoResults() {
+  return (
+    <div className="historico__empty">
+      <p className="historico__empty-text">Nenhuma simulação neste período.</p>
     </div>
   );
 }
@@ -228,13 +268,19 @@ function EmptyState() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Historico() {
+  const [period, setPeriod] = useState(PERIOD_OPTIONS[0]);
+
   function renderContent() {
     if (MOCK_SIMULATIONS.length === 0) {
       return <EmptyState />;
     }
+    const filtered = filterByPeriod(MOCK_SIMULATIONS, period);
+    if (filtered.length === 0) {
+      return <NoResults />;
+    }
     return (
       <ul className="historico__list">
-        {MOCK_SIMULATIONS.map((s) => (
+        {filtered.map((s) => (
           <SimulationCard key={s.id} simulation={s} />
         ))}
       </ul>
@@ -251,7 +297,7 @@ export default function Historico() {
           </p>
         </div>
 
-        <PeriodFilter />
+        <PeriodFilter selected={period} onChange={setPeriod} />
 
         {renderContent()}
       </div>
