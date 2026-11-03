@@ -85,7 +85,7 @@ export const sessionStorage = {
  * request payload) or after a successful PUT /me update.
  */
 export async function fetchAndStoreMe(): Promise<SessionUser> {
-  const res = await api.request<UsuarioResponse>("/api/v1/acesso/me");
+  const res = await api.request<UsuarioResponse>("/api/v1/acesso/me", { skipRedirectOn401: true });
   const current = sessionStorage.getUser();
   // Preserve existing documento — the API never returns it in GET /me
   const merged: SessionUser = { ...current, ...res };

@@ -23,6 +23,8 @@ interface RequestOptions {
   blob?: boolean;
   /** When true, skip attaching the Authorization header (used for auth endpoints). */
   public?: boolean;
+  /** When true, a 401 response throws normally instead of redirecting to /login. */
+  skipRedirectOn401?: boolean;
 }
 
 async function request<T>(
@@ -52,7 +54,7 @@ async function request<T>(
 
   const res = await fetch(`${BASE_URL}${path}`, init);
 
-  if (res.status === 401 && !options.public) {
+  if (res.status === 401 && !options.public && !options.skipRedirectOn401) {
     handleUnauthorized();
   }
 
@@ -63,6 +65,9 @@ async function request<T>(
       // FastAPI 422 shape: { detail: [{ msg, loc, ... }] }
       if (Array.isArray(err?.detail)) {
         message = err.detail.map((d: { msg?: string }) => d.msg ?? JSON.stringify(d)).join("; ");
+      } else if (typeof err?.detail === "string") {
+        // FastAPI 409/4xx shape: { detail: "mensagem" }
+        message = err.detail;
       } else {
         // SplitAgent API shape: { mensagem: "...", erros: [...] }
         message = err?.mensagem ?? err?.message ?? err?.error ?? message;
@@ -100,6 +105,8 @@ async function requestForm<T>(path: string, formData: FormData): Promise<T> {
       const err = await res.json();
       if (Array.isArray(err?.detail)) {
         message = err.detail.map((d: { msg?: string }) => d.msg ?? JSON.stringify(d)).join("; ");
+      } else if (typeof err?.detail === "string") {
+        message = err.detail;
       } else {
         message = err?.mensagem ?? err?.message ?? err?.error ?? message;
       }
