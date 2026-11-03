@@ -39,10 +39,13 @@ interface CashFlowChartProps {
 }
 
 export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods }: CashFlowChartProps) {
+  if (!dataPoints || dataPoints.length < 2) return null;
+
   const WIDTH = 600;
   const HEIGHT = 200;
   const MIN_DATA = Math.min(0, ...dataPoints.map(p => p.value));
-  const MAX_DATA = Math.max(...dataPoints.map(p => p.value), minimumBalance) * 1.1;
+  const rawMax = Math.max(...dataPoints.map(p => p.value), minimumBalance) * 1.1;
+  const MAX_DATA = rawMax === MIN_DATA ? MIN_DATA + 1 : rawMax;
   const Y_LABELS = buildYLabels(MIN_DATA, MAX_DATA);
 
   const points = dataPoints.map((d, i) => ({
@@ -98,10 +101,10 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
           </defs>
 
           {/* Y-axis grid lines + labels */}
-          {Y_LABELS.map((val) => {
+          {Y_LABELS.map((val, idx) => {
             const y = yCoord(val, HEIGHT, MIN_DATA, MAX_DATA);
             return (
-              <g key={val}>
+              <g key={`ylabel-${idx}-${val}`}>
                 <line
                   x1={PAD_LEFT}
                   y1={y}
@@ -215,9 +218,9 @@ export function CashFlowChart({ points: dataPoints, minimumBalance, riskPeriods 
           ))}
 
           {/* X-axis labels — only show first, middle, last */}
-          {[0, Math.floor((dataPoints.length - 1) / 2), dataPoints.length - 1].map((i) => (
+          {[...new Set([0, Math.floor((dataPoints.length - 1) / 2), dataPoints.length - 1])].map((i) => (
             <text
-              key={i}
+              key={`xlabel-${i}`}
               x={points[i].x}
               y={HEIGHT - 4}
               textAnchor="middle"

@@ -52,7 +52,6 @@ export default function Configuracoes() {
   // ── Edit profile state ──
   const [editing, setEditing] = useState(false);
   const [editNome, setEditNome] = useState("");
-  const [editDocumento, setEditDocumento] = useState("");
   const [editEmail, setEditEmail] = useState("");
   const [saving, setSaving] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
@@ -71,7 +70,6 @@ export default function Configuracoes() {
 
   function handleOpenEdit() {
     setEditNome(user?.nome ?? "");
-    setEditDocumento(user?.documento ?? "");
     setEditEmail(user?.email ?? "");
     setEditError(null);
     setEditing(true);
@@ -88,7 +86,6 @@ export default function Configuracoes() {
     try {
       await authService.atualizarMe({
         nome: editNome.trim() || null,
-        documento: editDocumento.trim() || null,
         email: editEmail.trim() || null,
       });
       refresh();
@@ -153,7 +150,6 @@ export default function Configuracoes() {
 
         {/* ── Perfil ── */}
         <section className="config__section config__section--profile">
-          <h2 className="config__section-title config__section-title--name">{user?.nome ?? "—"}</h2>
 
           {editing ? (
             <div className="config__user-card config__user-card--editing">
@@ -163,13 +159,6 @@ export default function Configuracoes() {
                   value={editNome}
                   onChange={e => setEditNome(e.target.value)}
                   autoComplete="name"
-                  disabled={saving}
-                />
-                <Input
-                  label="CPF/CNPJ:"
-                  value={editDocumento}
-                  onChange={e => setEditDocumento(e.target.value)}
-                  autoComplete="off"
                   disabled={saving}
                 />
                 <Input
@@ -206,12 +195,12 @@ export default function Configuracoes() {
             <div className="config__user-card">
               <div className="config__user-info">
                 <p className="config__user-field">
-                  <span className="config__user-label">Email:</span>
-                  <span className="config__user-value">{user?.email ?? "—"}</span>
+                  <span className="config__user-label">Nome:</span>
+                  <span className="config__user-value">{user?.nome ?? "—"}</span>
                 </p>
                 <p className="config__user-field">
-                  <span className="config__user-label">CPF/CNPJ:</span>
-                  <span className="config__user-value">{user?.documento || "—"}</span>
+                  <span className="config__user-label">Email:</span>
+                  <span className="config__user-value">{user?.email ?? "—"}</span>
                 </p>
               </div>
               <button

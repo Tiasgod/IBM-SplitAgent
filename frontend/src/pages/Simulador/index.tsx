@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { simuladorService } from "../../services/simulador.service";
 import {
   TrendingUp,
@@ -33,7 +34,6 @@ import "./Simulador.css";
 type PaymentMethod = "avista" | "parcelado" | "outro";
 
 interface SimuladorForm {
-  productType: string;
   saleValue: string;
   expectedDate: string;
   paymentMethod: PaymentMethod;
@@ -67,11 +67,6 @@ export interface SimuladorResultData {
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-
-const PRODUCT_OPTIONS = [
-  { value: "venda", label: "Venda" },
-  { value: "despesa", label: "Despesa" },
-];
 
 const TAX_REGIME_OPTIONS = [
   { value: "6",     label: "Simples Nacional (~6%)" },
@@ -127,7 +122,6 @@ export default function Simulador() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<SimuladorForm>({
-    productType:   "",
     saleValue:     "",
     expectedDate:  "",
     paymentMethod: "avista",
@@ -140,21 +134,24 @@ export default function Simulador() {
     try {
       const numericValue = parseFloat(form.saleValue.replace(/[^\d,]/g, "").replace(",", ".")) || 0;
       const descricao = [
-        PRODUCT_OPTIONS.find(o => o.value === form.productType)?.label ?? form.productType,
+        "Venda",
         PAYMENT_METHODS.find(o => o.value === form.paymentMethod)?.label,
       ].filter(Boolean).join(" — ");
 
       const res = await simuladorService.simular({
-        tipo:                          form.productType, // "venda" | "despesa"
+        tipo:     "venda",
         descricao,
-        data:                          form.expectedDate,
-        valor:                         numericValue,
-        aliquota_tributaria_percentual: form.productType === "despesa" ? 0 : parseFloat(form.taxRegime),
+        data:     form.expectedDate,
+        valor:    numericValue,
+        aliquota_tributaria_percentual: parseFloat(form.taxRegime),
       });
 
-      // Parse currency strings like "R$ 1.234,56" → number
+      // Parse both "R$ 1.234,56" and plain "5000.00" → number
       const parseBRL = (s: string | null | undefined): number => {
         if (!s) return 0;
+        // Plain numeric string like "5000.00" — use directly
+        if (/^\d+(\.\d+)?$/.test(s.trim())) return parseFloat(s) || 0;
+        // Formatted BRL like "R$ 1.234,56" — strip symbols, swap comma→dot
         return parseFloat(s.replace(/[^\d,]/g, "").replace(",", ".")) || 0;
       };
 
@@ -170,20 +167,26 @@ export default function Simulador() {
         netReceivedValue: liquido,
       };
 
-      // Check if the API has cash-flow projection data
-      const projecao = res.projecao_simulada as Record<string, { saldo_previsto: string }> | undefined;
-      const projecaoEntries = projecao ? Object.entries(projecao) : [];
-      const hasFinancialData = projecaoEntries.length > 0;
+      // projecao_simulada.dias é o array real de projeção por data
+      const dias = res.projecao_simulada?.dias ?? [];
 
-      if (hasFinancialData) {
-        const saldoAtual     = parseBRL(res.saldo_atual_simulado);
-        const menorSaldo     = parseBRL(res.menor_saldo_simulado);
-        const saldoOriginal  = parseBRL(res.saldo_atual_original);
+      // Dados reais = conta com saldo ou com movimentações na projeção ORIGINAL
+      // (sem a venda simulada). Conta sem planilha/banco tem tudo "0.00" na original.
+      const saldoOriginal = parseBRL(res.saldo_atual_original);
+      const diasOriginais = res.projecao_original?.dias ?? [];
+      const temMovimentacaoOriginal = diasOriginais.some(
+        d => parseBRL(d.total_entradas_brutas) !== 0 || parseBRL(d.total_saidas) !== 0
+      );
+      const hasRealData = saldoOriginal !== 0 || temMovimentacaoOriginal;
 
-        const chartData: ChartPoint[] = projecaoEntries.map(([data, val]) => ({
-          label:   data,
-          balance: parseBRL(val.saldo_previsto),
-          isRisk:  res.periodos_abaixo_minimo_simulados?.some(p => p.data === data),
+      if (hasRealData) {
+        const saldoAtual = parseBRL(res.saldo_atual_simulado);
+        const menorSaldo = parseBRL(res.menor_saldo_simulado);
+
+        const chartData: ChartPoint[] = dias.map(d => ({
+          label:   d.data,
+          balance: parseBRL(d.saldo_previsto),
+          isRisk:  res.periodos_abaixo_minimo_simulados?.some(p => p.data === d.data),
         }));
 
         const agentLines: string[] = [
@@ -241,23 +244,15 @@ export default function Simulador() {
       <div className="simulador">
         <div className="simulador__page-header">
           <p className="simulador__eyebrow">Teste antes de decidir</p>
-          <h1 className="simulador__title">Simulador</h1>
+          <h1 className="simulador__title">Simulador de Vendas</h1>
         </div>
 
         <div className="simulador__card">
-          <h2 className="simulador__card-title">Dados da transação</h2>
+          <h2 className="simulador__card-title">Dados da venda</h2>
 
           <div className="simulador__fields">
-            <Select
-              label="Tipo de transação"
-              options={PRODUCT_OPTIONS}
-              placeholder="Selecione"
-              value={form.productType}
-              onChange={e => setForm(f => ({ ...f, productType: e.target.value }))}
-            />
-
             <Input
-              label="Valor"
+              label="Valor da venda"
               placeholder="R$"
               value={form.saleValue}
               onChange={e => setForm(f => ({ ...f, saleValue: e.target.value }))}
@@ -270,34 +265,30 @@ export default function Simulador() {
               onChange={e => setForm(f => ({ ...f, expectedDate: e.target.value }))}
             />
 
-            {form.productType !== "despesa" && (
-              <fieldset className="simulador__fieldset">
-                <legend className="simulador__legend">Como será o pagamento?</legend>
-                <div className="simulador__toggle-group">
-                  {PAYMENT_METHODS.map(({ value, label }) => (
-                    <button
-                      key={value}
-                      type="button"
-                      className={`simulador__toggle${form.paymentMethod === value ? " simulador__toggle--active" : ""}`}
-                      onClick={() => setForm(f => ({ ...f, paymentMethod: value }))}
-                      aria-pressed={form.paymentMethod === value}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-            )}
+            <fieldset className="simulador__fieldset">
+              <legend className="simulador__legend">Como será o pagamento?</legend>
+              <div className="simulador__toggle-group">
+                {PAYMENT_METHODS.map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`simulador__toggle${form.paymentMethod === value ? " simulador__toggle--active" : ""}`}
+                    onClick={() => setForm(f => ({ ...f, paymentMethod: value }))}
+                    aria-pressed={form.paymentMethod === value}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
-            {form.productType !== "despesa" && (
-              <Select
-                label="Regime tributário da empresa"
-                options={TAX_REGIME_OPTIONS}
-                placeholder="Selecione"
-                value={form.taxRegime}
-                onChange={e => setForm(f => ({ ...f, taxRegime: e.target.value }))}
-              />
-            )}
+            <Select
+              label="Regime tributário da empresa"
+              options={TAX_REGIME_OPTIONS}
+              placeholder="Selecione"
+              value={form.taxRegime}
+              onChange={e => setForm(f => ({ ...f, taxRegime: e.target.value }))}
+            />
           </div>
 
           {error && (
@@ -309,13 +300,7 @@ export default function Simulador() {
             size="lg"
             className="simulador__submit"
             onClick={handleSimulate}
-            disabled={
-              loading ||
-              !form.productType ||
-              !form.saleValue ||
-              !form.expectedDate ||
-              (form.productType !== "despesa" && !form.taxRegime)
-            }
+            disabled={loading || !form.saleValue || !form.expectedDate || !form.taxRegime}
           >
             {loading ? "Simulando…" : "Simular Impacto"}
           </Button>
@@ -447,7 +432,7 @@ function CashForecastCard({
 // ─── With-data result: right column ──────────────────────────────────────────
 
 function CashEvolutionCard({ chartData }: { chartData: ChartPoint[] }) {
-  const maxBalance = Math.max(...chartData.map(d => d.balance));
+  const maxBalance = chartData.length > 0 ? Math.max(...chartData.map(d => d.balance)) : 0;
   const riskStart = chartData.find(d => d.isRisk)?.label;
   const riskEnd   = [...chartData].reverse().find(d => d.isRisk)?.label;
 
@@ -569,7 +554,7 @@ function SimuladorResultWithData({
     <ChatShell headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
-          <p className="simulador__eyebrow">Simulador de transação</p>
+          <p className="simulador__eyebrow">Simulador de venda</p>
           <h1 className="simulador__title">Resultado</h1>
         </div>
 
@@ -593,11 +578,12 @@ function SimuladorResultNoData({
   result: SimuladorResult;
   onBack: () => void;
 }) {
+  const navigate = useNavigate();
   return (
     <ChatShell headerVariant="nav" onBack={onBack}>
       <div className="simulador">
         <div className="simulador__page-header">
-          <p className="simulador__eyebrow">Simulador de transação</p>
+          <p className="simulador__eyebrow">Simulador de venda</p>
           <h1 className="simulador__title">Resultado</h1>
         </div>
 
@@ -678,7 +664,11 @@ function SimuladorResultNoData({
             </p>
             <div className="simulador__connect-options" role="list">
               {CONNECTION_OPTIONS.map(({ icon: Icon, title, description }) => (
-                <button key={title} className="simulador__connect-card">
+                <button
+                  key={title}
+                  className="simulador__connect-card"
+                  onClick={() => navigate("/configuracoes")}
+                >
                   <Icon
                     size={28}
                     strokeWidth={1.5}

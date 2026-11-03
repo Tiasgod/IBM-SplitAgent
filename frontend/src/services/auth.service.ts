@@ -62,7 +62,12 @@ export const sessionStorage = {
   },
   save(res: TokenResponse): void {
     localStorage.setItem(TOKEN_KEY, res.access_token);
-    localStorage.setItem(USER_KEY, JSON.stringify(res.usuario));
+    // Preserve documento from any previous session — the API never returns it
+    const existing = this.getUser();
+    const user: SessionUser = existing?.documento
+      ? { ...res.usuario, documento: existing.documento }
+      : res.usuario;
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   },
   saveUser(user: SessionUser): void {
     localStorage.setItem(USER_KEY, JSON.stringify(user));

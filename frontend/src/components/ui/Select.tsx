@@ -51,7 +51,6 @@ export function Select({
           className={`select-field__control${variant === "filter" ? " select-field__control--filter" : ""}`}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
-          defaultValue=""
           {...rest}
         >
           <option value="" disabled>

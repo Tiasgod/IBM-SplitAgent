@@ -48,10 +48,40 @@
   min-width: 0;
 }
 
+.simulador__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
 .simulador__card-title {
   font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--color-text);
+}
+
+.simulador__data-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.simulador__data-badge--connected {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #bbf7d0;
+}
+
+.simulador__data-badge--empty {
+  color: #92400e;
+  background: #fef9c3;
+  border-color: #fde68a;
 }
 
 /* ============================================================
