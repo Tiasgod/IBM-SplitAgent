@@ -3,6 +3,7 @@ import { Paperclip, Send, X, ChevronUp } from "lucide-react";
 import { ChatBubble } from "../ui/ChatBubble";
 import { Button } from "../ui/Button";
 import { Header } from "../layout/Header";
+import splitoChatImg from "../../assets/splito-chat.png";
 import "./ChatPanel.css";
 
 type Role = "user" | "agent";
@@ -94,6 +95,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
           onForward={onClose}
           onBack={onBack}
           hideForwardArrow={hideForwardArrow}
+          avatarSrc={splitoChatImg}
           className="chat-panel__header"
         />
       )}

@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { type HeaderVariant } from "./Header";
 import { PageLayout } from "./PageLayout";
 import { ChatPanel } from "../chat/ChatPanel";
+import splitoChatImg from "../../assets/splito-chat.png";
 import "./ChatShell.css";
 
 interface ChatShellProps {
@@ -44,7 +45,12 @@ export function ChatShell({ children, headerVariant, onBack }: ChatShellProps) {
           onClick={() => setChatOpen(true)}
           aria-label="Abrir assistente"
         >
-          <span className="chat-shell__trigger-avatar" aria-hidden="true" />
+          <img
+            className="chat-shell__trigger-avatar"
+            src={splitoChatImg}
+            alt=""
+            aria-hidden="true"
+          />
         </button>
       )}
     </div>

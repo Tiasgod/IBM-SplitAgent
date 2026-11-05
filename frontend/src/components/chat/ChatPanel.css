@@ -15,6 +15,10 @@
   background-color: #ffffff;
 }
 
+.chat-panel__header .header__avatar {
+  background-color: var(--color-primary);
+}
+
 /* ============================================================
    Messages scroll area
    ============================================================ */

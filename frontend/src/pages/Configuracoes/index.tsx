@@ -279,7 +279,7 @@ export default function Configuracoes() {
           <div className="config__col-right">
             <button
               className="config__account-btn config__account-btn--logout"
-              onClick={async () => { await authService.logout(); navigate("/login"); }}
+              onClick={async () => { await authService.logout(); navigate("/landing"); }}
             >
               <span className="config__account-btn-title">Sair</span>
               <span className="config__account-btn-subtitle">Encerrar sessão</span>

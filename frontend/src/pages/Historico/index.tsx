@@ -3,9 +3,11 @@ import { Lightbulb, TrendingUp, CalendarDays, ChevronDown, Calculator, DollarSig
 import { Link } from "react-router-dom";
 import { ChatShell } from "../../components/layout/ChatShell";
 import { Button } from "../../components/ui/Button";
+import { Skeleton } from "../../components/ui/Skeleton";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useStaleCache } from "../../hooks/useStaleCache";
 import { simuladorService } from "../../services/simulador.service";
-import type { SimulacaoHistorico } from "../../services/simulador.service";
+import type { SimulacaoHistorico, ListaSimulacoesResponse } from "../../services/simulador.service";
 import "./Historico.css";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -205,26 +207,53 @@ function NoResults() {
   );
 }
 
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+
+function HistoricoSkeleton() {
+  return (
+    <ChatShell headerVariant="nav">
+      <div className="historico">
+        <div className="historico__page-header">
+          <Skeleton width="200px" height="1.5rem" />
+          <Skeleton width="280px" height="0.875rem" style={{ marginTop: 6 }} />
+        </div>
+        <div className="historico__list">
+          {[1, 2, 3].map(i => (
+            <li key={i} className="historico__entry">
+              <Skeleton width="80px" height="0.75rem" />
+              <div className="historico__card">
+                {[1, 2, 3].map(j => (
+                  <div key={j} className="historico__row">
+                    <Skeleton width="2.5rem" height="2.5rem" borderRadius="50%" />
+                    <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+                      <Skeleton width="60%" height="0.875rem" />
+                      <Skeleton width="40%" height="0.75rem" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </li>
+          ))}
+        </div>
+      </div>
+    </ChatShell>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Historico() {
   const [period, setPeriod] = useState(PERIOD_OPTIONS[0]);
-  const [simulations, setSimulations] = useState<SimulacaoHistorico[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    simuladorService.listarSimulacoes()
-      .then(res => setSimulations(res.simulacoes))
-      .catch(err => setError(err instanceof Error ? err.message : "Erro ao carregar histórico."))
-      .finally(() => setLoading(false));
-  }, []);
+  const { data, loading, error } = useStaleCache<ListaSimulacoesResponse>(
+    "cache:historico",
+    simuladorService.listarSimulacoes
+  );
+
+  const simulations = data?.simulacoes ?? [];
 
   function renderContent() {
-    if (loading) {
-      return <p className="historico__loading">Carregando...</p>;
-    }
-    if (error) {
+    if (error && !data) {
       return <p className="historico__error" role="alert">{error}</p>;
     }
     if (simulations.length === 0) {
@@ -243,6 +272,10 @@ export default function Historico() {
     );
   }
 
+  if (loading) {
+    return <HistoricoSkeleton />;
+  }
+
   return (
     <ChatShell headerVariant="nav">
       <div className="historico">
@@ -253,7 +286,7 @@ export default function Historico() {
           </p>
         </div>
 
-        {!loading && !error && simulations.length > 0 && (
+        {!error && simulations.length > 0 && (
           <PeriodFilter selected={period} onChange={setPeriod} />
         )}
 

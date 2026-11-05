@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bot } from "lucide-react";
 import { PageLayout } from "../../components/layout/PageLayout";
 import { Button } from "../../components/ui/Button";
+import { Skeleton } from "../../components/ui/Skeleton";
 import { FinancialSummaryCard } from "./FinancialSummaryCard";
 import { CashFlowChart } from "./CashFlowChart";
 import { useAuth } from "../../hooks/useAuth";
+import { useStaleCache } from "../../hooks/useStaleCache";
 import {
   calculosFinanceirosService,
   type CashSituation,
@@ -67,40 +68,51 @@ function CashAlertCard({
   );
 }
 
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+
+function VisaoGeralSkeleton() {
+  return (
+    <PageLayout headerVariant="nav">
+      <div className="visao-geral">
+        <div className="visao-geral__page-header">
+          <Skeleton width="120px" height="0.875rem" />
+          <Skeleton width="160px" height="1.5rem" style={{ marginTop: 6 }} />
+        </div>
+        {/* FinancialSummaryCard shape */}
+        <div className="visao-geral__summary-skeleton">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="visao-geral__summary-skeleton-item">
+              <Skeleton width="60%" height="0.75rem" />
+              <Skeleton width="80%" height="1.25rem" style={{ marginTop: 6 }} />
+            </div>
+          ))}
+        </div>
+        {/* CashFlowChart shape */}
+        <div className="visao-geral__chart-skeleton">
+          <Skeleton width="140px" height="0.875rem" />
+          <Skeleton width="100%" height="140px" borderRadius="8px" style={{ marginTop: 12 }} />
+        </div>
+      </div>
+    </PageLayout>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function VisaoGeral() {
   const { user } = useAuth();
   const primeiroNome = user?.nome?.split(" ")[0] ?? "você";
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<VisaoGeralPageData | null>(null);
-
-  function loadData() {
-    setLoading(true);
-    setError(null);
-    calculosFinanceirosService
-      .buscarVisaoGeral()
-      .then(setData)
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => {
-    loadData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, loading, error } = useStaleCache<VisaoGeralPageData>(
+    "cache:visao-geral",
+    calculosFinanceirosService.buscarVisaoGeral
+  );
 
   if (loading) {
-    return (
-      <PageLayout headerVariant="nav">
-        <p style={{ textAlign: "center" }}>Carregando...</p>
-      </PageLayout>
-    );
+    return <VisaoGeralSkeleton />;
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <PageLayout headerVariant="nav">
         <p style={{ textAlign: "center" }}>{error}</p>
@@ -117,6 +129,7 @@ export default function VisaoGeral() {
         <div className="visao-geral__page-header">
           <p className="visao-geral__eyebrow">Olá, {primeiroNome}</p>
           <h1 className="visao-geral__title">Visão geral</h1>
+          {error && <p className="visao-geral__stale-error">{error} — exibindo dados anteriores.</p>}
         </div>
 
         {/* Financial summary card */}

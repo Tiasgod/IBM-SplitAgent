@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Lightbulb } from "lucide-react";
 import {
   BarChart,
@@ -10,7 +9,9 @@ import {
   Cell,
 } from "recharts";
 import { ChatShell } from "../../components/layout/ChatShell";
+import { Skeleton } from "../../components/ui/Skeleton";
 import { ManualEntryCard } from "./ManualEntryCard";
+import { useStaleCache } from "../../hooks/useStaleCache";
 import {
   calculosFinanceirosService,
   type FluxoCaixaPageData,
@@ -188,36 +189,62 @@ function MovementsCard({ movements }: { movements: Movement[] }) {
   );
 }
 
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+
+function FluxoSkeleton() {
+  return (
+    <ChatShell headerVariant="nav">
+      <div className="fluxo">
+        <div className="fluxo__page-header">
+          <Skeleton width="160px" height="1.5rem" />
+          <Skeleton width="220px" height="0.875rem" style={{ marginTop: 6 }} />
+        </div>
+        <div className="fluxo__layout">
+          <div className="fluxo__col-left">
+            {/* BalanceCard */}
+            <div className="fluxo__card fluxo__balance-card">
+              <Skeleton width="120px" height="0.75rem" />
+              <Skeleton width="180px" height="2.5rem" style={{ marginTop: 8 }} />
+              <Skeleton width="200px" height="0.75rem" style={{ marginTop: 8 }} />
+            </div>
+            {/* ProjectionCard */}
+            <div className="fluxo__card">
+              <Skeleton width="140px" height="1rem" />
+              <Skeleton width="100%" height="140px" borderRadius="8px" style={{ marginTop: 16 }} />
+            </div>
+          </div>
+          {/* MovementsCard */}
+          <div className="fluxo__card">
+            <Skeleton width="180px" height="1rem" />
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid #e2e8f0" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <Skeleton width="160px" height="0.875rem" />
+                  <Skeleton width="100px" height="0.75rem" />
+                </div>
+                <Skeleton width="80px" height="0.875rem" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </ChatShell>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FluxoDeCaixa() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<FluxoCaixaPageData | null>(null);
-
-  function loadData() {
-    setLoading(true);
-    calculosFinanceirosService
-      .buscarFluxoCaixa()
-      .then(setData)
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => {
-    loadData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, loading, error, reload } = useStaleCache<FluxoCaixaPageData>(
+    "cache:fluxo-caixa",
+    calculosFinanceirosService.buscarFluxoCaixa
+  );
 
   if (loading) {
-    return (
-      <ChatShell headerVariant="nav">
-        <p style={{ textAlign: "center" }}>Carregando...</p>
-      </ChatShell>
-    );
+    return <FluxoSkeleton />;
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <ChatShell headerVariant="nav">
         <p style={{ textAlign: "center" }}>{error}</p>
@@ -232,6 +259,7 @@ export default function FluxoDeCaixa() {
           <h1 className="fluxo__title">Fluxo de Caixa</h1>
           <p className="fluxo__subtitle">
             Acompanhe o que entra, o que sai e o saldo previsto.
+            {error && <span className="fluxo__stale-error"> · {error} — exibindo dados anteriores.</span>}
           </p>
         </div>
 
@@ -248,7 +276,7 @@ export default function FluxoDeCaixa() {
         </div>
 
         {/* Inserção manual de dados */}
-        <ManualEntryCard onSaved={loadData} />
+        <ManualEntryCard onSaved={reload} />
       </div>
     </ChatShell>
   );

@@ -245,15 +245,15 @@ function mapFluxoCaixa(
   fc: FluxoCaixaAPIResponse,
   movFinanceiras: MovimentacoesAPIResponse
 ): FluxoCaixaPageData {
-  const movements: Movement[] = movFinanceiras.movimentacoes
+  const movements: Movement[] = [...movFinanceiras.movimentacoes]
+    .sort((a, b) => a.data.localeCompare(b.data))
     .map((m) => ({
       id: `fin-${m.data}-${m.descricao}`,
       title: m.descricao,
       description: m.tipo === "entrada" ? "Entrada prevista" : "Despesa prevista",
       date: formatDateShort(m.data),
       amount: m.tipo === "entrada" ? parseNum(m.valor) : -parseNum(m.valor),
-    }))
-    .sort((a, b) => a.date.localeCompare(b.date));
+    }));
 
   return {
     balance: {

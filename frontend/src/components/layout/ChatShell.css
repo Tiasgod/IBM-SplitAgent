@@ -61,7 +61,8 @@
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 50%;
-    background-color: #d1d9e0;
+    background-color: var(--color-primary);
+    object-fit: cover;
   }
 
   /* ── Chat aberto ── */

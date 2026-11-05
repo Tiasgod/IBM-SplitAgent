@@ -31,6 +31,15 @@
   font-weight: 400;
 }
 
+/* ─── Stale error banner ─────────────────────────────────── */
+
+.fluxo__stale-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-alert);
+}
+
+
+
 /* ─── Layout principal: 2 colunas no desktop ─────────────── */
 
 .fluxo__layout {

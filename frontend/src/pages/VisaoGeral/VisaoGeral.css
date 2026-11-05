@@ -132,3 +132,36 @@
     max-width: none;
   }
 }
+
+/* ─── Skeleton placeholders ──────────────────────────────── */
+
+.visao-geral__summary-skeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.visao-geral__summary-skeleton-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.visao-geral__chart-skeleton {
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.visao-geral__stale-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-alert);
+  margin-top: var(--space-1);
+}

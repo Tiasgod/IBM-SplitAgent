@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { Logo } from "../brand";
+import { authService } from "../../services/auth.service";
 import "./Sidebar.css";
 
 export type SidebarVariant = "mobile" | "collapsed" | "expanded";
@@ -96,7 +97,10 @@ export default function Sidebar({
         <button
           className="sidebar__item sidebar__item--logout"
           title={!showLabels ? "Sair" : undefined}
-          onClick={() => navigate("/logout")}
+          onClick={async () => {
+            await authService.logout();
+            navigate("/landing");
+          }}
         >
           <LogOut size={22} strokeWidth={1.75} aria-hidden="true" />
           {showLabels && <span>Sair</span>}

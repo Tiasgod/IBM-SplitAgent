@@ -1,4 +1,4 @@
-const BASE_URL = "https://ibm-splitagent-back-end-production.up.railway.app";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 const TOKEN_KEY = "splitagent_token";
 
@@ -12,6 +12,65 @@ function handleUnauthorized(): never {
   window.location.href = "/login";
   throw new Error("Sessão expirada. Faça login novamente.");
 }
+
+// ─── Friendly fallback messages per HTTP status ───────────────────────────────
+
+const HTTP_STATUS_MESSAGES: Record<number, string> = {
+  400: "Requisição inválida. Verifique os dados informados.",
+  401: "Sessão expirada. Faça login novamente.",
+  403: "Você não tem permissão para realizar esta ação.",
+  404: "Recurso não encontrado.",
+  408: "O servidor demorou demais para responder. Tente novamente.",
+  409: "Conflito: esta operação não pode ser concluída com os dados atuais.",
+  422: "Os dados enviados são inválidos. Verifique o formulário.",
+  429: "Muitas requisições em pouco tempo. Aguarde um momento e tente novamente.",
+  500: "Erro interno do servidor. Tente novamente em breve.",
+  502: "Serviço indisponível no momento. Tente novamente em breve.",
+  503: "Serviço temporariamente fora do ar. Tente novamente em breve.",
+  504: "O servidor não respondeu a tempo. Verifique sua conexão e tente novamente.",
+};
+
+/**
+ * Extracts a human-readable message from an API error response.
+ * Priority:
+ *   1. Body message from known API shapes (FastAPI detail / SplitAgent mensagem)
+ *   2. Friendly fallback for the HTTP status code
+ *   3. Generic fallback with the status code
+ */
+async function parseApiError(res: Response): Promise<string> {
+  const fallback =
+    HTTP_STATUS_MESSAGES[res.status] ?? `Erro inesperado (código ${res.status}). Tente novamente.`;
+
+  try {
+    const err = await res.json();
+
+    // FastAPI 422 shape: { detail: [{ msg, loc, ... }] }
+    if (Array.isArray(err?.detail) && err.detail.length > 0) {
+      const msg = err.detail
+        .map((d: { msg?: string }) => d.msg ?? JSON.stringify(d))
+        .join("; ");
+      return msg || fallback;
+    }
+
+    // FastAPI 4xx shape: { detail: "mensagem" }
+    if (typeof err?.detail === "string" && err.detail.trim()) {
+      return err.detail;
+    }
+
+    // SplitAgent API shape: { mensagem: "...", erros: [...] }
+    const bodyMsg: string | undefined =
+      err?.mensagem ?? err?.message ?? err?.error;
+    if (typeof bodyMsg === "string" && bodyMsg.trim()) {
+      return bodyMsg;
+    }
+  } catch {
+    // body is not JSON (e.g. HTML error page from Railway/nginx)
+  }
+
+  return fallback;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -59,23 +118,7 @@ async function request<T>(
   }
 
   if (!res.ok) {
-    let message = `HTTP ${res.status}`;
-    try {
-      const err = await res.json();
-      // FastAPI 422 shape: { detail: [{ msg, loc, ... }] }
-      if (Array.isArray(err?.detail)) {
-        message = err.detail.map((d: { msg?: string }) => d.msg ?? JSON.stringify(d)).join("; ");
-      } else if (typeof err?.detail === "string") {
-        // FastAPI 409/4xx shape: { detail: "mensagem" }
-        message = err.detail;
-      } else {
-        // SplitAgent API shape: { mensagem: "...", erros: [...] }
-        message = err?.mensagem ?? err?.message ?? err?.error ?? message;
-      }
-    } catch {
-      // ignore parse errors
-    }
-    throw new Error(message);
+    throw new Error(await parseApiError(res));
   }
 
   if (blob) return res.blob() as Promise<T>;
@@ -100,20 +143,7 @@ async function requestForm<T>(path: string, formData: FormData): Promise<T> {
   }
 
   if (!res.ok) {
-    let message = `HTTP ${res.status}`;
-    try {
-      const err = await res.json();
-      if (Array.isArray(err?.detail)) {
-        message = err.detail.map((d: { msg?: string }) => d.msg ?? JSON.stringify(d)).join("; ");
-      } else if (typeof err?.detail === "string") {
-        message = err.detail;
-      } else {
-        message = err?.mensagem ?? err?.message ?? err?.error ?? message;
-      }
-    } catch {
-      // ignore parse errors
-    }
-    throw new Error(message);
+    throw new Error(await parseApiError(res));
   }
 
   return res.json() as Promise<T>;

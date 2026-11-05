@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import BottomNav from "./BottomNav";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { AppShellContext } from "./AppShellContext";
+import { sessionStorage } from "../../services/auth.service";
 import "./AppShell.css";
 
 export default function AppShell() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+
+  if (!sessionStorage.getToken()) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <AppShellContext.Provider value={{ openDrawer: () => setDrawerOpen(true) }}>
