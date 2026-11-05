@@ -1,5 +1,22 @@
 import { useNavigate } from "react-router-dom";
+import {
+  Download,
+  BarChart2,
+  Shuffle,
+  AlertTriangle,
+  MessageSquare,
+  CalendarDays,
+  Banknote,
+  TrendingUp,
+  Scale,
+  ShieldCheck,
+  CreditCard,
+  Users,
+  DivideSquare,
+} from "lucide-react";
 import { Logo } from "../../components/brand";
+import splitoHome from "../../assets/splito-home.png";
+import macbook from "../../assets/macbook.png";
 import "./LandingPage.css";
 
 /* ── Navbar ─────────────────────────────────────────────────── */
@@ -25,7 +42,6 @@ function LandingNav() {
             </a>
           </li>
         </ul>
-        {/* Mobile hamburger placeholder */}
         <button className="lp-nav__hamburger" aria-label="Abrir menu">
           <span /><span /><span />
         </button>
@@ -73,143 +89,66 @@ function LandingFooter() {
   );
 }
 
-/* ── SVG Icons ───────────────────────────────────────────────── */
-function IconDownload() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 3v13M6 11l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M4 20h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-function IconCart() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#0DA0A0" strokeWidth="1.5" strokeLinejoin="round"/>
-      <line x1="3" y1="6" x2="21" y2="6" stroke="#0DA0A0" strokeWidth="1.5"/>
-      <path d="M16 10a4 4 0 01-8 0" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-function IconSplit() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" stroke="#0DA0A0" strokeWidth="1.5"/>
-      <line x1="12" y1="7" x2="12" y2="17" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="7" y1="12" x2="17" y2="12" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-function IconAnalysis() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="12" width="4" height="9" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-      <rect x="10" y="7" width="4" height="14" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-      <rect x="17" y="3" width="4" height="18" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-    </svg>
-  );
-}
-
-function IconScenario() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 8h16M15 4l5 4-5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M20 16H4M9 12l-5 4 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-
-function IconRisk() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2L2 20h20L12 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-      <line x1="12" y1="10" x2="12" y2="14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <circle cx="12" cy="17" r="1" fill="currentColor"/>
-    </svg>
-  );
-}
-
-function IconChat() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-
-function IconCashflow() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-      <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" strokeWidth="1.5"/>
-    </svg>
-  );
-}
-
-/* ── Agent icon helpers ── */
-function AgentIcon({ color = "#0DA0A0" }: { color?: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="16" cy="16" r="15" stroke={color} strokeWidth="1.5" strokeDasharray="4 2"/>
-      <circle cx="16" cy="12" r="4" stroke={color} strokeWidth="1.5"/>
-      <path d="M8 26c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
+/* ── Orchestrator icon (personalizado) ── */
 function OrchestratorIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
       <circle cx="24" cy="24" r="23" stroke="#0DA0A0" strokeWidth="1.5"/>
       <circle cx="24" cy="24" r="8" stroke="#0DA0A0" strokeWidth="1.5"/>
       <circle cx="24" cy="24" r="3" fill="#0DA0A0"/>
-      <line x1="24" y1="1" x2="24" y2="16" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="24" y1="1"  x2="24" y2="16" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
       <line x1="24" y1="32" x2="24" y2="47" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="1" y1="24" x2="16" y2="24" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="1"  y1="24" x2="16" y2="24" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
       <line x1="32" y1="24" x2="47" y2="24" stroke="#0DA0A0" strokeWidth="1.5" strokeLinecap="round"/>
     </svg>
   );
 }
 
-/* ── Data ─────────────────────────────────────────────────────── */
+/* ── Feature tags (seção Solução) ── */
+const solutionTags = [
+  { icon: <BarChart2 size={16} />, label: "Análise Financeira" },
+  { icon: <Shuffle size={16} />,   label: "Simulação de cenários" },
+  { icon: <AlertTriangle size={16} />, label: "Identificação de Riscos" },
+  { icon: <MessageSquare size={16} />, label: "Orientações com IA" },
+  { icon: <CalendarDays size={16} />,  label: "Projeção do fluxo de caixa" },
+];
+
+/* ── Agents data ── */
 const agents = [
   {
     name: "Split Payment",
     desc: "Analisa os efeitos dos tributos sobre as vendas.",
-    icon: <AgentIcon />,
+    icon: <DivideSquare size={28} strokeWidth={1.5} />,
   },
   {
     name: "Cash",
     desc: "Monitora entradas e saídas financeiras.",
-    icon: <AgentIcon />,
+    icon: <Banknote size={28} strokeWidth={1.5} color="#FFC801"/>,
   },
   {
     name: "Forecast",
     desc: "Projeta cenários e prevê dificuldades financeiras.",
-    icon: <AgentIcon />,
+    icon: <TrendingUp size={28} strokeWidth={1.5} />,
   },
   {
     name: "Tax",
     desc: "Interpreta regras e obrigações tributárias.",
-    icon: <AgentIcon color="#FFC801" />,
+    icon: <Scale size={28} strokeWidth={1.5} color="#FFC801" />,
   },
   {
     name: "Guardian",
     desc: "Identifica riscos e protege as análises.",
-    icon: <AgentIcon />,
+    icon: <ShieldCheck size={28} strokeWidth={1.5} />,
   },
   {
     name: "Credit",
     desc: "Avalia a capacidade de crédito da empresa.",
-    icon: <AgentIcon />,
+    icon: <CreditCard size={28} strokeWidth={1.5} color="#FFC801" />,
   },
   {
     name: "Inclusion",
     desc: "Simplifica informações e orientações financeiras.",
-    icon: <AgentIcon />,
+    icon: <Users size={28} strokeWidth={1.5} />,
   },
 ];
 
@@ -229,23 +168,26 @@ export default function LandingPage() {
             <div className="lp-hero__text">
               <Logo variant="full" size="lg" color="#ffffff" className="lp-hero__logo" />
               <h1 className="lp-hero__headline">
-                Sua gestão financeira preparada para<br />o Split Payment.
+                Sua gestão financeira preparada para o Split Payment.
               </h1>
               <p className="lp-hero__subtitle">
                 Entenda como as mudanças da Reforma Tributária podem impactar a caixa da sua empresa e prepare-se com o apoio da inteligência artificial.
               </p>
               <div className="lp-hero__actions">
                 <button className="lp-btn-install" onClick={() => navigate("/")}>
-                  <IconDownload /> Instalar
+                  <Download size={15} strokeWidth={2} /> Instalar
                 </button>
                 <button className="lp-btn-enter" onClick={() => navigate("/login")}>
                   Entrar
                 </button>
               </div>
             </div>
-            <div className="lp-hero__mascot" aria-hidden="true">
-              {/* Mascot placeholder — will be replaced with actual image when available */}
-              <div className="lp-hero__mascot-bg" />
+            <div className="lp-hero__mascot">
+              <img
+                src={splitoHome}
+                alt="SplitAgent mascote"
+                className="lp-hero__mascot-img"
+              />
             </div>
           </div>
         </section>
@@ -256,61 +198,70 @@ export default function LandingPage() {
             <h2 className="lp-problem__title">A forma como sua empresa recebe pode mudar.</h2>
             <p className="lp-problem__subtitle">Você sabe quanto realmente estará disponível na sua caixa?</p>
 
-            <div className="lp-problem__steps">
-              <div className="lp-problem__step">
-                <div className="lp-problem__step-icon">
-                  <IconCart />
-                </div>
-                <div>
-                  <span className="lp-problem__step-num">1. Seu cliente faz uma compra</span>
-                  <p className="lp-problem__step-desc">A empresa realiza uma venda.</p>
-                </div>
+            <div className="lp-problem__layout">
+
+              {/* ── Coluna esquerda: recortes de matéria ── */}
+              <div className="lp-problem__news">
+
+                <a
+                  href="https://www.ey.com/pt_br/newsroom/2026/01/reforma-tributaria-split-payment-vai-alterar-gestao-caixa-empresas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lp-problem__news-card lp-problem__news-card--1"
+                >
+                  <span className="lp-problem__news-source lp-problem__news-source--ey">EY</span>
+                  <p className="lp-problem__news-title">
+                    Reforma tributária: Split payment vai alterar gestão de caixa das empresas
+                  </p>
+                  <span className="lp-problem__news-date">05 jan. 2026</span>
+                </a>
+
+                <a
+                  href="https://economia.uol.com.br/noticias/redacao/2026/08/13/reforma-tributaria-split-payment-imposto.ghtm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lp-problem__news-card lp-problem__news-card--2"
+                >
+                  <span className="lp-problem__news-source lp-problem__news-source--uol">UOL Economia</span>
+                  <p className="lp-problem__news-title">
+                    Nova regra na cobrança de impostos: split payment ameaça asfixiar empresas
+                  </p>
+                  <span className="lp-problem__news-date">13 ago. 2026</span>
+                </a>
+
+                <a
+                  href="https://exame.com/economia/split-payment-da-reforma-tributaria-forca-empresas-a-rever-caixa-e-contratos-desde-ja"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lp-problem__news-card lp-problem__news-card--3"
+                >
+                  <span className="lp-problem__news-source lp-problem__news-source--exame">exame.</span>
+                  <p className="lp-problem__news-title">
+                    Split payment força empresas a rever caixa e contratos desde já
+                  </p>
+                </a>
+
               </div>
 
-              <div className="lp-problem__arrow" aria-hidden="true">
-                <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
-                  <path d="M0 8h28M22 2l8 6-8 6" stroke="#0DA0A0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              {/* ── Coluna direita: explicação ── */}
+              <div className="lp-problem__explainer">
+                <h3 className="lp-problem__explainer-title">O que muda com o Split Payment?</h3>
+                <div className="lp-problem__explainer-body">
+                  <p>
+                    O Split Payment vai mudar a forma como as empresas lidam com seus impostos. Com a Reforma Tributária, o valor do IBS e da CBS será descontado <strong>automaticamente no momento do pagamento</strong> — antes de o dinheiro chegar ao caixa.
+                  </p>
+                  <p>
+                    Isso pode reduzir o capital disponível para o giro do negócio e exigir uma reorganização financeira. O impacto dependerá do porte e da realidade financeira de cada empresa.
+                  </p>
+                  <p>
+                    Por outro lado, a mudança promete mais transparência e segurança na arrecadação dos tributos.
+                  </p>
+                </div>
+                <p className="lp-problem__explainer-cta">
+                  Entender esse impacto no seu negócio, antes que ele aconteça, é exatamente o que o <strong>SplitAgent</strong> faz.
+                </p>
               </div>
 
-              <div className="lp-problem__step">
-                <div className="lp-problem__step-icon">
-                  <IconSplit />
-                </div>
-                <div>
-                  <span className="lp-problem__step-num">2. O pagamento é dividido</span>
-                  <p className="lp-problem__step-desc">Os tributos podem ser separados.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="lp-problem__result">
-              <div className="lp-problem__result-card lp-problem__result-card--company">
-                <div className="lp-problem__result-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                </div>
-                <div>
-                  <span className="lp-problem__result-label">Empresa</span>
-                  <p className="lp-problem__result-value">Valor líquido</p>
-                  <p className="lp-problem__result-desc">Valor que entra no caixa.</p>
-                </div>
-              </div>
-              <div className="lp-problem__result-card lp-problem__result-card--tax">
-                <div className="lp-problem__result-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M3 22V9l9-7 9 7v13H3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-                    <rect x="9" y="14" width="6" height="8" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                </div>
-                <div>
-                  <span className="lp-problem__result-label">Impostos</span>
-                  <p className="lp-problem__result-value">Parte separada</p>
-                  <p className="lp-problem__result-desc">Valor retido para tributos.</p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -324,16 +275,16 @@ export default function LandingPage() {
                 Com o SplitAgent, você analisa os impactos do Split Payment, acompanha seu fluxo de caixa e simula cenários financeiros com o apoio de agentes de inteligência artificial.
               </p>
               <div className="lp-solution__tags">
-                <span className="lp-solution__tag"><IconAnalysis /> Análise Financeira</span>
-                <span className="lp-solution__tag"><IconScenario /> Simulação de cenários</span>
-                <span className="lp-solution__tag"><IconRisk /> Identificação de Riscos</span>
-                <span className="lp-solution__tag"><IconChat /> Orientações com IA</span>
-                <span className="lp-solution__tag"><IconCashflow /> Projeção do fluxo de caixa</span>
+                {solutionTags.map((t) => (
+                  <span key={t.label} className="lp-solution__tag">
+                    {t.icon} {t.label}
+                  </span>
+                ))}
               </div>
             </div>
             <div className="lp-solution__visual">
               <img
-                src="/dashboard-hero.png"
+                src={macbook}
                 alt="Dashboard SplitAgent mostrando resultados financeiros"
                 className="lp-solution__img"
               />
@@ -377,7 +328,7 @@ export default function LandingPage() {
           <div className="lp-install__inner">
             <h2 className="lp-install__title">Instale o SplitAgent no seu dispositivo</h2>
             <button className="lp-btn-install" onClick={() => navigate("/")}>
-              <IconDownload /> Instalar
+              <Download size={15} strokeWidth={2} /> Instalar
             </button>
           </div>
         </section>

@@ -1,5 +1,5 @@
 /* ============================================================
-   LandingPage — novo design (protótipo alternativo)
+   LandingPage
    Dark navy theme, full-width sections
    ============================================================ */
 
@@ -12,7 +12,7 @@
   --lp-teal-dim:   #0E7573;
   --lp-gold:       #FFC801;
   --lp-text:       #e2e8f0;
-  --lp-text-muted: #8fa3b8;
+  --lp-text-muted: #b0c4d8;   /* mais próximo do branco */
   --lp-white:      #ffffff;
   --lp-section-gap: clamp(4rem, 8vw, 7rem);
   --lp-inner-max:  72rem;
@@ -27,6 +27,7 @@
   background-color: var(--lp-dark);
   overflow-x: hidden;
   width: 100%;
+  font-family: var(--font-family);
 }
 
 .lp main {
@@ -39,35 +40,16 @@
 /* ============================================================
    Shared Buttons
    ============================================================ */
+
+/* Instalar — fundo teal sólido + ícone download (fiel ao protótipo) */
 .lp-btn-install {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.4rem;
-  background: transparent;
-  color: var(--lp-teal);
-  border: 1.5px solid var(--lp-teal);
-  border-radius: 6px;
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-  white-space: nowrap;
-}
-
-.lp-btn-install:hover {
-  background: rgba(13, 160, 160, 0.15);
-}
-
-.lp-btn-enter {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.4rem;
-  background: transparent;
+  background: var(--lp-teal-dim);
   color: var(--lp-white);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border: 1.5px solid var(--lp-teal-dim);
   border-radius: 6px;
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
@@ -77,9 +59,32 @@
   white-space: nowrap;
 }
 
+.lp-btn-install:hover {
+  background: #0a5f5d;
+  border-color: #0a5f5d;
+}
+
+/* Entrar — fundo branco, texto primário (fiel ao protótipo) */
+.lp-btn-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: #ffffff;
+  color: var(--lp-dark);
+  border: 1.5px solid #ffffff;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
 .lp-btn-enter:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.8);
+  background: #e8f0f8;
+  border-color: #e8f0f8;
 }
 
 
@@ -120,22 +125,23 @@
 }
 
 .lp-nav__links a {
-  font-family: var(--font-family);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--lp-text-muted);
+  color: var(--lp-text);   /* mais próximo do branco */
   text-decoration: none;
   transition: color 0.15s ease;
+  opacity: 0.75;
 }
 
-.lp-nav__links a:hover,
-.lp-nav__links .lp-nav__install-link {
+.lp-nav__links a:hover {
   color: var(--lp-white);
+  opacity: 1;
 }
 
 .lp-nav__install-link {
   color: var(--lp-teal) !important;
+  opacity: 1 !important;
 }
 
 .lp-nav__hamburger {
@@ -156,7 +162,7 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: var(--lp-text);
+  background: var(--lp-text-muted);
   border-radius: 2px;
 }
 
@@ -183,64 +189,72 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .lp-hero__logo {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.lp-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* espaçamento generoso entre logo / título / subtítulo / botões */
 }
 
 .lp-hero__headline {
-  font-family: var(--font-family);
-  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-size: clamp(1.25rem, 3.2vw, 2rem);  /* menor que a logo, como no protótipo */
   font-weight: 700;
   color: var(--lp-white);
-  line-height: 1.2;
-  max-width: 28rem;
+  line-height: 1.25;
 }
 
 .lp-hero__subtitle {
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.4vw, 0.9375rem);
   color: var(--lp-text-muted);
-  line-height: 1.65;
-  max-width: 26rem;
+  line-height: 1.7;
 }
 
 .lp-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  padding-top: 0.25rem;
 }
 
-/* Mascot area — empty placeholder (mascot image to be added later) */
+/* Mascot — imagem do porco */
 .lp-hero__mascot {
-  display: none; /* hidden on mobile */
-  align-items: center;
+  display: none; /* oculto no mobile */
+  align-items: flex-end;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.lp-hero__mascot-bg {
-  width: clamp(14rem, 22vw, 22rem);
-  aspect-ratio: 3 / 4;
-  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-  background: radial-gradient(ellipse at 40% 30%, rgba(13, 160, 160, 0.35) 0%, rgba(13, 160, 160, 0.08) 60%, transparent 100%);
+.lp-hero__mascot-img {
+  display: block;
+  width: clamp(15rem, 26vw, 28rem);
+  height: auto;
+  object-fit: contain;
+  /* leve sombra para destacar do fundo */
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.5));
 }
 
 @media (min-width: 768px) {
   .lp-hero__inner {
     flex-direction: row;
     align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
+    gap: clamp(3rem, 6vw, 6rem);
   }
 
   .lp-hero__text {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .lp-hero__mascot {
     display: flex;
+    justify-content: flex-end;
+    /* encolhe para caber a imagem, sem ocupar espaço extra */
     flex: 0 0 auto;
   }
 }
@@ -277,124 +291,210 @@
   margin-top: -1rem;
 }
 
-/* Steps row */
-.lp-problem__steps {
+/* ── Animação float dos cards ── */
+@keyframes float-card {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+/* Layout 2 colunas */
+.lp-problem__layout {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* ── Coluna esquerda: news cards ── */
+.lp-problem__news {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   width: 100%;
 }
 
-.lp-problem__step {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.lp-problem__news-card,
+.lp-problem__news-card:visited {
+  text-decoration: none;
+}
+
+.lp-problem__news-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
-  padding: 1rem 1.25rem;
-  text-align: left;
-  flex: 1 1 10rem;
-  min-width: 10rem;
-  max-width: 18rem;
-}
-
-.lp-problem__step-icon {
+  padding: 1.1rem 1.25rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  border: 1.5px solid rgba(13, 160, 160, 0.4);
-  background: rgba(13, 160, 160, 0.08);
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.4rem;
+  animation: float-card 4s ease-in-out infinite alternate;
+  transform-origin: center center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  /* evita subpixel blur causado pelo rotate */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
+  cursor: pointer;
 }
 
-.lp-problem__step-num {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--lp-white);
-  line-height: 1.4;
-  display: block;
+.lp-problem__news-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
-.lp-problem__step-desc {
-  font-size: var(--font-size-xs);
-  color: var(--lp-text-muted);
-  margin: 0.25rem 0 0;
+.lp-problem__news-card--1 { transform: rotate(-1.5deg); animation-delay: 0s;   }
+.lp-problem__news-card--2 { transform: rotate( 1deg);   animation-delay: 1.8s; }
+.lp-problem__news-card--3 { transform: rotate(-0.8deg); animation-delay: 3.2s; }
+
+/* combina rotação fixa + animação de float */
+.lp-problem__news-card--1 { animation-name: float-card-1; }
+.lp-problem__news-card--2 { animation-name: float-card-2; }
+.lp-problem__news-card--3 { animation-name: float-card-3; }
+
+@keyframes float-card-1 {
+  from { transform: rotate(-1.5deg) translateY(0); }
+  to   { transform: rotate(-1.5deg) translateY(-6px); }
+}
+@keyframes float-card-2 {
+  from { transform: rotate(1deg) translateY(0); }
+  to   { transform: rotate(1deg) translateY(-5px); }
+}
+@keyframes float-card-3 {
+  from { transform: rotate(-0.8deg) translateY(0); }
+  to   { transform: rotate(-0.8deg) translateY(-7px); }
 }
 
-.lp-problem__arrow {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  opacity: 0.7;
-}
-
-/* Result cards */
-.lp-problem__result {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  width: 100%;
-  justify-content: center;
-}
-
-.lp-problem__result-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  border-radius: 10px;
-  padding: 1.25rem 1.5rem;
-  text-align: left;
-  flex: 1 1 12rem;
-  min-width: 12rem;
-  max-width: 22rem;
-}
-
-.lp-problem__result-card--company {
-  background-color: rgba(14, 117, 115, 0.18);
-  border: 1.5px solid rgba(14, 117, 115, 0.5);
-  color: #4eeae0;
-}
-
-.lp-problem__result-card--tax {
-  background-color: rgba(255, 200, 1, 0.1);
-  border: 1.5px solid rgba(255, 200, 1, 0.35);
-  color: var(--lp-gold);
-}
-
-.lp-problem__result-icon {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
-
-.lp-problem__result-label {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  letter-spacing: 0.05em;
+/* Logo do veículo */
+.lp-problem__news-source {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.75;
-  display: block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  align-self: flex-start;
+  line-height: 1.4;
 }
 
-.lp-problem__result-value {
-  font-size: var(--font-size-md);
+.lp-problem__news-source--ey {
+  background: #FFE600;
+  color: #1a1a1a;
+}
+
+.lp-problem__news-source--uol {
+  background: transparent;
+  color: #FF6B00;
+  border: 1px solid rgba(255, 107, 0, 0.5);
+}
+
+.lp-problem__news-source--exame {
+  background: transparent;
+  color: #E8001C;
+  border: 1px solid rgba(232, 0, 28, 0.4);
+  font-style: italic;
+  letter-spacing: 0;
+  font-size: 0.8rem;
+}
+
+.lp-problem__news-title {
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  margin: 0.2rem 0 0.15rem;
-  color: inherit;
+  color: #111827;
+  line-height: 1.4;
+  margin: 0;
 }
 
-.lp-problem__result-desc {
+.lp-problem__news-desc {
   font-size: var(--font-size-xs);
-  color: var(--lp-text-muted);
+  color: #6b7280;
+  line-height: 1.5;
   margin: 0;
+}
+
+.lp-problem__news-date {
+  font-size: var(--font-size-xs);
+  color: #9ca3af;
+  margin-top: 0.15rem;
+}
+
+/* ── Coluna direita: explicação ── */
+.lp-problem__explainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.lp-problem__explainer-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--lp-white);
+  line-height: 1.3;
+}
+
+.lp-problem__explainer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lp-problem__explainer-body p {
+  font-size: var(--font-size-sm);
+  color: var(--lp-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.lp-problem__explainer-body strong {
+  color: var(--lp-text);
+  font-weight: 600;
+}
+
+.lp-problem__explainer-cta {
+  font-size: var(--font-size-sm);
+  color: var(--lp-text);
+  line-height: 1.6;
+  border-left: 3px solid var(--lp-teal);
+  padding-left: 0.9rem;
+  margin: 0;
+}
+
+.lp-problem__explainer-cta strong {
+  color: var(--lp-teal);
+}
+
+/* Desktop: lado a lado */
+@media (min-width: 768px) {
+  .lp-problem__inner {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .lp-problem__layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .lp-problem__news {
+    flex: 0 0 38%;
+    max-width: 38%;
+  }
+
+  .lp-problem__explainer {
+    flex: 1;
+    align-self: center; /* centraliza verticalmente com os cards */
+  }
+}
+
+/* Mobile: sem rotação para evitar overflow */
+@media (max-width: 767px) {
+  .lp-problem__news-card--1,
+  .lp-problem__news-card--2,
+  .lp-problem__news-card--3 {
+    animation: none;
+    transform: none;
+  }
 }
 
 
@@ -441,17 +541,24 @@
   margin-top: 1.5rem;
 }
 
+/* Tags de feature — fundo branco, ícone verde, texto primário (fiel ao protótipo) */
 .lp-solution__tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  background: #ffffff;
+  border: 1px solid rgba(14, 117, 115, 0.25);
   border-radius: 6px;
   font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--lp-text);
+  color: var(--lp-dark);
+}
+
+/* ícone dentro da tag herda cor teal */
+.lp-solution__tag svg {
+  color: var(--lp-teal-dim);
+  flex-shrink: 0;
 }
 
 .lp-solution__visual {
@@ -466,8 +573,7 @@
   width: 100%;
   max-width: 34rem;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+  /* sem borda nem sombra — imagem do macbook já tem transparência */
 }
 
 @media (min-width: 768px) {
@@ -528,7 +634,7 @@
 .lp-agents__subtitle {
   font-size: var(--font-size-sm);
   color: var(--lp-text-muted);
-  max-width: 36rem;
+  max-width: 42rem;
   line-height: 1.6;
   margin-top: -1rem;
 }
@@ -597,6 +703,7 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
+  color: var(--lp-teal);  /* ícones lucide herdam esta cor */
 }
 
 .lp-agents__card-name {
