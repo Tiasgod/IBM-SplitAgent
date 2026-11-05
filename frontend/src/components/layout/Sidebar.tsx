@@ -99,7 +99,7 @@ export default function Sidebar({
           title={!showLabels ? "Sair" : undefined}
           onClick={async () => {
             await authService.logout();
-            navigate("/landing");
+            navigate("/");
           }}
         >
           <LogOut size={22} strokeWidth={1.75} aria-hidden="true" />

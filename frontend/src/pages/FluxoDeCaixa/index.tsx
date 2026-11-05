@@ -20,6 +20,7 @@ import {
   type Movement,
 } from "../../services/calculos-financeiros.service";
 import "./FluxoDeCaixa.css";
+import { useState } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -172,19 +173,58 @@ function MovementItem({ movement }: { movement: Movement }) {
 }
 
 function MovementsCard({ movements }: { movements: Movement[] }) {
+  const [visibleCount, setVisibleCount] = useState(5);
+
+  const visibleMovements = movements.slice(0, visibleCount);
+
+  const hasMore = visibleCount < movements.length;
+
+  function handleLoadMore() {
+    setVisibleCount((prev) => prev + 5);
+  }
+
   return (
     <div className="fluxo__card fluxo__movements-card">
       <h2 className="fluxo__card-title">Próximas movimentações</h2>
+
       <ul className="fluxo__movement-list">
-        {movements.map((m) => (
+        {visibleMovements.map((m) => (
           <MovementItem key={m.id} movement={m} />
         ))}
       </ul>
+
+      {movements.length > 5 && (
       <div className="fluxo__movements-footer">
-        <a href="#ver-todas" className="fluxo__movements-see-all">
-          Ver todas
-        </a>
+        {visibleCount === 5 ? (
+          <button
+            type="button"
+            className="fluxo__movements-see-all"
+            onClick={handleLoadMore}
+          >
+            Ver mais
+          </button>
+        ) : (
+          <div style={{ display: "flex", gap: "16px" }}>
+            <button
+              type="button"
+              className="fluxo__movements-see-all"
+              onClick={() => setVisibleCount(5)}
+            >
+              Ver menos
+            </button>
+            {hasMore && (
+              <button
+                type="button"
+                className="fluxo__movements-see-all"
+                onClick={handleLoadMore}
+              >
+                Ver mais
+              </button>
+            )}
+          </div>
+        )}
       </div>
+    )}
     </div>
   );
 }
