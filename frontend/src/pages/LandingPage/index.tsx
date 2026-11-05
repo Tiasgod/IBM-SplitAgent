@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePWAInstall } from "../../hooks/usePWAInstall";
 import {
   Download,
   BarChart2,
@@ -155,6 +156,17 @@ const agents = [
 /* ── Main Page ────────────────────────────────────────────────── */
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { canInstall, isInstalled, install } = usePWAInstall();
+
+  function handleInstall() {
+    if (canInstall) {
+      install();
+    } else if (!isInstalled) {
+      // fallback: browser não disparou o prompt ainda (ex: iOS Safari)
+      navigate("/inicio");
+    }
+    // se já instalado, não faz nada (botão fica oculto/desabilitado)
+  }
 
   return (
     <div className="lp">
@@ -174,10 +186,13 @@ export default function LandingPage() {
                 Entenda como as mudanças da Reforma Tributária podem impactar a caixa da sua empresa e prepare-se com o apoio da inteligência artificial.
               </p>
               <div className="lp-hero__actions">
-                <button className="lp-btn-install" onClick={() => navigate("/")}>
-                  <Download size={15} strokeWidth={2} /> Instalar
-                </button>
-                <button className="lp-btn-enter" onClick={() => navigate("/login")}>
+                {!isInstalled && (
+                  <button className="lp-btn-install" onClick={handleInstall}>
+                    <Download size={15} strokeWidth={2} />
+                    {canInstall ? "Instalar" : "Instalar"}
+                  </button>
+                )}
+                <button className="lp-btn-enter" onClick={() => navigate("/inicio")}>
                   Entrar
                 </button>
               </div>
@@ -327,9 +342,14 @@ export default function LandingPage() {
         <section className="lp-install" id="instalar">
           <div className="lp-install__inner">
             <h2 className="lp-install__title">Instale o SplitAgent no seu dispositivo</h2>
-            <button className="lp-btn-install" onClick={() => navigate("/")}>
-              <Download size={15} strokeWidth={2} /> Instalar
-            </button>
+            {!isInstalled && (
+              <button className="lp-btn-install" onClick={handleInstall}>
+                <Download size={15} strokeWidth={2} /> Instalar
+              </button>
+            )}
+            {isInstalled && (
+              <p className="lp-install__installed-msg">✓ SplitAgent já está instalado no seu dispositivo.</p>
+            )}
           </div>
         </section>
 

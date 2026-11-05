@@ -15,8 +15,8 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/landing" element={<LandingPage />} />
-        <Route path="/" element={<Inicio />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/inicio" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route element={<AppShell />}>
