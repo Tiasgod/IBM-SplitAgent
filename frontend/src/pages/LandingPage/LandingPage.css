@@ -2,6 +2,16 @@
    LandingPage
    Dark navy theme, full-width sections
    ============================================================ */
+  
+*{
+  scroll-behavior: smooth;
+}
+a{
+  text-decoration: none;
+  color: var(--color-bg);
+  transition: color 0.15s ease;
+}
+
 /* ── Shared dark background ── */
 .lp {
   --lp-section-gap: clamp(4rem, 8vw, 7rem);
@@ -255,7 +265,6 @@
   flex-direction: column;
   gap: clamp(2rem, 4vw, 3.5rem);
   width: 100%;
-  align-items: flex-start;
 }
 /* ── Coluna esquerda: news cards ── */
 .lp-problem__news {

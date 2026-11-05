@@ -25,6 +25,7 @@ import { Logo } from "../../components/brand";
 import splitoHome from "../../assets/splito-home.png";
 import macbook from "../../assets/macbook.png";
 import "./LandingPage.css";
+import SplitPaymentChart from "./SplitPaymentChart";
 import { useEffect, useRef, useState } from "react";
 
 /* ── Navbar ─────────────────────────────────────────────────── */
@@ -49,6 +50,7 @@ function LandingNav() {
               INSTALAR
             </a>
           </li>
+          <li><a href="#inicio">ENTRAR</a></li>
         </ul>
         <button className="lp-nav__hamburger" aria-label="Abrir menu">
           <span /><span /><span />
@@ -77,6 +79,7 @@ function LandingFooter() {
               <li><a href="#demonstracao">DEMONSTRAÇÃO</a></li>
               <li><a href="#agentes">AGENTES DE IA</a></li>
               <li><a href="#instalar">INSTALAR</a></li>
+              <li><a href="#inicio">ENTRAR</a></li>
             </ul>
           </div>
           <div className="lp-footer__col">
@@ -287,10 +290,11 @@ export default function LandingPage() {
               </p>
               <div className="lp-hero__actions">
                 {!isInstalled && (
+                  <a href="#instalar">
                   <button className="lp-btn-install" onClick={handleInstall}>
-                    <Download size={15} strokeWidth={2} />
-                    {canInstall ? "Instalar" : "Instalar"}
+                    <Download size={15} strokeWidth={2} /> Instalar
                   </button>
+                  </a>
                 )}
                 <button className="lp-btn-enter" onClick={() => navigate("/inicio")}>
                   Entrar
@@ -311,7 +315,7 @@ export default function LandingPage() {
         <section className="lp-problem" id="problema">
           <div className="lp-problem__inner">
             <h2 className="lp-problem__title">A forma como sua empresa recebe pode mudar.</h2>
-            <p className="lp-problem__subtitle">Você sabe quanto realmente estará disponível na sua caixa?</p>
+            <p className="lp-problem__subtitle">Você sabe quanto realmente estará disponível no seu caixa quando o Split Payment entrar em vigor?</p>
 
             <div className="lp-problem__layout">
 
@@ -354,29 +358,15 @@ export default function LandingPage() {
                   <p className="lp-problem__news-title">
                     Split payment força empresas a rever caixa e contratos desde já
                   </p>
+                  <span className="lp-problem__news-date">03 nov. 2026</span>
                 </a>
 
               </div>
 
               {/* ── Coluna direita: explicação ── */}
               <div className="lp-problem__explainer">
-                <h3 className="lp-problem__explainer-title">O que muda com o Split Payment?</h3>
-                <div className="lp-problem__explainer-body">
-                  <p>
-                    Com a Reforma Tributária, o valor do IBS e da CBS será descontado <strong>automaticamente no momento do pagamento</strong> — antes de o dinheiro chegar ao caixa.
-                  </p>
-                  <p>
-                    Isso pode reduzir o capital disponível para o giro do negócio e exigir uma reorganização financeira. O impacto dependerá do porte e da realidade financeira de cada empresa.
-                  </p>
-                  <p>
-                    Por outro lado, a mudança promete mais transparência e segurança na arrecadação dos tributos.
-                  </p>
-                </div>
-                <p className="lp-problem__explainer-cta">
-                  Entender esse impacto no seu negócio, antes que ele aconteça, é exatamente o que o <strong>SplitAgent</strong> faz.
-                </p>
+                <SplitPaymentChart />
               </div>
-
             </div>
           </div>
         </section>
@@ -446,11 +436,18 @@ export default function LandingPage() {
             <h2 className="lp-install__title">
               Leve o SplitAgent com você.
             </h2>
-            {!isInstalled && (
-              <button className="lp-btn-install" onClick={handleInstall}>
-                <Download size={15} strokeWidth={2} /> Instalar
-              </button>
-            )}
+            <div className="lp-hero__actions">
+                {!isInstalled && (
+                  <a href="#instalar">
+                  <button className="lp-btn-install" onClick={handleInstall}>
+                    <Download size={15} strokeWidth={2} /> Instalar
+                  </button>
+                  </a>
+                )}
+                <button className="lp-btn-enter" onClick={() => navigate("/inicio")}>
+                  Entrar
+                </button>
+              </div>
             {installError && (
               <div className="lp-install__toast" role="alert">
                 <span className="lp-install__toast-icon">!</span>
