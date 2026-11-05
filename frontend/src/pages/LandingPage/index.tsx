@@ -20,6 +20,8 @@ import {
   Laptop,
   Terminal,
   ChevronDown,
+  Menu,
+  X
 } from "lucide-react";
 import { Logo } from "../../components/brand";
 import splitoHome from "../../assets/splito-home.png";
@@ -30,6 +32,8 @@ import { useEffect, useRef, useState } from "react";
 
 /* ── Navbar ─────────────────────────────────────────────────── */
 function LandingNav() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   function scrollTo(id: string) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -50,11 +54,29 @@ function LandingNav() {
               INSTALAR
             </a>
           </li>
-          <li><a href="#inicio">ENTRAR</a></li>
+          <li><a href="#inicio" onClick={(e) => { e.preventDefault(); scrollTo("inicio"); }}>ENTRAR</a></li>
         </ul>
-        <button className="lp-nav__hamburger" aria-label="Abrir menu">
-          <span /><span /><span />
+         <button
+          className="lp-nav__hamburger"
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={menuOpen}
+          aria-controls="lp-mobile-menu"
+          onClick={() => setMenuOpen((prev) => !prev)}
+        >
+          {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
+
+        {menuOpen && (
+          <ul className="lp-nav__mobile-menu" id="lp-mobile-menu">
+            <li><a href="#inicio" onClick={(e) => { e.preventDefault(); scrollTo("inicio"); }}>INÍCIO</a></li>
+            <li><a href="#problema" onClick={(e) => { e.preventDefault(); scrollTo("problema"); }}>PROBLEMA</a></li>
+            <li><a href="#solucao" onClick={(e) => { e.preventDefault(); scrollTo("solucao"); }}>SOLUÇÃO</a></li>
+            <li><a href="#demonstracao" onClick={(e) => { e.preventDefault(); scrollTo("demonstracao"); }}>DEMONSTRAÇÃO</a></li>
+            <li><a href="#agentes" onClick={(e) => { e.preventDefault(); scrollTo("agentes"); }}>AGENTES DE IA</a></li>
+            <li><a href="#instalar" onClick={(e) => { e.preventDefault(); scrollTo("instalar"); }} className="lp-nav__install-link">INSTALAR</a></li>
+            <li><a href="#inicio" onClick={(e) => { e.preventDefault(); scrollTo("inicio"); }}>ENTRAR</a></li>
+          </ul>
+        )}
       </div>
     </nav>
   );
@@ -238,7 +260,6 @@ export default function LandingPage() {
   const { canInstall, isInstalled, install } = usePWAInstall();
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [installError, setInstallError] = useState(false);
-
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function showInstallToast() {
