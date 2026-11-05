@@ -14,11 +14,18 @@ import {
   CreditCard,
   Users,
   DivideSquare,
+  Apple,
+  Smartphone,
+  Monitor,
+  Laptop,
+  Terminal,
+  ChevronDown,
 } from "lucide-react";
 import { Logo } from "../../components/brand";
 import splitoHome from "../../assets/splito-home.png";
 import macbook from "../../assets/macbook.png";
 import "./LandingPage.css";
+import { useEffect, useRef, useState } from "react";
 
 /* ── Navbar ─────────────────────────────────────────────────── */
 function LandingNav() {
@@ -153,20 +160,113 @@ const agents = [
   },
 ];
 
+/* ── Steps download data ── */
+const installPlatforms = [
+  {
+    id: "ios",
+    name: "iPhone / iPad",
+    subtitle: "iOS e iPadOS",
+    icon: Apple,
+    browser: "Safari",
+    steps: [
+      "Abra o SplitAgent pelo Safari.",
+      "Toque no botão Compartilhar, na barra inferior do navegador.",
+      'Role as opções e selecione "Adicionar à Tela de Início".',
+      "Confirme em Adicionar. O SplitAgent aparecerá na tela inicial.",
+    ],
+  },
+  {
+    id: "android",
+    name: "Android",
+    subtitle: "Celulares e tablets",
+    icon: Smartphone,
+    browser: "Google Chrome",
+    steps: [
+      "Abra o SplitAgent pelo Google Chrome.",
+      "Toque no menu de três pontos no canto superior.",
+      'Selecione "Instalar aplicativo" ou "Adicionar à tela inicial".',
+      "Confirme a instalação. O ícone ficará disponível junto aos seus aplicativos.",
+    ],
+  },
+  {
+    id: "windows",
+    name: "Windows",
+    subtitle: "Windows 10 e 11",
+    icon: Monitor,
+    browser: "Microsoft Edge ou Google Chrome",
+    steps: [
+      "Abra o SplitAgent no Edge ou Chrome.",
+      "No Edge, clique no ícone de instalação na barra de endereço ou acesse Menu → Aplicativos → Instalar este site como aplicativo.",
+      "No Chrome, acesse o menu de três pontos → Transmitir, salvar e compartilhar → Instalar página como aplicativo.",
+      "Confirme a instalação. O SplitAgent poderá ser aberto pelo menu Iniciar.",
+    ],
+  },
+  {
+    id: "macos",
+    name: "macOS",
+    subtitle: "MacBook e iMac",
+    icon: Laptop,
+    browser: "Safari, Chrome ou Edge",
+    steps: [
+      "Abra o SplitAgent no navegador.",
+      "No Safari (macOS Sonoma ou posterior), acesse Arquivo → Adicionar ao Dock.",
+      "No Chrome ou Edge, utilize o ícone de instalação na barra de endereço ou a opção de instalar no menu do navegador.",
+      "Confirme. O SplitAgent ficará disponível no Dock e na pasta de aplicativos.",
+    ],
+  },
+  {
+    id: "linux",
+    name: "Linux",
+    subtitle: "Distribuições Linux",
+    icon: Terminal,
+    browser: "Google Chrome ou Microsoft Edge",
+    steps: [
+      "Abra o SplitAgent no Google Chrome ou Microsoft Edge.",
+      "Clique no ícone de instalação na barra de endereço, se disponível.",
+      'Se não aparecer, abra o menu do navegador e procure "Instalar página como aplicativo".',
+      "Confirme a instalação. O SplitAgent poderá ser aberto como um aplicativo independente.",
+    ],
+  },
+];
+
 /* ── Main Page ────────────────────────────────────────────────── */
 export default function LandingPage() {
   const navigate = useNavigate();
   const { canInstall, isInstalled, install } = usePWAInstall();
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [installError, setInstallError] = useState(false);
 
-  function handleInstall() {
-    if (canInstall) {
-      install();
-    } else if (!isInstalled) {
-      // fallback: browser não disparou o prompt ainda (ex: iOS Safari)
-      navigate("/inicio");
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function showInstallToast() {
+    setInstallError(true);
+
+    if (toastTimer.current) {
+      clearTimeout(toastTimer.current);
     }
-    // se já instalado, não faz nada (botão fica oculto/desabilitado)
+
+    toastTimer.current = setTimeout(() => {
+      setInstallError(false);
+    }, 4000);
   }
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
+
+  async function handleInstall() {
+  if (canInstall) {
+    try {
+      await install();
+    } catch {
+      showInstallToast();
+    }
+  } else if (!isInstalled) {
+    showInstallToast();
+  }
+}
 
   return (
     <div className="lp">
@@ -263,7 +363,7 @@ export default function LandingPage() {
                 <h3 className="lp-problem__explainer-title">O que muda com o Split Payment?</h3>
                 <div className="lp-problem__explainer-body">
                   <p>
-                    O Split Payment vai mudar a forma como as empresas lidam com seus impostos. Com a Reforma Tributária, o valor do IBS e da CBS será descontado <strong>automaticamente no momento do pagamento</strong> — antes de o dinheiro chegar ao caixa.
+                    Com a Reforma Tributária, o valor do IBS e da CBS será descontado <strong>automaticamente no momento do pagamento</strong> — antes de o dinheiro chegar ao caixa.
                   </p>
                   <p>
                     Isso pode reduzir o capital disponível para o giro do negócio e exigir uma reorganização financeira. O impacto dependerá do porte e da realidade financeira de cada empresa.
@@ -307,9 +407,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ── DEMONSTRAÇÃO — placeholder vazio ── */}
+        {/* ── DEMONSTRAÇÃO ── */}
         <section className="lp-demo" id="demonstracao" aria-label="Demonstração">
           <div className="lp-demo__placeholder" />
+          <video src=""></video>
         </section>
 
         {/* ── AGENTES ── */}
@@ -341,14 +442,97 @@ export default function LandingPage() {
         {/* ── INSTALAR ── */}
         <section className="lp-install" id="instalar">
           <div className="lp-install__inner">
-            <h2 className="lp-install__title">Instale o SplitAgent no seu dispositivo</h2>
+            <span className="lp-install__eyebrow">DISPONÍVEL EM TODAS AS PLATAFORMAS</span>
+            <h2 className="lp-install__title">
+              Leve o SplitAgent com você.
+            </h2>
             {!isInstalled && (
               <button className="lp-btn-install" onClick={handleInstall}>
                 <Download size={15} strokeWidth={2} /> Instalar
               </button>
             )}
+            {installError && (
+              <div className="lp-install__toast" role="alert">
+                <span className="lp-install__toast-icon">!</span>
+                <p>
+                  Não foi possível iniciar a instalação. Tente novamente ou
+                  instale manualmente seguindo os tutoriais.
+                </p>
+                <button
+                  onClick={() => setInstallError(false)}
+                  aria-label="Fechar mensagem"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+            <div className="lp-install__platforms">
+              {installPlatforms.map((platform) => {
+                const Icon = platform.icon;
+                const isActive = selectedPlatform === platform.id;
+                return (
+                  <button
+                    key={platform.id}
+                    className={`lp-install__platform ${isActive ? "is-active" : ""}`}
+                    onClick={() =>
+                      setSelectedPlatform(isActive ? null : platform.id)
+                    }
+                    aria-expanded={isActive}
+                    aria-controls={`install-guide-${platform.id}`}
+                  >
+                    <Icon size={27} strokeWidth={1.7} />
+                    <span className="lp-install__platform-name">{platform.name}</span>
+                    <span className="lp-install__platform-subtitle">
+                      {platform.subtitle}
+                    </span>
+                    <ChevronDown
+                      size={16}
+                      className={`lp-install__chevron ${isActive ? "is-open" : ""}`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+            {installPlatforms.map((platform) =>
+              selectedPlatform === platform.id ? (
+                <div
+                  key={platform.id}
+                  id={`install-guide-${platform.id}`}
+                  className="lp-install__guide"
+                >
+                  <div className="lp-install__guide-header">
+                    <div>
+                      <span className="lp-install__guide-label">
+                        GUIA DE INSTALAÇÃO
+                      </span>
+                      <h3>Instalando no {platform.name}</h3>
+                      <p>Navegador recomendado: {platform.browser}</p>
+                    </div>
+                    <button
+                      className="lp-install__guide-close"
+                      onClick={() => setSelectedPlatform(null)}
+                      aria-label="Fechar instruções"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <ol className="lp-install__steps">
+                    {platform.steps.map((step, index) => (
+                      <li key={index}>
+                        <span className="lp-install__step-number">
+                          {index + 1}
+                        </span>
+                        <p>{step}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : null
+            )}
             {isInstalled && (
-              <p className="lp-install__installed-msg">✓ SplitAgent já está instalado no seu dispositivo.</p>
+              <p className="lp-install__installed-msg">
+                ✓ SplitAgent já está instalado no seu dispositivo.
+              </p>
             )}
           </div>
         </section>

@@ -3,8 +3,10 @@
   --color-primary:       #0F263B;
   --color-primary-hover: #1A3C58;
   --color-secondary:     #0E7573;
+  --color-secondary2:    #18CDC9;
   --color-tertiary:      #FFC801;
   --color-gray:          #5B6B7C;
+  --color-gray2:         #8A8D91;
   --color-alert:         #D8672B;
   --color-danger:        #da1e28;
   --color-success:       #24a148;
@@ -14,6 +16,7 @@
   --color-bg-alert:      #FAEEE7;
   --color-text:          #1D2227;
   --color-border:        #CBD5E0;
+
 
   /* Typography */
   --font-family: 'Ubuntu', system-ui, sans-serif;
