@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   TrendingUp,
   CreditCard,
@@ -122,7 +123,9 @@ function AgentTextCard({ title, text }: { title: string; text: string }) {
         <span className="agentes__agent-card-title">{title}</span>
       </div>
       <div className="agentes__agent-card-body">
-        <p className="agentes__agent-card-para">{text}</p>
+        <div className="agentes__agent-card-markdown">
+          <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
       </div>
     </div>
   );
