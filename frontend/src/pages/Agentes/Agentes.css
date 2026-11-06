@@ -364,6 +364,35 @@
   white-space: pre-wrap;
 }
 
+/* ─── Skeleton ────────────────────────────────────────────── */
+
+@keyframes agentes-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.agentes__agent-card--skeleton {
+  pointer-events: none;
+}
+
+.agentes__skeleton-line {
+  height: 13px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    color-mix(in srgb, var(--color-border) 40%, var(--color-bg-secondary)) 50%,
+    var(--color-border) 75%
+  );
+  background-size: 800px 100%;
+  animation: agentes-shimmer 1.4s ease-in-out infinite;
+}
+
+.agentes__skeleton-line--full { width: 100%; }
+.agentes__skeleton-line--lg   { width: 82%; }
+.agentes__skeleton-line--md   { width: 65%; }
+.agentes__skeleton-line--sm   { width: 48%; }
+
 /* ─── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 767px) {

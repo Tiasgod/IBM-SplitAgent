@@ -471,10 +471,58 @@ function CashEvolutionCard({
   const [altError, setAltError] = useState<string | null>(null);
 
   function extractText(res: Record<string, unknown>): string {
+    // 1. ia_generativa.recomendacao (watsonx)
     const iaGenerativa = res["ia_generativa"] as Record<string, unknown> | undefined;
-    if (typeof iaGenerativa?.["recomendacao"] === "string" && iaGenerativa["recomendacao"].trim()) {
+    if (typeof iaGenerativa?.["recomendacao"] === "string" && iaGenerativa["recomendacao"].trim())
       return iaGenerativa["recomendacao"].trim();
+
+    // 2. split-payment: monta resumo legível a partir de results
+    const results = res["results"] as Record<string, unknown> | undefined;
+    if (results) {
+      const lines: string[] = [];
+      const addMsg = (obj: Record<string, unknown> | undefined) => {
+        if (typeof obj?.["message"] === "string") lines.push(obj["message"] as string);
+      };
+      addMsg(results["guardian"]      as Record<string, unknown> | undefined);
+      addMsg(results["inclusion"]     as Record<string, unknown> | undefined);
+      addMsg(results["split_payment"] as Record<string, unknown> | undefined);
+      const split  = results["split_payment"] as Record<string, unknown> | undefined;
+      const shares = split?.["shares"] as { name: string; amount: string }[] | undefined;
+      if (shares && shares.length > 0) {
+        lines.push("");
+        lines.push("Divisão:");
+        shares.forEach(s => {
+          const amt = parseFloat(s.amount).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+          lines.push(`  • ${s.name || "Participante"}: ${amt}`);
+        });
+      }
+      if (lines.length > 0) return lines.join("\n");
     }
+
+    // 3. crédito: message + campos numéricos relevantes
+    const msgLines: string[] = [];
+    if (typeof res["message"] === "string" && res["message"].trim())
+      msgLines.push(res["message"].trim());
+    if (typeof res["aviso"] === "string" && res["aviso"].trim())
+      msgLines.push(`⚠ ${res["aviso"].trim()}`);
+    const numFields: [string, string][] = [
+      ["available_credit",       "Crédito disponível"],
+      ["purchase_amount",        "Valor da operação"],
+      ["base_calculo",           "Base de cálculo"],
+      ["tributos_estimados",     "Tributos estimados"],
+      ["valor_liquido_estimado", "Valor líquido estimado"],
+    ];
+    for (const [key, label] of numFields) {
+      const v = res[key];
+      if (v !== undefined && v !== null) {
+        const n = parseFloat(String(v));
+        if (!isNaN(n))
+          msgLines.push(`${label}: ${n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`);
+      }
+    }
+    if (msgLines.length > 0) return msgLines.join("\n");
+
+    // 4. fallback
     return JSON.stringify(res, null, 2);
   }
 

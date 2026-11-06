@@ -11,6 +11,7 @@ import {
 import { PageLayout } from "../../components/layout/PageLayout";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
+import { Select } from "../../components/ui/Select";
 import {
   agentesService,
   type AnalisarFinanceiroParams,
@@ -20,6 +21,14 @@ import {
   type SplitParticipant,
 } from "../../services/agentes.service";
 import "./Agentes.css";
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const ALIQUOTA_OPTIONS = [
+  { value: "6",     label: "Simples Nacional (~6%)" },
+  { value: "13.33", label: "Lucro Presumido (~13,33%)" },
+  { value: "15",    label: "Lucro Real (~15%)" },
+];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -83,6 +92,26 @@ function extractText(res: Record<string, unknown>): string {
   return JSON.stringify(res, null, 2);
 }
 
+// ─── Skeleton card (shown while loading) ─────────────────────────────────────
+
+function AgentSkeletonCard({ title }: { title: string }) {
+  return (
+    <div className="agentes__agent-card agentes__agent-card--skeleton">
+      <div className="agentes__agent-card-header">
+        <Bot size={16} strokeWidth={1.75} aria-hidden="true" />
+        <span className="agentes__agent-card-title">{title}</span>
+      </div>
+      <div className="agentes__agent-card-body">
+        <div className="agentes__skeleton-line agentes__skeleton-line--full" />
+        <div className="agentes__skeleton-line agentes__skeleton-line--lg" />
+        <div className="agentes__skeleton-line agentes__skeleton-line--md" />
+        <div className="agentes__skeleton-line agentes__skeleton-line--sm" />
+        <div className="agentes__skeleton-line agentes__skeleton-line--lg" />
+      </div>
+    </div>
+  );
+}
+
 // ─── Shared text result card ──────────────────────────────────────────────────
 
 function AgentTextCard({ title, text }: { title: string; text: string }) {
@@ -102,7 +131,7 @@ function AgentTextCard({ title, text }: { title: string; text: string }) {
 // ─── Tab: Análise financeira ──────────────────────────────────────────────────
 
 function TabFinanceiro() {
-  const [aliquota, setAliquota] = useState("6.00");
+  const [aliquota, setAliquota] = useState("6");
   const [saldoMin, setSaldoMin] = useState("0.00");
   const [horizonte, setHorizonte] = useState("30");
   const [incluirIa, setIncluirIa] = useState(true);
@@ -135,13 +164,11 @@ function TabFinanceiro() {
     <form className="agentes__form" onSubmit={handleSubmit}>
       <div className="agentes__fields">
         <div className="agentes__field">
-          <label className="agentes__label">Alíquota tributária (%)</label>
-          <Input
-            variant="number"
+          <Select
+            label="Alíquota tributária"
+            options={ALIQUOTA_OPTIONS}
+            placeholder="Selecione o regime"
             value={aliquota}
-            min={0}
-            max={100}
-            step={0.01}
             onChange={e => setAliquota(e.target.value)}
           />
         </div>
@@ -184,6 +211,7 @@ function TabFinanceiro() {
         {loading ? <Loader2 size={16} className="agentes__spin" /> : null}
         {loading ? "Analisando…" : "Analisar fluxo financeiro"}
       </Button>
+      {loading && <AgentSkeletonCard title="Análise financeira" />}
       {result && <AgentTextCard title="Análise financeira" text={extractText(result)} />}
     </form>
   );
@@ -305,6 +333,7 @@ function TabSplit() {
         {loading ? <Loader2 size={16} className="agentes__spin" /> : null}
         {loading ? "Simulando…" : "Simular divisão"}
       </Button>
+      {loading && <AgentSkeletonCard title="Resultado da divisão" />}
       {result && <AgentTextCard title="Resultado da divisão" text={extractText(result)} />}
     </form>
   );
@@ -381,6 +410,7 @@ function TabCredito() {
         {loading ? <Loader2 size={16} className="agentes__spin" /> : null}
         {loading ? "Analisando…" : "Analisar crédito"}
       </Button>
+      {loading && <AgentSkeletonCard title="Análise de crédito" />}
       {result && <AgentTextCard title="Análise de crédito" text={extractText(result)} />}
     </form>
   );
@@ -390,7 +420,7 @@ function TabCredito() {
 
 function TabTributos() {
   const [total, setTotal] = useState("0");
-  const [aliquota, setAliquota] = useState("6.00");
+  const [aliquota, setAliquota] = useState("6");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Record<string, unknown> | null>(null);
@@ -428,13 +458,11 @@ function TabTributos() {
           />
         </div>
         <div className="agentes__field">
-          <label className="agentes__label">Alíquota (%)</label>
-          <Input
-            variant="number"
+          <Select
+            label="Alíquota"
+            options={ALIQUOTA_OPTIONS}
+            placeholder="Selecione o regime"
             value={aliquota}
-            min={0}
-            max={100}
-            step={0.01}
             onChange={e => setAliquota(e.target.value)}
           />
         </div>
@@ -444,6 +472,7 @@ function TabTributos() {
         {loading ? <Loader2 size={16} className="agentes__spin" /> : null}
         {loading ? "Calculando…" : "Estimar tributos"}
       </Button>
+      {loading && <AgentSkeletonCard title="Estimativa de tributos" />}
       {result && <AgentTextCard title="Estimativa de tributos" text={extractText(result)} />}
     </form>
   );
