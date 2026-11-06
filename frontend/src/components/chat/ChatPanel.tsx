@@ -3,6 +3,7 @@ import { Paperclip, Send, X, ChevronUp } from "lucide-react";
 import { ChatBubble } from "../ui/ChatBubble";
 import { Button } from "../ui/Button";
 import { Header } from "../layout/Header";
+import { agentesService } from "../../services/agentes.service";
 import splitoChatImg from "../../assets/splito-chat.png";
 import "./ChatPanel.css";
 
@@ -14,10 +15,7 @@ interface Message {
   text: string;
 }
 
-const INITIAL_MESSAGES: Message[] = [
-  { id: 1, role: "user",  text: "Por que meu caixa vai ficar negativo depois dessa compra?" },
-  { id: 2, role: "agent", text: "O principal motivo parece ser a concentração de pagamentos nesta semana. Encontrei 3 contas previstas antes da entrada dos seus recebíveis." },
-];
+const INITIAL_MESSAGES: Message[] = [];
 
 const SUGGESTIONS = [
   "Como posso evitar ficar sem caixa?",
@@ -56,7 +54,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  function sendMessage(text: string) {
+  async function sendMessage(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
 
@@ -64,13 +62,36 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
     setInput("");
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await agentesService.analisarFinanceiro({ incluir_ia: true });
+
+      // Extract ia_generativa.recomendacao — the watsonx/AI text field
+      const raw = res as Record<string, unknown>;
+      const iaGenerativa = raw["ia_generativa"] as Record<string, unknown> | undefined;
+      const agentText =
+        (typeof iaGenerativa?.["recomendacao"] === "string" ? iaGenerativa["recomendacao"] : null) ??
+        JSON.stringify(res, null, 2);
+
       setMessages(prev => [
         ...prev,
-        { id: Date.now() + 1, role: "agent", text: "Estou analisando sua solicitação. Em breve trarei mais detalhes sobre esse cenário." },
+        {
+          id: Date.now() + 1,
+          role: "agent",
+          text: agentText,
+        },
       ]);
-    }, 1500);
+    } catch {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "agent",
+          text: "Não consegui acessar o agente financeiro agora. Verifique sua conexão e tente novamente.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleSubmit(e: FormEvent) {

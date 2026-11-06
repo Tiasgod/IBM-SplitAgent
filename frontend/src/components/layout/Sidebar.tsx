@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  BrainCircuit,
 } from "lucide-react";
 import { Logo } from "../brand";
 import { authService } from "../../services/auth.service";
@@ -26,12 +27,13 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: "/visao-geral",   icon: House,    label: "Início" },
-  { to: "/simulador",     icon: Wand2,    label: "Simulador" },
-  { to: "/fluxo",         icon: Landmark, label: "Fluxo de caixa" },
-  { to: "/assistente",    icon: Bot,      label: "Assistente" },
-  { to: "/historico",     icon: History,  label: "Histórico" },
-  { to: "/configuracoes", icon: Settings, label: "Configurações" },
+  { to: "/visao-geral",   icon: House,          label: "Início" },
+  { to: "/simulador",     icon: Wand2,          label: "Simulador" },
+  { to: "/fluxo",         icon: Landmark,       label: "Fluxo de caixa" },
+  { to: "/assistente",    icon: Bot,            label: "Assistente" },
+  { to: "/agentes",       icon: BrainCircuit,   label: "Agentes IA" },
+  { to: "/historico",     icon: History,        label: "Histórico" },
+  { to: "/configuracoes", icon: Settings,       label: "Configurações" },
 ] as const;
 
 export default function Sidebar({

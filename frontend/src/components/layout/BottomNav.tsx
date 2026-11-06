@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { House, Wand2, Landmark, Bot } from "lucide-react";
+import { House, Wand2, Landmark, Bot, BrainCircuit } from "lucide-react";
 import "./BottomNav.css";
 
-// Mobile bottom nav shows the 4 primary destinations (no Histórico / Configurações)
+// Mobile bottom nav shows the 5 primary destinations (no Histórico / Configurações)
 const navItems = [
-  { to: "/visao-geral", icon: House,    label: "Início" },
-  { to: "/simulador",  icon: Wand2,    label: "Simulador" },
-  { to: "/fluxo",      icon: Landmark, label: "Fluxo de caixa" },
-  { to: "/assistente", icon: Bot,      label: "Assistente" },
+  { to: "/visao-geral", icon: House,         label: "Início" },
+  { to: "/simulador",   icon: Wand2,         label: "Simulador" },
+  { to: "/fluxo",       icon: Landmark,      label: "Fluxo de caixa" },
+  { to: "/assistente",  icon: Bot,           label: "Assistente" },
+  { to: "/agentes",     icon: BrainCircuit,  label: "Agentes IA" },
 ] as const;
 
 export default function BottomNav() {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { simuladorService } from "../../services/simulador.service";
+import { agentesService } from "../../services/agentes.service";
 import {
   TrendingUp,
   Calendar,
@@ -202,6 +203,27 @@ export default function Simulador() {
         }
         if (res.observacao_tributaria) {
           agentLines.push(`**Observação tributária**: ${res.observacao_tributaria}`);
+        }
+
+        // Enrich with watsonx.ai analysis (best-effort — does not block the result)
+        let watsonxText: string | null = null;
+        try {
+          const iaRes = await agentesService.analisarFinanceiro({
+            aliquota_tributaria_percentual: parseFloat(form.taxRegime),
+            horizonte_dias: 30,
+            incluir_ia: true,
+          });
+          const raw = iaRes as Record<string, unknown>;
+          const iaGenerativa = raw["ia_generativa"] as Record<string, unknown> | undefined;
+          if (typeof iaGenerativa?.["recomendacao"] === "string" && iaGenerativa["recomendacao"].trim()) {
+            watsonxText = iaGenerativa["recomendacao"].trim();
+          }
+        } catch {
+          // watsonx enrichment is best-effort; failure does not break the result
+        }
+
+        if (watsonxText) {
+          agentLines.push(`**IBM watsonx.ai**: ${watsonxText}`);
         }
 
         setResultData({
@@ -431,10 +453,76 @@ function CashForecastCard({
 
 // ─── With-data result: right column ──────────────────────────────────────────
 
-function CashEvolutionCard({ chartData }: { chartData: ChartPoint[] }) {
+function CashEvolutionCard({
+  chartData,
+  result,
+}: {
+  chartData: ChartPoint[];
+  result: SimuladorResult;
+}) {
   const maxBalance = chartData.length > 0 ? Math.max(...chartData.map(d => d.balance)) : 0;
   const riskStart = chartData.find(d => d.isRisk)?.label;
   const riskEnd   = [...chartData].reverse().find(d => d.isRisk)?.label;
+
+  // ── Alternatives state ───────────────────────────────────────────────────────
+  type AltKey = "parcelar" | "antecipar";
+  const [altLoading, setAltLoading] = useState<AltKey | null>(null);
+  const [altResult, setAltResult] = useState<{ key: AltKey; text: string } | null>(null);
+  const [altError, setAltError] = useState<string | null>(null);
+
+  function extractText(res: Record<string, unknown>): string {
+    const iaGenerativa = res["ia_generativa"] as Record<string, unknown> | undefined;
+    if (typeof iaGenerativa?.["recomendacao"] === "string" && iaGenerativa["recomendacao"].trim()) {
+      return iaGenerativa["recomendacao"].trim();
+    }
+    return JSON.stringify(res, null, 2);
+  }
+
+  async function handleParcelar() {
+    setAltLoading("parcelar");
+    setAltResult(null);
+    setAltError(null);
+    try {
+      // Simula divisão do valor em 3 parcelas iguais entre "Empresa" e "Impostos"
+      const parcela = result.totalSaleValue / 3;
+      const res = await agentesService.simularSplit({
+        total: result.totalSaleValue,
+        participants: [
+          { name: "Empresa",   weight: Math.round(result.netReceivedValue) },
+          { name: "Impostos",  weight: Math.round(result.estimatedTax) },
+          { name: "Parcela 1", weight: Math.round(parcela) },
+          { name: "Parcela 2", weight: Math.round(parcela) },
+          { name: "Parcela 3", weight: Math.round(parcela) },
+        ],
+      });
+      setAltResult({ key: "parcelar", text: extractText(res as Record<string, unknown>) });
+    } catch (err) {
+      setAltError(err instanceof Error ? err.message : "Erro ao simular parcelamento.");
+    } finally {
+      setAltLoading(null);
+    }
+  }
+
+  async function handleAntecipar() {
+    setAltLoading("antecipar");
+    setAltResult(null);
+    setAltError(null);
+    try {
+      // Analisa crédito com o valor líquido da venda como operação e tributos como dívida atual
+      const res = await agentesService.analisarCredito({
+        total: result.netReceivedValue,
+        credit_context: {
+          credit_limit: result.totalSaleValue,
+          current_debt:  result.estimatedTax,
+        },
+      });
+      setAltResult({ key: "antecipar", text: extractText(res as Record<string, unknown>) });
+    } catch (err) {
+      setAltError(err instanceof Error ? err.message : "Erro ao analisar antecipação.");
+    } finally {
+      setAltLoading(null);
+    }
+  }
 
   return (
     <div className="simulador__evolution-card">
@@ -517,18 +605,30 @@ function CashEvolutionCard({ chartData }: { chartData: ChartPoint[] }) {
       <div className="simulador__alternatives">
         <h3 className="simulador__alternatives-title">Alternativas para o seu caixa</h3>
         <div className="simulador__alternatives-list">
-          <button className="simulador__alt-card">
+          <button
+            className="simulador__alt-card"
+            onClick={handleParcelar}
+            disabled={altLoading !== null}
+          >
             <div className="simulador__alt-card-text">
-              <span className="simulador__alt-card-title">Parcelar a compra</span>
+              <span className="simulador__alt-card-title">
+                {altLoading === "parcelar" ? "Analisando…" : "Parcelar a compra"}
+              </span>
               <span className="simulador__alt-card-desc">
                 Avalie o efeito das parcelas no fluxo de caixa.
               </span>
             </div>
             <ChevronRight size={20} strokeWidth={2} className="simulador__alt-card-chevron" aria-hidden="true" />
           </button>
-          <button className="simulador__alt-card">
+          <button
+            className="simulador__alt-card"
+            onClick={handleAntecipar}
+            disabled={altLoading !== null}
+          >
             <div className="simulador__alt-card-text">
-              <span className="simulador__alt-card-title">Antecipar recebíveis</span>
+              <span className="simulador__alt-card-title">
+                {altLoading === "antecipar" ? "Analisando…" : "Antecipar recebíveis"}
+              </span>
               <span className="simulador__alt-card-desc">
                 Compare o reforço de caixa com o custo da antecipação.
               </span>
@@ -536,6 +636,28 @@ function CashEvolutionCard({ chartData }: { chartData: ChartPoint[] }) {
             <ChevronRight size={20} strokeWidth={2} className="simulador__alt-card-chevron" aria-hidden="true" />
           </button>
         </div>
+
+        {altError && (
+          <p className="simulador__error" role="alert" style={{ marginTop: "0.75rem" }}>
+            {altError}
+          </p>
+        )}
+
+        {altResult && (
+          <div className="simulador__agent-card" style={{ marginTop: "0.75rem" }}>
+            <div className="simulador__agent-card-header">
+              <Lightbulb size={18} strokeWidth={1.75} aria-hidden="true" />
+              <span className="simulador__agent-card-title">
+                {altResult.key === "parcelar" ? "Análise de parcelamento" : "Análise de antecipação"}
+              </span>
+            </div>
+            <div className="simulador__agent-card-body">
+              <p className="simulador__agent-card-para" style={{ whiteSpace: "pre-wrap" }}>
+                {altResult.text}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -562,7 +684,7 @@ function SimuladorResultWithData({
 
         <div className="simulador__with-data-layout">
           <CashForecastCard forecast={data.forecast} agentAnalysis={data.agentAnalysis} />
-          <CashEvolutionCard chartData={data.chartData} />
+          <CashEvolutionCard chartData={data.chartData} result={data.result} />
         </div>
       </div>
     </ChatShell>

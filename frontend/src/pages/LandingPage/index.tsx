@@ -151,37 +151,37 @@ const agents = [
   {
     name: "Split Payment",
     desc: "Analisa os efeitos dos tributos sobre as vendas.",
-    icon: <DivideSquare size={28} strokeWidth={1.5} />,
+    icon: <DivideSquare size={36} strokeWidth={1.5} />,
   },
   {
     name: "Cash",
     desc: "Monitora entradas e saídas financeiras.",
-    icon: <Banknote size={28} strokeWidth={1.5} color="#FFC801"/>,
+    icon: <Banknote size={36} strokeWidth={1.5} color="#FFC801"/>,
   },
   {
     name: "Forecast",
     desc: "Projeta cenários e prevê dificuldades financeiras.",
-    icon: <TrendingUp size={28} strokeWidth={1.5} />,
+    icon: <TrendingUp size={36} strokeWidth={1.5} />,
   },
   {
     name: "Tax",
     desc: "Interpreta regras e obrigações tributárias.",
-    icon: <Scale size={28} strokeWidth={1.5} color="#FFC801" />,
+    icon: <Scale size={36} strokeWidth={1.5} color="#FFC801" />,
   },
   {
     name: "Guardian",
     desc: "Identifica riscos e protege as análises.",
-    icon: <ShieldCheck size={28} strokeWidth={1.5} />,
+    icon: <ShieldCheck size={36} strokeWidth={1.5} />,
   },
   {
     name: "Credit",
     desc: "Avalia a capacidade de crédito da empresa.",
-    icon: <CreditCard size={28} strokeWidth={1.5} color="#FFC801" />,
+    icon: <CreditCard size={36} strokeWidth={1.5} color="#FFC801" />,
   },
   {
     name: "Inclusion",
     desc: "Simplifica informações e orientações financeiras.",
-    icon: <Users size={28} strokeWidth={1.5} />,
+    icon: <Users size={36} strokeWidth={1.5} />,
   },
 ];
 
@@ -520,9 +520,6 @@ export default function LandingPage() {
                 >
                   <div className="lp-install__guide-header">
                     <div>
-                      <span className="lp-install__guide-label">
-                        GUIA DE INSTALAÇÃO
-                      </span>
                       <h3>Instalando no {platform.name}</h3>
                       <p>Navegador recomendado: {platform.browser}</p>
                     </div>
