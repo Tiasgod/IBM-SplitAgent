@@ -448,8 +448,12 @@ export default function LandingPage() {
 
         {/* ── DEMONSTRAÇÃO ── */}
         <section className="lp-demo" id="demonstracao" aria-label="Demonstração">
-          <div className="lp-demo__placeholder" />
-          <video src=""></video>
+          <video
+            className="lp-demo__video"
+            src="/gravacao-tela-spplit.mp4"
+            controls
+            playsInline
+          />
         </section>
 
         {/* ── AGENTES ── */}
