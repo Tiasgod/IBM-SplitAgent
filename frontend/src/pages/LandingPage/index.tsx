@@ -262,6 +262,27 @@ export default function LandingPage() {
   const [installError, setInstallError] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ── Scroll-reveal via IntersectionObserver ──────────────────
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document
+      .querySelectorAll(".lp-reveal")
+      .forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   function showInstallToast() {
     setInstallError(true);
 
@@ -301,7 +322,7 @@ export default function LandingPage() {
         {/* ── HERO ── */}
         <section className="lp-hero" id="inicio">
           <div className="lp-hero__inner">
-            <div className="lp-hero__text">
+            <div className="lp-hero__text lp-reveal lp-reveal--left">
               <Logo variant="full" size="lg" color="#ffffff" className="lp-hero__logo" />
               <h1 className="lp-hero__headline">
                 Sua gestão financeira preparada para o Split Payment.
@@ -322,7 +343,7 @@ export default function LandingPage() {
                 </button>
               </div>
             </div>
-            <div className="lp-hero__mascot">
+            <div className="lp-hero__mascot lp-reveal lp-reveal--right">
               <img
                 src={splitoHome}
                 alt="SplitAgent mascote"
@@ -335,8 +356,8 @@ export default function LandingPage() {
         {/* ── PROBLEMA ── */}
         <section className="lp-problem" id="problema">
           <div className="lp-problem__inner">
-            <h2 className="lp-problem__title">A forma como sua empresa recebe pode mudar.</h2>
-            <p className="lp-problem__subtitle">Você sabe quanto realmente estará disponível no seu caixa quando o Split Payment entrar em vigor?</p>
+            <h2 className="lp-problem__title lp-reveal lp-reveal--up">A forma como sua empresa recebe pode mudar.</h2>
+            <p className="lp-problem__subtitle lp-reveal lp-reveal--up" style={{ transitionDelay: "0.1s" }}>Você sabe quanto realmente estará disponível no seu caixa quando o Split Payment entrar em vigor?</p>
 
             <div className="lp-problem__layout">
 
@@ -347,7 +368,8 @@ export default function LandingPage() {
                   href="https://www.ey.com/pt_br/newsroom/2026/01/reforma-tributaria-split-payment-vai-alterar-gestao-caixa-empresas"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lp-problem__news-card lp-problem__news-card--1"
+                  className="lp-problem__news-card lp-problem__news-card--1 lp-reveal lp-reveal--up"
+                  style={{ transitionDelay: "0s" }}
                 >
                   <span className="lp-problem__news-source lp-problem__news-source--ey">EY</span>
                   <p className="lp-problem__news-title">
@@ -360,7 +382,8 @@ export default function LandingPage() {
                   href="https://economia.uol.com.br/noticias/redacao/2026/08/13/reforma-tributaria-split-payment-imposto.ghtm"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lp-problem__news-card lp-problem__news-card--2"
+                  className="lp-problem__news-card lp-problem__news-card--2 lp-reveal lp-reveal--up"
+                  style={{ transitionDelay: "0.15s" }}
                 >
                   <span className="lp-problem__news-source lp-problem__news-source--uol">UOL Economia</span>
                   <p className="lp-problem__news-title">
@@ -373,7 +396,8 @@ export default function LandingPage() {
                   href="https://exame.com/economia/split-payment-da-reforma-tributaria-forca-empresas-a-rever-caixa-e-contratos-desde-ja"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lp-problem__news-card lp-problem__news-card--3"
+                  className="lp-problem__news-card lp-problem__news-card--3 lp-reveal lp-reveal--up"
+                  style={{ transitionDelay: "0.3s" }}
                 >
                   <span className="lp-problem__news-source lp-problem__news-source--exame">exame.</span>
                   <p className="lp-problem__news-title">
@@ -385,7 +409,7 @@ export default function LandingPage() {
               </div>
 
               {/* ── Coluna direita: explicação ── */}
-              <div className="lp-problem__explainer">
+              <div className="lp-problem__explainer lp-reveal lp-reveal--right">
                 <SplitPaymentChart />
               </div>
             </div>
@@ -395,20 +419,24 @@ export default function LandingPage() {
         {/* ── SOLUÇÃO ── */}
         <section className="lp-solution" id="solucao">
           <div className="lp-solution__inner">
-            <div className="lp-solution__text">
+            <div className="lp-solution__text lp-reveal lp-reveal--left">
               <h2 className="lp-solution__title">Prepare-se para as mudanças. Tenha mais controle sobre suas finanças.</h2>
               <p className="lp-solution__desc">
                 Com o SplitAgent, você analisa os impactos do Split Payment, acompanha seu fluxo de caixa e simula cenários financeiros com o apoio de agentes de inteligência artificial.
               </p>
               <div className="lp-solution__tags">
-                {solutionTags.map((t) => (
-                  <span key={t.label} className="lp-solution__tag">
+                {solutionTags.map((t, i) => (
+                  <span
+                    key={t.label}
+                    className="lp-solution__tag lp-reveal lp-reveal--up"
+                    style={{ transitionDelay: `${i * 0.07}s` }}
+                  >
                     {t.icon} {t.label}
                   </span>
                 ))}
               </div>
             </div>
-            <div className="lp-solution__visual">
+            <div className="lp-solution__visual lp-reveal lp-reveal--right">
               <img
                 src={macbook}
                 alt="Dashboard SplitAgent mostrando resultados financeiros"
@@ -427,20 +455,24 @@ export default function LandingPage() {
         {/* ── AGENTES ── */}
         <section className="lp-agents" id="agentes">
           <div className="lp-agents__inner">
-            <h2 className="lp-agents__title">Inteligência que trabalha em conjunto.</h2>
-            <p className="lp-agents__subtitle">
+            <h2 className="lp-agents__title lp-reveal lp-reveal--up">Inteligência que trabalha em conjunto.</h2>
+            <p className="lp-agents__subtitle lp-reveal lp-reveal--up" style={{ transitionDelay: "0.1s" }}>
               Uma arquitetura de <strong>agentes especializados</strong> para transformar dados financeiros em orientações.
             </p>
 
-            <div className="lp-agents__orchestrator">
+            <div className="lp-agents__orchestrator lp-reveal lp-reveal--up" style={{ transitionDelay: "0.2s" }}>
               <OrchestratorIcon />
               <p className="lp-agents__orch-label">ORCHESTRATOR</p>
               <p className="lp-agents__orch-desc">Coordena os agentes e distribui as tarefas.</p>
             </div>
 
             <div className="lp-agents__grid">
-              {agents.map((agent) => (
-                <div key={agent.name} className="lp-agents__card">
+              {agents.map((agent, i) => (
+                <div
+                  key={agent.name}
+                  className="lp-agents__card lp-reveal lp-reveal--up"
+                  style={{ transitionDelay: `${0.1 + i * 0.07}s` }}
+                >
                   <div className="lp-agents__card-icon">{agent.icon}</div>
                   <p className="lp-agents__card-name">{agent.name}</p>
                   <p className="lp-agents__card-desc">{agent.desc}</p>

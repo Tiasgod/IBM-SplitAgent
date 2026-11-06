@@ -983,3 +983,44 @@ a{
     justify-content: flex-end;
   }
 }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.lp-reveal {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.lp-reveal--up    { transform: translateY(28px); }
+.lp-reveal--left  { transform: translateX(-32px); }
+.lp-reveal--right { transform: translateX(32px); }
+
+.lp-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero anima imediatamente (já está na viewport ao carregar) */
+.lp-hero .lp-reveal {
+  animation: lp-hero-in 0.7s ease both;
+}
+.lp-hero .lp-reveal--left  { animation-delay: 0.05s; }
+.lp-hero .lp-reveal--right { animation-delay: 0.25s; }
+
+@keyframes lp-hero-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Respeita preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .lp-reveal,
+  .lp-hero .lp-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+}
