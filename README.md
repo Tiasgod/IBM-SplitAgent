@@ -1,12 +1,14 @@
 # SplitAgent — Inteligência Financeira Agêntica
 
-![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-orange)
-![PWA](https://img.shields.io/badge/Plataforma-PWA-blue)
+![Status](https://img.shields.io/badge/Status-Concluído-success)
+![Plataformas](https://img.shields.io/badge/Plataformas-Web%20%7C%20Mobile-blue)
+![PWA](https://img.shields.io/badge/Progressive%20Web%20App-PWA-purple)
 ![Python](https://img.shields.io/badge/Linguagem-Python-yellow)
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
 ![IA](https://img.shields.io/badge/Arquitetura-Multi--Agentes-purple)
 
 ## Nosso Time
+
 <p align="center">
 <table>
 <tr>
@@ -45,68 +47,91 @@
 </table>
 </p>
 
-A ThreeValley é a equipe responsável pelo desenvolvimento do SplitAgent, reunindo diferentes competências em desenvolvimento de software, inteligência artificial, design e pesquisa.
+A **ThreeValley** é uma equipe formada por profissionais em desenvolvimento de software, inteligência artificial, design e pesquisa, unida pelo propósito de transformar desafios financeiros em soluções tecnológicas inteligentes.
 
-Nosso objetivo é desenvolver uma solução tecnológica que utilize agentes de inteligência artificial para apoiar empreendedores na análise financeira e na tomada de decisões, explorando novas possibilidades de aplicação da IA em problemas reais.
+Somos responsáveis pelo **SplitAgent**, uma plataforma de inteligência financeira que combina agentes autônomos de IA, automação e análise de dados para simplificar a gestão empresarial. Nossa solução conecta diferentes atividades financeiras em um único ambiente, com destaque para o Split Payment, o acompanhamento do fluxo de caixa e o apoio à tomada de decisões.
+
+Mais do que desenvolver uma aplicação, buscamos aproximar a inteligência artificial das necessidades reais dos empreendedores, oferecendo uma experiência acessível tanto pela Web quanto por dispositivos móveis.
 
 ### Mentoria
 
 - Silas Fernandes
 - João Carlos Manozzo Junior
+
+### Persona
+
+- **Priscila Araújo — Contadora profissional**
+
 ## Sumário
 
-- [Quem somos](#quem-somos)
 - [Sobre o projeto](#sobre-o-projeto)
 - [A proposta](#a-proposta)
 - [O problema](#o-problema)
 - [Objetivos](#objetivos)
 - [Agentes de IA](#agentes-de-ia)
 - [Funcionalidades](#funcionalidades)
+- [API](#api)
 - [Arquitetura da solução](#arquitetura-da-solução)
 - [Tecnologias utilizadas](#tecnologias-utilizadas)
 - [IBM Bob](#ibm-bob)
 - [Comunicação entre Front-End e Back-End](#comunicação-entre-front-end-e-back-end)
 - [Segurança e governança](#segurança-e-governança)
 - [Diferenciais](#diferenciais)
-- [Roadmap](#roadmap)
 - [Agradecimentos](#agradecimentos)
 - [Contexto do projeto](#contexto-do-projeto)
-- [Impacto esperado](#impacto-esperado)
+- [Impacto e contribuição](#impacto-e-contribuição)
 - [Licença](#licença)
 
 ## Sobre o projeto
 
-O **SplitAgent** é uma solução de inteligência financeira baseada em uma arquitetura de múltiplos agentes de inteligência artificial. O projeto tem como objetivo auxiliar empresas na organização de suas finanças, na divisão de pagamentos e no acompanhamento do fluxo de caixa.
+O **SplitAgent** é uma plataforma de inteligência financeira baseada em uma arquitetura de múltiplos agentes de inteligência artificial, desenvolvida para auxiliar empresas e empreendedores na organização de suas finanças, na divisão de pagamentos e no acompanhamento do fluxo de caixa.
 
-A solução utiliza agentes especializados que trabalham de forma integrada, permitindo analisar diferentes aspectos financeiros e contribuir para uma tomada de decisão mais organizada e eficiente.
+Um dos principais pilares da solução é o **Split Payment**, modelo que permite distribuir automaticamente os valores de uma transação entre diferentes destinatários, considerando as regras e condições estabelecidas para cada operação.
 
-O sistema está sendo desenvolvido com uma aplicação web responsiva no formato **PWA (Progressive Web App)**, permitindo o acesso por navegadores em computadores e dispositivos móveis.
+Além da divisão de pagamentos, a plataforma reúne recursos de análise financeira, previsão de caixa, informações fiscais, avaliação de crédito e segurança. Os agentes especializados trabalham de maneira integrada, permitindo que diferentes aspectos de uma operação financeira sejam analisados em conjunto.
+
+O SplitAgent também considera as transformações do cenário tributário brasileiro, especialmente as mudanças introduzidas pela Reforma Tributária. Por meio de seus recursos de análise fiscal e inteligência artificial, a solução oferece suporte à compreensão de novas regras, à organização de informações tributárias e à avaliação de seus possíveis impactos nas operações empresariais.
+
+Sua estrutura permite acompanhar mudanças na legislação e adaptar suas análises conforme novas regras tributárias entram em vigor, contribuindo para que os empreendedores tenham mais clareza sobre suas obrigações e decisões financeiras.
+
+A plataforma está disponível em **duas modalidades de acesso:**
+
+- **Web:** acesso pelo navegador, com interface adaptada para computadores.
+- **Mobile:** experiência otimizada para dispositivos móveis.
+
+As duas experiências utilizam a tecnologia **PWA (Progressive Web App)**, proporcionando uma aplicação multiplataforma, com possibilidade de instalação nos dispositivos compatíveis.
 
 ## A proposta
 
-O SplitAgent propõe utilizar inteligência artificial agêntica para simplificar e automatizar processos financeiros, tendo como foco principal o Split Payment, um modelo de pagamento que permite dividir automaticamente os valores de uma transação entre diferentes destinatários.
+O SplitAgent utiliza inteligência artificial agêntica para simplificar atividades financeiras, tendo como um de seus principais focos o **Split Payment**.
 
-A solução utiliza agentes de inteligência artificial especializados em diferentes atividades, coordenados por um agente orquestrador responsável por direcionar as demandas e integrar as informações.
+Esse modelo de pagamento permite que os valores de uma transação sejam distribuídos diretamente entre os participantes envolvidos, de acordo com as regras da operação. Isso contribui para uma gestão mais organizada dos recebimentos e para a integração dos processos financeiros.
 
-Com foco no Split Payment, o sistema busca auxiliar na organização, considerando os participantes envolvidos e as regras definidas para a operação. Além disso, integra recursos de análise financeira, previsão de caixa, avaliação de crédito, aspectos fiscais, segurança e inclusão financeira em um único ambiente.
+A solução reúne agentes especializados em diferentes áreas, coordenados por um agente orquestrador responsável por interpretar as solicitações e direcioná-las aos componentes adequados.
 
-Dessa forma, o SplitAgent busca tornar o gerenciamento das transações mais organizado, transparente e eficiente, apoiando a tomada de decisões e reduzindo a necessidade de atividades manuais.
+Além da distribuição de pagamentos, o sistema integra análise de fluxo de caixa, previsão financeira, crédito, aspectos fiscais, segurança e inclusão financeira.
+
+Outro ponto importante é a capacidade de acompanhar as transformações da legislação tributária. Com a implementação da Reforma Tributária e a chegada de novas regras, empresas precisam compreender mudanças que podem afetar seus processos, custos e obrigações.
+
+Nesse contexto, o SplitAgent utiliza sua estrutura de inteligência artificial para auxiliar na interpretação dessas informações e apoiar a avaliação de cenários, contribuindo para uma gestão mais preparada diante das mudanças tributárias.
 
 ## O problema
 
 A gestão financeira pode ser desafiadora para empresas que precisam controlar entradas e saídas, organizar pagamentos, acompanhar obrigações fiscais e prever necessidades futuras de caixa.
 
-A falta de integração entre essas atividades pode dificultar a análise das informações e tornar a tomada de decisões mais lenta.
+A falta de integração entre essas atividades dificulta a análise das informações e pode tornar a tomada de decisões mais lenta.
 
-Além disso, processos financeiros realizados manualmente podem aumentar a possibilidade de erros e dificultar a identificação antecipada de riscos.
+O cenário também se torna mais complexo diante das mudanças na legislação tributária brasileira. Novas regras podem exigir adaptações nos processos financeiros, na organização dos pagamentos e no acompanhamento das obrigações fiscais.
 
-O SplitAgent busca enfrentar esses desafios por meio da inteligência artificial agêntica, utilizando agentes especializados para apoiar o processo de Split Payment, organizar as informações das transações, auxiliar na conferência dos valores e identificar possíveis inconsistências. A proposta é oferecer uma solução integrada que contribua para tornar a divisão dos pagamentos mais segura, organizada e eficiente.
+O SplitAgent enfrenta esses desafios por meio da inteligência artificial agêntica, reunindo recursos que auxiliam na organização das transações, na conferência de valores, na análise financeira e na compreensão de informações tributárias.
+
+Com isso, a plataforma oferece um ambiente integrado para tornar os processos mais organizados, transparentes e eficientes.
 
 ## Objetivos
 
 ### Objetivo geral
 
-Desenvolver uma solução baseada em inteligência artificial agêntica para auxiliar na divisão de pagamentos, na gestão do fluxo de caixa e na análise de informações financeiras.
+Oferecer uma solução baseada em inteligência artificial agêntica para auxiliar empresas na divisão de pagamentos, na gestão do fluxo de caixa e na análise de informações financeiras e fiscais.
 
 ### Objetivos específicos
 
@@ -114,29 +139,30 @@ Desenvolver uma solução baseada em inteligência artificial agêntica para aux
 - Auxiliar no acompanhamento das entradas e saídas de recursos.
 - Gerar previsões para apoiar o planejamento do fluxo de caixa.
 - Apoiar análises relacionadas a crédito e aspectos fiscais.
+- Facilitar a compreensão de informações relacionadas às mudanças tributárias.
 - Integrar agentes especializados por meio de um agente orquestrador.
-- Considerar segurança, governança e inclusão financeira durante o desenvolvimento.
-- Disponibilizar uma interface acessível pela web e por dispositivos móveis.
+- Considerar segurança, governança e inclusão financeira.
+- Disponibilizar uma experiência multiplataforma, com acesso Web e Mobile.
 
 ## Agentes de IA
 
-O SplitAgent utiliza uma arquitetura composta por agentes especializados. Cada agente possui uma responsabilidade específica e pode colaborar com os demais por meio do agente orquestrador.
+O SplitAgent utiliza uma arquitetura composta por agentes especializados. Cada agente possui uma responsabilidade específica e trabalha de forma integrada com os demais por meio do agente orquestrador.
 
 ### 1. Orquestrador
 
-Responsável por coordenar a comunicação entre os agentes, interpretar as solicitações recebidas e direcionar cada tarefa para o agente especializado adequado.
+Responsável por coordenar a comunicação entre os agentes, interpretar as solicitações recebidas e direcionar cada tarefa ao agente especializado adequado.
 
 ### 2. Agente Fiscal — Tax
 
-Voltado à análise de informações fiscais e ao apoio na organização de obrigações relacionadas a impostos e tributos.
+Voltado à análise de informações fiscais e ao apoio na organização de obrigações relacionadas a impostos e tributos. Também auxilia na compreensão das mudanças na legislação tributária, incluindo as transformações decorrentes da Reforma Tributária brasileira.
 
 ### 3. Agente de Fluxo de Caixa — Cash Flow
 
-Responsável por auxiliar no acompanhamento das entradas e saídas financeiras, contribuindo para uma visão organizada da situação financeira.
+Responsável por auxiliar no acompanhamento das entradas e saídas financeiras, contribuindo para uma visão organizada da situação financeira da empresa.
 
 ### 4. Agente de Previsão — Forecast
 
-Utiliza os dados financeiros disponíveis para apoiar a previsão de cenários futuros e identificar possíveis necessidades de planejamento.
+Utiliza os dados financeiros disponíveis para analisar tendências, projetar cenários futuros e identificar possíveis necessidades de planejamento.
 
 ### 5. Agente de Crédito — Credit
 
@@ -150,39 +176,60 @@ Tem como foco os aspectos de segurança, monitoramento e proteção das informa�
 
 Busca considerar a acessibilidade e a inclusão financeira, contribuindo para que a solução seja mais compreensível e acessível aos seus usuários.
 
+### 8. Splito — Assistente Virtual
+
+O **Splito** é o assistente virtual do SplitAgent, desenvolvido para proporcionar uma interação mais simples e intuitiva com a plataforma.
+
+Por meio de uma comunicação conversacional, ele permite que os usuários façam perguntas, esclareçam dúvidas e compreendam melhor os recursos e as informações disponibilizadas pelo sistema.
+
+Entre suas principais funções estão:
+
+- Conversar com os usuários de maneira natural.
+- Explicar funcionalidades e recursos da plataforma.
+- Responder dúvidas sobre o funcionamento do SplitAgent.
+- Auxiliar na compreensão de informações financeiras.
+- Orientar os usuários durante a utilização do sistema.
+
+O Splito aproxima a inteligência artificial do usuário, tornando a experiência de utilização mais acessível e interativa.
+
 ## Funcionalidades
 
-Entre as funcionalidades previstas para o SplitAgent estão:
+O SplitAgent reúne funcionalidades voltadas à gestão financeira e à utilização de inteligência artificial em processos empresariais.
 
-- **Divisão de pagamentos:** apoio à organização e à distribuição de pagamentos.
-- **Gestão financeira:** acompanhamento de entradas e saídas de recursos.
-- **Análise do fluxo de caixa:** organização das informações financeiras.
-- **Previsão financeira:** apoio à identificação de tendências e necessidades futuras.
-- **Análise fiscal:** suporte à organização de informações relacionadas a obrigações fiscais.
+- **Split Payment:** apoio à organização e à distribuição de pagamentos entre diferentes destinatários.
+- **Gestão financeira:** acompanhamento e organização de informações financeiras.
+- **Análise do fluxo de caixa:** visualização das entradas e saídas de recursos.
+- **Previsão financeira:** análise de tendências e projeção de cenários futuros.
+- **Análise fiscal:** suporte à organização e à compreensão de informações tributárias.
+- **Reforma Tributária:** apoio à compreensão de mudanças nas regras fiscais e à avaliação de seus possíveis impactos nas operações empresariais.
 - **Análise de crédito:** apoio à avaliação de informações financeiras.
+- **Assistente virtual Splito:** interação conversacional para explicações e esclarecimento de dúvidas.
 - **Orquestração de agentes:** encaminhamento de solicitações para agentes especializados.
-- **Segurança:** consideração de mecanismos de proteção e controle das informações.
-- **Acessibilidade:** atenção à inclusão e à facilidade de utilização da plataforma.
-- **Acesso multiplataforma:** utilização da aplicação por navegadores em computadores e dispositivos móveis.
-
-As funcionalidades representam o escopo planejado para a solução e poderão ser implementadas e refinadas ao longo do desenvolvimento.
+- **Segurança:** mecanismos de proteção e controle das informações.
+- **Acessibilidade:** atenção à inclusão e à facilidade de utilização.
+- **Acesso multiplataforma:** utilização da aplicação pela Web e por dispositivos móveis.
 
 ## API
+
+A comunicação entre os componentes do sistema é realizada por meio de uma API desenvolvida com FastAPI.
+
+**Documentação interativa:**
 
 https://ibm-splitagent-back-end-production.up.railway.app/docs#/
 
 ## Arquitetura da solução
 
-A arquitetura do SplitAgent foi pensada para separar a interface do usuário, a camada de serviços e a lógica de inteligência artificial.
+A arquitetura do SplitAgent separa a interface do usuário, a camada de serviços, o armazenamento de dados e a lógica de inteligência artificial.
 
-A aplicação será disponibilizada como uma **PWA**, permitindo acesso pela web e por dispositivos móveis. O Back-End será desenvolvido em Python utilizando FastAPI, responsável por disponibilizar os endpoints e intermediar as solicitações da aplicação.
+A aplicação oferece acesso Web e Mobile por meio de uma estrutura PWA. O Back-End utiliza Python e FastAPI para disponibilizar os endpoints, processar as solicitações e integrar os diferentes componentes do sistema.
 
-A camada de inteligência artificial será organizada em agentes especializados, coordenados pelo orquestrador.
+A camada de inteligência artificial é organizada em agentes especializados, coordenados pelo orquestrador. O Splito também integra essa experiência, oferecendo uma interface conversacional para interação com os usuários.
 
 ```mermaid
 flowchart TD
-    A[Usuário] --> B[PWA - Web e Mobile]
+    A[Usuário] --> B[Web e Mobile - PWA]
     B --> C[Back-End - Python e FastAPI]
+
     C --> D[Agente Orquestrador]
 
     D --> E[Agente Fiscal - Tax]
@@ -191,6 +238,9 @@ flowchart TD
     D --> H[Agente de Crédito]
     D --> I[Agente de Segurança - Guardian]
     D --> J[Agente de Inclusão]
+
+    B <--> K[Splito - Assistente Virtual]
+    K <--> C
 
     E --> D
     F --> D
@@ -203,101 +253,139 @@ flowchart TD
     C --> B
 ```
 
-O fluxo apresentado representa a arquitetura conceitual da solução. A comunicação e a integração definitivas entre os componentes dependem da implementação técnica do projeto.
+O fluxo representa a integração entre as plataformas, a API, os agentes especializados e o assistente virtual, demonstrando como os diferentes componentes trabalham em conjunto para atender às solicitações dos usuários.
 
 ## Tecnologias utilizadas
 
-### Front-End
+### Front-End e plataformas
 
-- **PWA (Progressive Web App):** aplicação acessível por navegadores e dispositivos móveis.
-- **Tecnologias web:** utilizadas na construção da interface e da experiência do usuário.
+- **Web:** interface acessível por navegadores, com experiência adaptada para computadores.
+- **Mobile:** aplicação otimizada para utilização em dispositivos móveis.
+- **PWA (Progressive Web App):** tecnologia que proporciona uma experiência multiplataforma, permitindo a instalação da aplicação em dispositivos compatíveis.
+- **React:** biblioteca utilizada na construção das interfaces.
+- **JavaScript:** linguagem utilizada na implementação dos recursos e da interação da aplicação.
 
 ### Back-End
 
-- **Python:** linguagem utilizada no desenvolvimento dos serviços.
-- **FastAPI:** framework para criação de APIs e integração entre os componentes do sistema.
+- **Python:** linguagem utilizada na construção dos serviços e da lógica do sistema.
+- **FastAPI:** framework utilizado na criação da API e na integração entre os componentes.
+- **PostgreSQL:** banco de dados relacional utilizado para armazenar as informações da aplicação.
+- **SQLAlchemy:** ferramenta utilizada no mapeamento e na interação com o banco de dados.
+- **Alembic:** ferramenta de gerenciamento das migrações do banco de dados.
 
 ### Inteligência artificial
 
-- **Arquitetura multiagente:** organização da solução em agentes especializados.
-- **Agente orquestrador:** coordenação e encaminhamento das solicitações.
-- **IBM Bob:** ferramenta utilizada como apoio durante o desenvolvimento.
+- **Arquitetura multiagente:** organização da inteligência artificial em agentes especializados.
+- **Agente Orquestrador:** coordenação e encaminhamento das solicitações.
+- **IBM Watson:** tecnologia do ecossistema IBM utilizada como parte dos recursos de inteligência artificial.
+- **Splito:** assistente virtual conversacional integrado à plataforma.
+- **Cloudflare:** tecnologia utilizada no ecossistema de infraestrutura e proteção da aplicação.
+
+### Infraestrutura e hospedagem
+
+- **Vercel:** hospedagem e disponibilização da aplicação Front-End.
+- **Railway:** hospedagem dos serviços de Back-End e API.
+- **Neon:** serviço de banco de dados PostgreSQL.
+- **Cloudflare:** recursos de infraestrutura e proteção associados à aplicação.
+
+### Ferramentas de desenvolvimento
+
+- **IBM Bob:** ferramenta de apoio às atividades de desenvolvimento de software.
+- **Git e GitHub:** controle de versão, organização e colaboração no código-fonte.
 
 ## IBM Bob
 
-O **IBM Bob** foi utilizado como ferramenta de apoio durante o desenvolvimento do projeto SplitAgent.
+O **IBM Bob** foi utilizado como ferramenta de apoio durante a construção do SplitAgent.
 
-A ferramenta auxilia atividades de desenvolvimento de software, contribuindo para tarefas como programação, análise de código, depuração e organização do trabalho técnico.
+A ferramenta auxiliou a equipe em atividades relacionadas ao desenvolvimento de software, como programação, análise de código, depuração, organização e aprimoramento dos componentes técnicos.
 
-Sua utilização faz parte da experiência de desenvolvimento da equipe, apoiando a construção e o aprimoramento da solução.
+Sua utilização contribuiu para otimizar o trabalho da equipe e explorar novas possibilidades de aplicação da inteligência artificial no processo de desenvolvimento.
 
 ## Comunicação entre Front-End e Back-End
 
-A comunicação entre a interface e o Back-End será realizada por meio de uma API desenvolvida com FastAPI.
+A comunicação entre a interface e o Back-End ocorre por meio de uma API desenvolvida com FastAPI.
 
-A aplicação PWA enviará requisições HTTP aos endpoints disponibilizados pelo servidor. O Back-End será responsável por processar as solicitações, acionar a lógica correspondente e retornar as respostas para a interface.
+As aplicações Web e Mobile enviam requisições HTTP aos endpoints disponibilizados pelo servidor. O Back-End processa as solicitações, executa as regras correspondentes, aciona os agentes especializados quando necessário e retorna os resultados para a interface.
 
-Esse modelo permite manter a interface separada das regras de negócio e facilita a integração entre os diferentes componentes da aplicação.
+Esse modelo mantém a interface separada das regras de negócio e permite a integração organizada entre os diferentes componentes da aplicação.
 
-Exemplo conceitual de fluxo:
+### Fluxo de comunicação
 
-1. O usuário realiza uma solicitação pela interface.
+1. O usuário realiza uma solicitação pela interface Web ou Mobile.
 2. O Front-End envia a requisição para a API.
 3. O Back-End recebe e processa a solicitação.
-4. O orquestrador direciona a tarefa ao agente especializado.
-5. O resultado é retornado pelo Back-End.
-6. A interface apresenta as informações ao usuário.
+4. O orquestrador direciona a tarefa ao agente especializado, quando necessário.
+5. O agente executa a análise correspondente.
+6. O resultado retorna pelo Back-End.
+7. A interface apresenta as informações ao usuário.
 
 ## Segurança e governança
 
 A segurança e a governança são aspectos importantes para uma solução que trabalha com informações financeiras.
 
-O projeto considera a necessidade de:
+O SplitAgent considera mecanismos e práticas voltados a:
 
-- Proteger as informações dos usuários.
-- Controlar o acesso aos recursos da aplicação.
-- Validar os dados recebidos pela API.
-- Tratar erros e solicitações inválidas.
-- Considerar privacidade e uso responsável da inteligência artificial.
-- Avaliar as respostas produzidas pelos agentes.
-- Manter atenção à rastreabilidade e à confiabilidade das informações.
-
-A implementação dos mecanismos específicos deverá acompanhar a evolução técnica do projeto.
+- Proteção das informações dos usuários.
+- Controle de acesso aos recursos da aplicação.
+- Validação dos dados recebidos pela API.
+- Tratamento de erros e solicitações inválidas.
+- Privacidade e uso responsável da inteligência artificial.
+- Avaliação das respostas produzidas pelos agentes.
+- Rastreabilidade e confiabilidade das informações.
+- Proteção da comunicação entre os componentes do sistema.
 
 ## Diferenciais
 
-- **Arquitetura multiagente:** agentes especializados em diferentes atividades financeiras.
+- **Split Payment:** foco na organização e na distribuição de pagamentos entre diferentes destinatários.
+- **Arquitetura multiagente:** agentes especializados em diferentes áreas financeiras.
+- **Splito:** assistente virtual que conversa, explica e esclarece dúvidas dos usuários.
+- **Inteligência financeira integrada:** combinação de análise, organização e previsão financeira.
+- **Acompanhamento tributário:** suporte à compreensão de mudanças na legislação e de seus possíveis impactos.
+- **Acesso multiplataforma:** disponibilidade de experiências Web e Mobile utilizando PWA.
 - **Orquestração inteligente:** coordenação das solicitações por um agente central.
-- **Integração financeira:** proposta de reunir diferentes análises em uma única solução.
-- **Acesso multiplataforma:** utilização por meio de uma PWA.
-- **Desenvolvimento com apoio de IA:** utilização do IBM Bob como ferramenta de suporte ao trabalho técnico.
-- **Foco em inclusão:** consideração da acessibilidade e da inclusão financeira.
-- **Parceria e inovação:** projeto desenvolvido no contexto da colaboração com a IBM e o Banco do Brasil.
+- **Inclusão financeira:** atenção à acessibilidade e à facilidade de utilização.
+- **Parceria e inovação:** solução desenvolvida no contexto da colaboração com a IBM e o Banco do Brasil.
 
 ## Agradecimentos
 
-Agradecemos à **IBM** pela oportunidade de participar dessa iniciativa, pelo contato com novas tecnologias e pelo incentivo ao desenvolvimento de soluções inovadoras.
+Agradecemos à **IBM** pela oportunidade de participar dessa iniciativa, pelo contato com novas tecnologias e pelo incentivo à construção de soluções inovadoras.
 
-Agradecemos também ao **Banco do Brasil** pela parceria e pelo contexto de aplicação que contribui para a construção do SplitAgent.
+Agradecemos também ao **Banco do Brasil** pela parceria e pelo contexto de aplicação que contribuiu para a construção do SplitAgent.
 
-A experiência representa uma oportunidade de aprendizado, colaboração e desenvolvimento técnico para toda a equipe ThreeValley.
+Um agradecimento especial aos nossos mentores, **Silas Fernandes** e **João Carlos Manozzo Junior**, pelas orientações e contribuições ao longo da jornada.
+
+Agradecemos ainda à **Priscila Araújo**, contadora profissional, pela contribuição como referência para a compreensão das necessidades e dos desafios relacionados à área contábil.
+
+Por fim, agradecemos a todos que contribuíram para essa experiência de aprendizado, colaboração e inovação.
 
 ## Contexto do projeto
 
-O SplitAgent é desenvolvido pela equipe **ThreeValley** no contexto de uma iniciativa de inovação em parceria com a IBM e o Banco do Brasil.
+O SplitAgent é uma solução desenvolvida pela equipe **ThreeValley** no contexto de uma iniciativa de inovação em parceria com a IBM e o Banco do Brasil.
 
-O projeto tem como foco explorar o uso de inteligência artificial agêntica em atividades financeiras, unindo desenvolvimento de software, organização de dados e agentes especializados.
+A proposta reúne conhecimentos de desenvolvimento de software, inteligência artificial, organização financeira e experiência do usuário para solucionar desafios reais enfrentados por empresas e empreendedores.
 
-## Impacto esperado
+O projeto representa a aplicação prática de tecnologias emergentes em um cenário de transformação digital, com foco na inteligência artificial agêntica e em sua utilização para aprimorar processos financeiros.
 
-O SplitAgent busca contribuir para uma gestão financeira mais organizada, oferecendo suporte à análise de informações, ao planejamento de caixa e à divisão de pagamentos.
+## Impacto e contribuição
 
-Com a integração dos agentes especializados, a solução pretende reduzir a complexidade de determinadas tarefas e auxiliar os usuários na compreensão de diferentes aspectos financeiros.
+O SplitAgent busca contribuir para uma gestão financeira mais organizada, integrada e inteligente.
 
-O impacto efetivo dependerá da implementação, da qualidade dos dados utilizados e da validação dos resultados produzidos pelo sistema.
+Ao reunir divisão de pagamentos, acompanhamento de caixa, previsões financeiras e análise fiscal, a plataforma oferece recursos que auxiliam os empreendedores na compreensão de suas operações e na tomada de decisões.
 
-## Licença
+Seu foco no Split Payment ganha ainda mais relevância diante das transformações do sistema tributário brasileiro. A Reforma Tributária representa mudanças importantes para empresas de diferentes segmentos, exigindo atenção às novas regras, aos processos de recolhimento de tributos e aos impactos financeiros das operações.
 
-A licença do projeto ainda deverá ser definida pela equipe.
+Nesse cenário, o SplitAgent reúne inteligência artificial e análise financeira para auxiliar os usuários a compreender essas transformações, organizar informações e avaliar diferentes cenários.
 
-Até que essa definição seja realizada, não se deve presumir que o código esteja disponível para reutilização, distribuição ou modificação sob uma licença de software específica.
+Mais do que acompanhar as necessidades atuais das empresas, a solução possui uma estrutura de agentes especializados que permite incorporar novos contextos de análise, acompanhando a evolução das demandas financeiras e tributárias.
+
+# Licença
+
+Este projeto está licenciado sob a **Licença MIT**.
+
+Copyright (c) 2026 ThreeValley.
+
+É concedida permissão, gratuitamente, a qualquer pessoa que obtenha uma cópia deste software e dos arquivos de documentação associados (o "Software"), para utilizar o Software sem restrições, incluindo, sem limitação, os direitos de usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e/ou vender cópias do Software, bem como permitir que as pessoas a quem o Software seja fornecido façam o mesmo, sujeitas às seguintes condições:
+
+O aviso de direitos autorais acima e este aviso de permissão deverão ser incluídos em todas as cópias ou partes substanciais do Software.
+
+O SOFTWARE É FORNECIDO "NO ESTADO EM QUE SE ENCONTRA", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO, ÀS GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO VIOLAÇÃO. EM NENHUMA HIPÓTESE OS AUTORES OU TITULARES DOS DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANO OU OUTRA RESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, ATO ILÍCITO OU OUTRA FORMA, DECORRENTE DE, OU RELACIONADA AO SOFTWARE OU AO USO OU OUTRAS NEGOCIAÇÕES NO SOFTWARE.
