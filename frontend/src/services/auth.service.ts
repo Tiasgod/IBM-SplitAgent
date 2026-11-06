@@ -75,6 +75,7 @@ export const sessionStorage = {
   clear(): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+    window.sessionStorage.clear();
   },
 };
 

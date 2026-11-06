@@ -321,7 +321,7 @@ a{
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  animation: float-card 4s ease-in-out infinite alternate;
+  animation: float-card 3.8s ease-in-out infinite alternate;
   transform-origin: center center;
   box-shadow: var(--shadow-md);
   backface-visibility: hidden;
