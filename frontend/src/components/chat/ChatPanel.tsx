@@ -3,7 +3,7 @@ import { Paperclip, Send, X, ChevronUp } from "lucide-react";
 import { ChatBubble } from "../ui/ChatBubble";
 import { Button } from "../ui/Button";
 import { Header } from "../layout/Header";
-import { agentesService } from "../../services/agentes.service";
+import { assistenteService } from "../../services/assistente.service";
 import splitoChatImg from "../../assets/splito-chat.png";
 import "./ChatPanel.css";
 
@@ -63,22 +63,18 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
     setLoading(true);
 
     try {
-      const res = await agentesService.analisarFinanceiro({ incluir_ia: true });
-
-      // Extract ia_generativa.recomendacao — the watsonx/AI text field
-      const raw = res as Record<string, unknown>;
-      const iaGenerativa = raw["ia_generativa"] as Record<string, unknown> | undefined;
-      const agentText =
-        (typeof iaGenerativa?.["recomendacao"] === "string" ? iaGenerativa["recomendacao"] : null) ??
-        JSON.stringify(res, null, 2);
+      const historico = messages.slice(-10).map(msg => ({
+        role: msg.role === "user" ? "user" as const : "assistant" as const,
+        content: msg.text,
+      }));
+      const res = await assistenteService.conversar({
+        mensagem: trimmed,
+        historico,
+      });
 
       setMessages(prev => [
         ...prev,
-        {
-          id: Date.now() + 1,
-          role: "agent",
-          text: agentText,
-        },
+        { id: Date.now() + 1, role: "agent", text: res.resposta },
       ]);
     } catch {
       setMessages(prev => [
@@ -86,7 +82,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
         {
           id: Date.now() + 1,
           role: "agent",
-          text: "Não consegui acessar o agente financeiro agora. Verifique sua conexão e tente novamente.",
+          text: "Não consegui responder agora. Verifique sua conexão e tente novamente em instantes.",
         },
       ]);
     } finally {
@@ -106,7 +102,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
     }
   }
 
-  const chatDate = new Date(2026, 9, 21);
+  const chatDate = new Date();
 
   return (
     <div className={`chat-panel ${className ?? ""}`}>
@@ -139,7 +135,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
 
         {loading && (
           <div className="chat-panel__bubble-row chat-panel__bubble-row--agent">
-            <ChatBubble variant="loading">Analisando sua solicitação...</ChatBubble>
+            <ChatBubble variant="loading">Pensando na sua pergunta...</ChatBubble>
           </div>
         )}
 
@@ -204,7 +200,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
         </form>
 
         <p className="chat-panel__disclaimer">
-          Suas informações são usadas apenas para melhorar o SplitAgent.{" "}
+          Quando necessário, dados financeiros da sua conta são enviados ao serviço de IA para elaborar a resposta.{" "}
           <a href="/privacidade" className="chat-panel__disclaimer-link">
             Como meus dados são tratados?
           </a>
