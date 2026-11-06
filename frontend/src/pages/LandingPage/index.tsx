@@ -54,7 +54,7 @@ function LandingNav() {
               INSTALAR
             </a>
           </li>
-          <li><a href="#inicio" onClick={(e) => { e.preventDefault(); scrollTo("inicio"); }}>ENTRAR</a></li>
+          <li><a href="/inicio">ENTRAR</a></li>
         </ul>
          <button
           className="lp-nav__hamburger"
@@ -74,7 +74,7 @@ function LandingNav() {
             <li><a href="#demonstracao" onClick={(e) => { e.preventDefault(); scrollTo("demonstracao"); }}>DEMONSTRAÇÃO</a></li>
             <li><a href="#agentes" onClick={(e) => { e.preventDefault(); scrollTo("agentes"); }}>AGENTES DE IA</a></li>
             <li><a href="#instalar" onClick={(e) => { e.preventDefault(); scrollTo("instalar"); }} className="lp-nav__install-link">INSTALAR</a></li>
-            <li><a href="#inicio" onClick={(e) => { e.preventDefault(); scrollTo("inicio"); }}>ENTRAR</a></li>
+            <li><a href="/inicio">ENTRAR</a></li>
           </ul>
         )}
       </div>
@@ -101,7 +101,7 @@ function LandingFooter() {
               <li><a href="#demonstracao">DEMONSTRAÇÃO</a></li>
               <li><a href="#agentes">AGENTES DE IA</a></li>
               <li><a href="#instalar">INSTALAR</a></li>
-              <li><a href="#inicio">ENTRAR</a></li>
+              <li><a href="/inicio">ENTRAR</a></li>
             </ul>
           </div>
           <div className="lp-footer__col">
