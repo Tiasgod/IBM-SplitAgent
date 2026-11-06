@@ -130,7 +130,10 @@ export const authService = {
 
   async logout(): Promise<void> {
     try {
-      await api.request("/api/v1/acesso/logout", { method: "POST" });
+      await api.request("/api/v1/acesso/logout", {
+        method: "POST",
+        skipRedirectOn401: true, // never auto-redirect; caller handles navigation
+      });
     } finally {
       sessionStorage.clear();
     }

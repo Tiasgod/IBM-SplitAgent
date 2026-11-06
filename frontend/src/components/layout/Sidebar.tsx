@@ -100,8 +100,11 @@ export default function Sidebar({
           className="sidebar__item sidebar__item--logout"
           title={!showLabels ? "Sair" : undefined}
           onClick={async () => {
-            await authService.logout();
-            navigate("/");
+            try {
+              await authService.logout();
+            } finally {
+              navigate("/");
+            }
           }}
         >
           <LogOut size={22} strokeWidth={1.75} aria-hidden="true" />
