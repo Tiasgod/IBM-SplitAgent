@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Cell,
 } from "recharts";
 import "./SplitPaymentChart.css";
 
