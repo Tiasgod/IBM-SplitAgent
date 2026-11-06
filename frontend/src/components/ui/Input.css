@@ -63,6 +63,29 @@
   cursor: pointer;
 }
 
+/* Password variant — espaço para o botão olho */
+.input-field__control--password {
+  padding-right: calc(var(--space-3) + 18px + var(--space-2));
+}
+
+.input-field__password-toggle {
+  position: absolute;
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-gray);
+  line-height: 0;
+}
+
+.input-field__password-toggle:hover {
+  color: var(--color-text);
+}
+
 /* Remove o seletor nativo de data no Chrome/Safari */
 .input-field__control--date::-webkit-calendar-picker-indicator {
   opacity: 0;

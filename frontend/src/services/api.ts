@@ -1,5 +1,12 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
+if (!BASE_URL) {
+  console.error(
+    "[api] VITE_API_BASE_URL não está definida. " +
+    "Adicione a variável de ambiente no painel da Vercel e faça um novo deploy."
+  );
+}
+
 const TOKEN_KEY = "splitagent_token";
 
 function getToken(): string | null {
