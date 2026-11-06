@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+      includeAssets: ["favicon.ico", "favicon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
         name: "SplitAgent",
         short_name: "SplitAgent",
