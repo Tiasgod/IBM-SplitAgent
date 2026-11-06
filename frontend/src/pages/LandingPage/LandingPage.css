@@ -560,12 +560,11 @@ a{
   background-color: var(--color-primary-hover);
   padding: var(--lp-section-gap) var(--lp-px);
 }
-.lp-demo__placeholder {
+.lp-demo__video {
+  display: block;
   max-width: var(--lp-inner-max);
   margin: 0 auto;
   width: 100%;
-  min-height: clamp(16rem, 30vw, 28rem);
-  background-color: var(--color-secondary);
   border-radius: var(--radius-lg);
 }
 /* ============================================================
