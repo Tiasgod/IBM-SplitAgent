@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, type FormEvent, type KeyboardEvent } from "react";
+import ReactMarkdown from "react-markdown";
 import { Paperclip, Send, X, ChevronUp } from "lucide-react";
 import { ChatBubble } from "../ui/ChatBubble";
 import { Button } from "../ui/Button";
@@ -129,7 +130,15 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
 
         {messages.map(msg => (
           <div key={msg.id} className={`chat-panel__bubble-row chat-panel__bubble-row--${msg.role}`}>
-            <ChatBubble variant={msg.role}>{msg.text}</ChatBubble>
+            <ChatBubble variant={msg.role}>
+              {msg.role === "agent" ? (
+                <div className="chat-bubble__markdown">
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </div>
+              ) : (
+                msg.text
+              )}
+            </ChatBubble>
           </div>
         ))}
 
