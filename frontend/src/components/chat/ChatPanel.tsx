@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect, type FormEvent, type KeyboardEvent } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import { Paperclip, Send, X, ChevronUp } from "lucide-react";
 import { ChatBubble } from "../ui/ChatBubble";
@@ -37,18 +43,28 @@ interface ChatPanelProps {
   onClose?: () => void;
   /** Modo tela cheia mobile: exibe header agent-back */
   onBack?: () => void;
-  /** Oculta o header (ex: quando usado dentro de tela cheia que já tem header) */
+  /** Oculta o header */
   hideHeader?: boolean;
-  /** Oculta a seta de avançar no header agent-forward (ex: página Assistente) */
+  /** Oculta a seta de avançar no header */
   hideForwardArrow?: boolean;
   className?: string;
 }
 
-export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArrow = false, className }: ChatPanelProps) {
+export function ChatPanel({
+  onClose,
+  onBack,
+  hideHeader = false,
+  hideForwardArrow = false,
+  className,
+}: ChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+
+  // Identificador da conversa armazenada no PostgreSQL.
+  const [conversaId, setConversaId] = useState<number | null>(null);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,28 +73,40 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
 
   async function sendMessage(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
 
-    setMessages(prev => [...prev, { id: Date.now(), role: "user", text: trimmed }]);
+    if (!trimmed || loading) return;
+
+    const mensagemUsuario: Message = {
+      id: Date.now(),
+      role: "user",
+      text: trimmed,
+    };
+
+    setMessages((prev) => [...prev, mensagemUsuario]);
     setInput("");
     setLoading(true);
 
     try {
-      const historico = messages.slice(-10).map(msg => ({
-        role: msg.role === "user" ? "user" as const : "assistant" as const,
-        content: msg.text,
-      }));
       const res = await assistenteService.conversar({
         mensagem: trimmed,
-        historico,
+        ...(conversaId !== null && {
+          conversa_id: conversaId,
+        }),
       });
 
-      setMessages(prev => [
+      // Guarda o identificador para as próximas mensagens.
+      setConversaId(res.conversa_id);
+
+      setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, role: "agent", text: res.resposta },
+        {
+          id: Date.now() + 1,
+          role: "agent",
+          text: res.resposta,
+        },
       ]);
     } catch {
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
@@ -128,8 +156,11 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
           <span>{formatDate(chatDate)}</span>
         </div>
 
-        {messages.map(msg => (
-          <div key={msg.id} className={`chat-panel__bubble-row chat-panel__bubble-row--${msg.role}`}>
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`chat-panel__bubble-row chat-panel__bubble-row--${msg.role}`}
+          >
             <ChatBubble variant={msg.role}>
               {msg.role === "agent" ? (
                 <div className="chat-bubble__markdown">
@@ -144,7 +175,9 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
 
         {loading && (
           <div className="chat-panel__bubble-row chat-panel__bubble-row--agent">
-            <ChatBubble variant="loading">Pensando na sua pergunta...</ChatBubble>
+            <ChatBubble variant="loading">
+              Pensando na sua pergunta...
+            </ChatBubble>
           </div>
         )}
 
@@ -156,18 +189,29 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
           <div className="chat-panel__suggestions-header">
             <button
               className="chat-panel__suggestions-toggle"
-              onClick={() => setShowSuggestions(v => !v)}
-              aria-label={showSuggestions ? "Ocultar sugestões" : "Mostrar sugestões"}
-            >
-              {showSuggestions
-                ? <><X size={14} strokeWidth={2} /> Ocultar</>
-                : <><ChevronUp size={14} strokeWidth={2} /> Sugestões</>
+              onClick={() => setShowSuggestions((v) => !v)}
+              aria-label={
+                showSuggestions ? "Ocultar sugestões" : "Mostrar sugestões"
               }
+            >
+              {showSuggestions ? (
+                <>
+                  <X size={14} strokeWidth={2} /> Ocultar
+                </>
+              ) : (
+                <>
+                  <ChevronUp size={14} strokeWidth={2} /> Sugestões
+                </>
+              )}
             </button>
           </div>
+
           {showSuggestions && (
-            <div className="chat-panel__suggestions" aria-label="Sugestões de perguntas">
-              {SUGGESTIONS.map(s => (
+            <div
+              className="chat-panel__suggestions"
+              aria-label="Sugestões de perguntas"
+            >
+              {SUGGESTIONS.map((s) => (
                 <Button
                   key={s}
                   variant="subtle"
@@ -182,8 +226,16 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
           )}
         </div>
 
-        <form className="chat-panel__input-row" onSubmit={handleSubmit} aria-label="Enviar mensagem">
-          <button type="button" className="chat-panel__icon-btn" aria-label="Anexar arquivo">
+        <form
+          className="chat-panel__input-row"
+          onSubmit={handleSubmit}
+          aria-label="Enviar mensagem"
+        >
+          <button
+            type="button"
+            className="chat-panel__icon-btn"
+            aria-label="Anexar arquivo"
+          >
             <Paperclip size={20} strokeWidth={1.75} />
           </button>
 
@@ -192,7 +244,7 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
             className="chat-panel__input"
             placeholder="Digite sua mensagem"
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             aria-label="Mensagem"
             autoComplete="off"
@@ -200,7 +252,9 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
 
           <button
             type="submit"
-            className={`chat-panel__send-btn${input.trim() ? " chat-panel__send-btn--active" : ""}`}
+            className={`chat-panel__send-btn${
+              input.trim() ? " chat-panel__send-btn--active" : ""
+            }`}
             aria-label="Enviar"
             disabled={!input.trim() || loading}
           >
@@ -209,7 +263,8 @@ export function ChatPanel({ onClose, onBack, hideHeader = false, hideForwardArro
         </form>
 
         <p className="chat-panel__disclaimer">
-          Quando necessário, dados financeiros da sua conta são enviados ao serviço de IA para elaborar a resposta.{" "}
+          Quando necessário, dados financeiros da sua conta são enviados ao
+          serviço de IA para elaborar a resposta.{" "}
           <a href="/privacidade" className="chat-panel__disclaimer-link">
             Como meus dados são tratados?
           </a>
