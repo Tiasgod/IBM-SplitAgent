@@ -358,6 +358,10 @@ Agradecemos ainda à **Priscila Araújo**, contadora profissional, pela contribu
 
 Por fim, agradecemos a todos que contribuíram para essa experiência de aprendizado, colaboração e inovação.
 
+<p align="center">
+  <img src=".bob/artifacts/bob-e-splito.png" width="650" alt="IBM Bob cumprimentando Splito, mascote do SplitAgent">
+</p>
+
 ## Contexto do projeto
 
 O SplitAgent é uma solução desenvolvida pela equipe **ThreeValley** no contexto de uma iniciativa de inovação em parceria com a IBM e o Banco do Brasil.
