@@ -1,0 +1,20 @@
+# Ambiente
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editores e sistema
+.idea/
+.vscode/
+.DS_Store
+
+# Bancos locais
+*.db
+*.sqlite3
