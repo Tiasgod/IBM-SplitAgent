@@ -366,7 +366,7 @@ O SplitAgent considera mecanismos e práticas voltados a:
 
 ## Agradecimentos
 
-Agradecemos à **IBM** pela oportunidade de participar dessa iniciativa, pelo contato com novas tecnologias e pelo incentivo à construção de soluções inovadoras.
+Agradecemos à **IBM** pela oportunidade de participar dessa iniciativa, pelo contato com novas tecnologias como o Bob e pelo incentivo à construção de soluções inovadoras.
 
 Agradecemos também ao **Banco do Brasil** pela parceria e pelo contexto de aplicação que contribuiu para a construção do SplitAgent.
 
@@ -374,7 +374,7 @@ Um agradecimento especial aos nossos mentores, **Silas Fernandes** e **João Car
 
 Agradecemos ainda à **Priscila Araújo**, contadora profissional, pela contribuição como referência para a compreensão das necessidades e dos desafios relacionados à área contábil.
 
-Por fim, agradecemos a todos que contribuíram para essa experiência de aprendizado, colaboração e inovação.
+Por fim, agradecemos a todos da IBM que contribuíram para essa experiência de aprendizado, colaboração e inovação.
 
 <p align="center">
   <img src=".bob/artifacts/bob-e-splito.png" width="650" alt="IBM Bob cumprimentando Splito, mascote do SplitAgent">
