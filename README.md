@@ -1,4 +1,3 @@
-
 # SplitAgent — Inteligência Financeira Agêntica
 
 ![Status](https://img.shields.io/badge/Status-Concluído-success)
@@ -104,7 +103,9 @@ As duas experiências utilizam a tecnologia **PWA (Progressive Web App)**, propo
 
 ### Demonstração da plataforma
 
-[▶ Assistir à demonstração inicial da plataforma](./.bob/artifacts/iniciar.mp4)
+<p align="center">
+  <img src="./.bob/artifacts/iniciar.gif" width="720" alt="Demonstração inicial da plataforma SplitAgent">
+</p>
 
 ## A proposta
 
@@ -201,7 +202,9 @@ Entre suas principais funções estão:
 
 O Splito aproxima a inteligência artificial do usuário, tornando a experiência de utilização mais acessível e interativa.
 
-[▶ Assistir à demonstração do Splito](./.bob/artifacts/assistente2.mp4)
+<p align="center">
+  <img src="./.bob/artifacts/assistente2.gif" width="720" alt="Demonstração do assistente virtual Splito">
+</p>
 
 ## Funcionalidades
 
@@ -228,7 +231,9 @@ A comunicação entre os componentes do sistema é realizada por meio de uma API
 
 https://ibm-splitagent-back-end-production.up.railway.app/docs#/
 
-[▶ Assistir à demonstração da API e do Back-End](./.bob/artifacts/backend.mp4)
+<p align="center">
+  <img src="./.bob/artifacts/backend.gif" width="720" alt="Demonstração da API e do Back-End do SplitAgent">
+</p>
 
 ## Arquitetura da solução
 
